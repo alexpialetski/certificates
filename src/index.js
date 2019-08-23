@@ -5,6 +5,9 @@ import App from './App';
 import './index.css';
 import './App.css';
 
+import {configureFakeBackend} from './component/util/fake-backend'
+configureFakeBackend();
+
 ReactDOM.render(
   <BrowserRouter>
     <App />

@@ -7,7 +7,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "webpack -d",
-    "clean": "rimraf dist"
+    "clean": "rimraf dist",
+    "start": "webpack-dev-server --open"
   },
   "dependencies": {
     "bundle-loader": "^0.5.5",

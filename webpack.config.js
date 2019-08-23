@@ -13,7 +13,7 @@ var config = {
     // entry: APP_DIR + '/index.js',
     entry: {
         bundle: APP_DIR + '/index.js',
-        vendor: VENDOR_LIBS
+        vendor: VENDOR_LIBS,
     },
     output: {
         path: BUILD_DIR,
@@ -36,7 +36,7 @@ var config = {
                 use: ['style-loader', 'css-loader', 'sass-loader']
             },
             {
-                test: /\.(jpe?g|png|gif|svg)$/i,
+                test: /\.(jpeg|jpg|png|gif|svg)$/i,
                 use: 'file-loader'
             }
         ]
@@ -47,7 +47,14 @@ var config = {
         port: 9000,
         disableHostCheck: false,
         open: true,
-        hot: true
+        hot: true,
+        historyApiFallback: true
+    },
+    externals: {
+        // global app config object
+        config: JSON.stringify({
+            apiUrl: 'http://localhost:9000'
+        })
     },
     plugins: [
         new htmlWebpackPlugin({
