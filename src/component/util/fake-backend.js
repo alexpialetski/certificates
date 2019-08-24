@@ -4,7 +4,7 @@ export function configureFakeBackend() {
     window.fetch = function (url, opts) {
         return new Promise((resolve, reject) => {
             // wrap in timeout to simulate server api call
-            setTimeout(() => {
+            // setTimeout(() => {
                 // authenticate
                 if (url.endsWith('/users/authenticate') && opts.method === 'POST') {
                     // get parameters from post request
@@ -50,7 +50,7 @@ export function configureFakeBackend() {
                 // pass through any requests not handled above
                 realFetch(url, opts).then(response => resolve(response));
 
-            }, 500);
+            // }, 500);
         });
     }
 }

@@ -1,11 +1,16 @@
 import React from 'react';
 
 import {userService} from '../service/user.service';
-import {valueLessThan} from "../validation/FormValidation";
-import {valueGreaterOrEqualThan} from "../validation/FormValidation";
+import {valueGreaterOrEqualThan, valueLessThan} from "../validation/FormValidation";
 import {Header} from "./part/Header";
+import UserContext from './../context/UserContext';
+import Container from "../core/Container";
+import FormGroup from "../core/form/FormGroup";
+import ConditionalInvalidFeedback from "../core/form/ConditionalFeedback";
 
 class LoginPage extends React.Component {
+    static contextType = UserContext;
+
     constructor(props) {
         super(props);
 
@@ -18,13 +23,14 @@ class LoginPage extends React.Component {
             loading: false,
             error: '',
             usernameError: '',
-            passwordError: ''
+            passwordError: '',
         };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.userNameInput = this.userNameInput.bind(this);
         this.passwordInput = this.passwordInput.bind(this);
+
     }
 
     userNameInput(e) {
@@ -45,7 +51,6 @@ class LoginPage extends React.Component {
         } else {
             this.setState({passwordError: ""});
         }
-        // passwordInputValidation(e);
     }
 
     handleChange(e) {
@@ -65,6 +70,7 @@ class LoginPage extends React.Component {
         userService.login(username, password)
             .then(
                 user => {
+                    this.context.createUser(user);
                     const {from} = this.props.location.state || {from: {pathname: "/"}};
                     this.props.history.push(from);
                 },
@@ -73,54 +79,75 @@ class LoginPage extends React.Component {
     }
 
     render() {
-        const {username, password, submitted, loading, error, usernameError, passwordError} = this.state;
+        const {
+            username,
+            password,
+            submitted,
+            loading,
+            error,
+            usernameError,
+            passwordError
+        } = this.state;
         return (
-            <div>
-                <Header/>
-                <div className="container mt-5 p-5 shadow rounded-sm">
-                    <h2>Certificates</h2>
-                    <div className="col-md-6">
-                        <form name="form" onSubmit={this.handleSubmit}>
-                            <div className="form-group">
-                                <label htmlFor="username">Username</label>
-                                <input type="text"
-                                       className={'form-control' + (submitted && !username || usernameError ? ' is-invalid' : '')}
-                                       name="username" value={username}
-                                       onChange={this.userNameInput}/>
-                                {submitted && !username &&
-                                <div className="invalid-feedback">Username is required</div>
-                                }
-                                {usernameError && <div className="invalid-feedback">{this.state.usernameError}</div>}
+            <UserContext.Consumer>
+                {context => (
+                    <div>
+                        <Header/>
+                        <Container className="mt-5 p-5">
+                            <h2>Certificates</h2>
+                            <div className="col-md-6">
+                                <form name="form" onSubmit={this.handleSubmit}>
+                                    <FormGroup className="col-md-6">
+                                        <label htmlFor="username">Username</label>
+                                        <input type="text"
+                                               className={'form-control' + (submitted && !username || usernameError ? ' is-invalid' : '')}
+                                               name="username" value={username}
+                                               onChange={this.userNameInput}/>
+                                        <ConditionalInvalidFeedback
+                                            condition={submitted && !username}
+                                            className={'invalid-feedback'}>
+                                            Username is required
+                                        </ConditionalInvalidFeedback>
+                                        <ConditionalInvalidFeedback
+                                            condition={submitted && !username}
+                                            className={'invalid-feedback'}>
+                                            {this.state.usernameError}
+                                        </ConditionalInvalidFeedback>
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <label htmlFor="password">Password</label>
+                                        <input type="password"
+                                               name="password" value={password}
+                                               className={'form-control' + (submitted && !password || passwordError ? ' is-invalid' : '')}
+                                               onChange={this.passwordInput}/>
+                                        <ConditionalInvalidFeedback
+                                            condition={submitted && !password}
+                                            className={'invalid-feedback'}>
+                                            Password is required
+                                        </ConditionalInvalidFeedback>
+                                        <ConditionalInvalidFeedback
+                                            condition={passwordError}
+                                            className={'invalid-feedback'}>
+                                            {this.state.passwordError}
+                                        </ConditionalInvalidFeedback>
+                                    </FormGroup>
+                                    <button className="btn btn-primary" disabled={loading}>Login</button>
+                                    {loading &&
+                                    <img
+                                        src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>
+                                    }
+                                    {error &&
+                                    <div className={'alert alert-danger'}>{error}</div>
+                                    }
+                                </form>
                             </div>
-                            <div className="form-group">
-                                <label htmlFor="password">Password</label>
-                                <input type="password"
-                                       name="password" value={password}
-                                       className={'form-control' + (submitted && !password || passwordError ? ' is-invalid' : '')}
-                                       onChange={this.passwordInput}/>
-                                {submitted && !password &&
-                                <div className="invalid-feedback">Password is required</div>
-                                }
-                                {passwordError && <div className="invalid-feedback">{this.state.passwordError}</div>}
+                            <div className="col-md-6">
+                                <img src="../resources/images/welcome.jpg" className="img-thumbnail img-responsive"/>
                             </div>
-                            <div className="form-group">
-                                <button className="btn btn-primary" disabled={loading}>Login</button>
-                                {loading &&
-                                <img
-                                    src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>
-                                }
-                            </div>
-                            {error &&
-                            <div className={'alert alert-danger'}>{error}</div>
-                            }
-                        </form>
+                        </Container>
                     </div>
-                    <div className="col-md-6"
-                         style={{backgroundImage: "url('./../assets/welcome.jpg')", height: "100%"}}>
-                        {/*<img src="../assets/welcome.jpg" className="img-thumbnail img-responsive"/>*/}
-                    </div>
-                </div>
-            </div>
+                )}
+            </UserContext.Consumer>
         );
     }
 }
