@@ -1,5 +1,7 @@
 var webpack = require('webpack');
 var path = require('path');
+require("babel-core/register");
+require("babel-polyfill");
 var htmlWebpackPlugin = require('html-webpack-plugin');
 
 var BUILD_DIR = path.join(__dirname, 'dist');
@@ -12,6 +14,10 @@ const VENDOR_LIBS = [
 var config = {
     // entry: APP_DIR + '/index.js',
     entry: {
+        main: [
+            'babel-polyfill',
+            APP_DIR + '/index.js'
+        ],
         bundle: APP_DIR + '/index.js',
         vendor: VENDOR_LIBS,
     },
@@ -37,7 +43,17 @@ var config = {
             },
             {
                 test: /\.(jpeg|jpg|png|gif|svg)$/i,
-                use: 'file-loader'
+                use: {
+                    loader: 'file-loader',
+                    options: {
+                        name: '[path][name].[ext]',
+                        outputPath: '/'
+                    }
+                }
+            },
+            {
+                test: /\.json$/,
+                loader: 'json-loader'
             }
         ]
     },
@@ -65,6 +81,6 @@ var config = {
         }),
         new webpack.HotModuleReplacementPlugin()
     ]
-}
+};
 
 module.exports = config;

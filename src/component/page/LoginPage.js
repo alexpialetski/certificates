@@ -7,6 +7,8 @@ import UserContext from './../context/UserContext';
 import Container from "../core/Container";
 import FormGroup from "../core/form/FormGroup";
 import ConditionalInvalidFeedback from "../core/form/ConditionalFeedback";
+import img from "../resources/images/welcome.jpg"
+import smallLoader from "../resources/images/smallLoader.gif"
 
 class LoginPage extends React.Component {
     static contextType = UserContext;
@@ -93,12 +95,13 @@ class LoginPage extends React.Component {
                 {context => (
                     <div>
                         <Header/>
-                        <Container className="mt-5 p-5">
+                        <Container className="row mt-5 p-5">
                             <h2>Certificates</h2>
+                            <div className={"row"}>
                             <div className="col-md-6">
                                 <form name="form" onSubmit={this.handleSubmit}>
                                     <FormGroup className="col-md-6">
-                                        <label htmlFor="username">Username</label>
+                                        <label htmlFor="username">Login</label>
                                         <input type="text"
                                                className={'form-control' + (submitted && !username || usernameError ? ' is-invalid' : '')}
                                                name="username" value={username}
@@ -134,7 +137,7 @@ class LoginPage extends React.Component {
                                     <button className="btn btn-primary" disabled={loading}>Login</button>
                                     {loading &&
                                     <img
-                                        src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>
+                                        src={smallLoader}/>
                                     }
                                     {error &&
                                     <div className={'alert alert-danger'}>{error}</div>
@@ -142,7 +145,8 @@ class LoginPage extends React.Component {
                                 </form>
                             </div>
                             <div className="col-md-6">
-                                <img src="../resources/images/welcome.jpg" className="img-thumbnail img-responsive"/>
+                                <img src={img} className="img-thumbnail img-responsive"/>
+                            </div>
                             </div>
                         </Container>
                     </div>

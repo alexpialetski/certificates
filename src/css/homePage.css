@@ -1,0 +1,13 @@
+.absolute{
+    position: absolute;
+}
+
+.flex-column{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.quantity{
+
+}

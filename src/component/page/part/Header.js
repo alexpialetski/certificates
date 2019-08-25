@@ -1,6 +1,9 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import UserContext from "../../context/UserContext";
+import ToggleButton from "../../core/header/ToggleButton";
+import LeftNavBar from "../../core/header/LeftNavBar";
+import NavBarCollapsed from "../../core/header/NavBarCollapsed";
 
 class Header extends React.Component {
     static contextType = UserContext;
@@ -27,20 +30,16 @@ class Header extends React.Component {
             <UserContext.Consumer>
                 {context => (
                     <nav className="navbar navbar-expand-lg navbar-light bg-light shadow-sm mb-2">
-                        <Link className="navbar-brand" to="#">Certificates</Link>
-                        <button className="navbar-toggler" type="button" data-toggle="collapse"
-                                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                                aria-expanded="false" aria-label="Toggle navigation">
-                            <span className="navbar-toggler-icon"></span>
-                        </button>
-
-                        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                            <ul className="navbar-nav mr-auto">
+                        <Link className="navbar-brand" to="/">Certificates</Link>
+                        <ToggleButton toggleContentId={"navbarSupportedContent"}/>
+                        {/*<div className="collapse navbar-collapse" id="navbarSupportedContent">*/}
+                        <NavBarCollapsed id={"navbarSupportedContent"}>
+                            <LeftNavBar>
                                 <li className="nav-item active">
                                     <Link className="nav-link" to="/">Home <span
                                         className="sr-only">(current)</span></Link>
                                 </li>
-                            </ul>
+                            </LeftNavBar>
                             <div className="navbar-nav m-2">
                                 <button className="btn" onChange={this.changeLocale}>Ru / En</button>
                             </div>
@@ -62,7 +61,7 @@ class Header extends React.Component {
                                     </div>
                                 }
                             </div>
-                        </div>
+                        </NavBarCollapsed>
                     </nav>
                 )}
             </UserContext.Consumer>
