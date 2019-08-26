@@ -1,22 +1,30 @@
 import React from 'react'
+import PaginatePanel from "./PaginatePanel";
 
-const Pagination = ({certificatesPerPage, totalCertificates, paginate, className}) => {
-    const pageNumbers = [];
-
-    for (let i = 1; i <= Math.ceil(totalCertificates / certificatesPerPage); i++) {
-        pageNumbers.push(i)
-    }
-    const nav = pageNumbers.map(number => {
-        return <li key={number} className={"page-item"}>
-            <a onClick={() => paginate(number)} className={"page-link"}>
-                {number}
-            </a>
-        </li>
-    });
+const Pagination = ({certificatesPerPage, totalCertificates, paginate, className, currentPage}) => {
+    const lastPage = Math.ceil(totalCertificates / certificatesPerPage);
+    const currentPageNumber = parseInt(currentPage);
     return (
         <nav className={className}>
-            <ul className={"pagination justify-content-center"}>
-                {nav}
+            <PaginatePanel
+                certificatesPerPage={certificatesPerPage}
+                paginate={paginate}
+                totalCertificates={totalCertificates}
+                lastPage={lastPage}
+                currentPageNumber={currentPageNumber}/>
+            <ul className={"pagination justify-content-between"}>
+                <li className={'page-item ' + currentPageNumber === 1 ? 'disabled' : undefined}>
+                    <a onClick={() => paginate(currentPageNumber - 1)}
+                       className={"page-link"}>
+                        {"<--- Older"}
+                    </a>
+                </li>
+                <li className={'page-item ' + currentPageNumber === lastPage ? 'disabled' : undefined}>
+                    <a onClick={() => paginate(currentPageNumber + 1)}
+                       className={"page-link"}>
+                        {"Newer --->"}
+                    </a>
+                </li>
             </ul>
         </nav>
     )

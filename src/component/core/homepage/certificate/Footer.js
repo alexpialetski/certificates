@@ -7,7 +7,7 @@ export default ({role, editClick, deleteClick, cost, buyClick}) => {
         wrap: "wrap",
         alignItems: 'end'
     };
-    const property = role && role === "USER" ? {justifyContent: 'end'} : {justifyContent: 'space-around'} ;
+    const property = role && role === "ADMIN" ? {justifyContent: 'space-between'} : {justifyContent: 'end'} ;
     const footer = {
         display: "flex",
         wrap: "wrap",

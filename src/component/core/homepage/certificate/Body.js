@@ -2,9 +2,9 @@ import React from 'react';
 import styles from "../../../../css/certificate.css"
 import Tag from "./Tag";
 
-export default ({tags, description, ...rest}) => {
+export default ({tags, description, tagClick}) => {
     const tagsComponents = tags.map(tag => {
-       return <Tag key={tag} tagName={tag} action={rest.tagClick}/>
+       return <Tag key={tag} tagName={tag} action={tagClick}/>
     });
     return (
         <div className={styles.body}>
