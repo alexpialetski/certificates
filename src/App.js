@@ -1,5 +1,5 @@
 import React from 'react';
-import {Route, Switch} from "react-router-dom";
+import {Redirect , Route, Switch} from "react-router-dom";
 import {PrivateRoute} from "./component/util/privateRoute";
 import HomePage from "./component/page/HomePage";
 import {LoginPage} from "./component/page/LoginPage";
@@ -30,7 +30,8 @@ class CertificateApp extends React.Component {
                 user: this.state.user, createUser: this.createUser, deleteUser: this.deleteUser
             }}>
                 <Switch>
-                    <PrivateRoute exact path="/" component={HomePage}/>
+                    {/*<PrivateRoute exact path="/" component={HomePage}/>*/}
+                    <Route exact path="/" component={HomePage}/>
                     <Route exact path="/login" component={LoginPage}/>
                     <Route exact path="/register" component={RegisterPage}/>
                 </Switch>

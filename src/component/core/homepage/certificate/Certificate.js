@@ -37,5 +37,5 @@ export default (props) => {
 }
 
 const certificate = {
-    backgroundColor: "aqua",
+    backgroundColor: "aliceblue",
 };

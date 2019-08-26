@@ -1,14 +1,49 @@
+import React, {useContext} from 'react'
+import UserContext from "../context/UserContext";
+
 export function configureFakeBackend() {
     let users = [{
-        id: 1,
-        username: 'user',
-        password: 'user',
-        firstName: 'UserFirst',
-        lastName: 'UserLast',
-        role: 'USER'
-    },
-        {id: 2, username: 'admin', password: 'admin', firstName: 'AdminFirst', lastName: 'AdminLast', role: 'ADMIN'}];
+        id: 1, username: 'user', password: 'user', firstName: 'UserFirst', lastName: 'UserLast', role: 'USER'
+    }, {
+        id: 2, username: 'admin', password: 'admin', firstName: 'AdminFirst', lastName: 'AdminLast', role: 'ADMIN'
+    }];
+    let userCertificates = [
+        {
+            "userId": 1,
+            "certificateId": 200
+        },
+        {
+            "userId": 1,
+            "certificateId": 300
+        }
+    ];
+    let allCertificates = [
+        {
+            "id": 1,
+            "title": "Dita",
+            "date": "2019-07-08",
+            "tags": ["computer", "fun"],
+            "description": "Aliquam sit amet diam in magna bibendum imperdiet.",
+            "cost": 705
+        },
+        {
+            "id": 200,
+            "title": "Abbot",
+            "date": "2019-03-05",
+            "tags": ["bread", "bubble", "fun"],
+            "description": "Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus.",
+            "cost": 882
+        },
+        {
+            "id": 300,
+            "title": "Dorn",
+            "date": "2019-04-05",
+            "tags": ["story", "hard"],
+            "description": "Bliquam lacus purus, magna at, imperdiet non, pretium quis, lectus.",
+            "cost": 1000
+        }];
     let realFetch = window.fetch;
+
     window.fetch = function (url, opts) {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
@@ -44,36 +79,52 @@ export function configureFakeBackend() {
                     }
                     return;
                 }
-
+            debugger;
                 if (url.endsWith('/certificates/all') && opts.method === 'GET') {
+
                     const headers = opts.headers;
                     if (headers && getPriority(headers.role) >= 0) {
                         resolve({
                             ok: true,
-                            text: () => Promise.resolve(JSON.stringify([
-                                {
-                                    "id": 1,
-                                    "title": "Dita",
-                                    "date": "2019-07-08",
-                                    "tags": ["computer", "fun"],
-                                    "description": "Aliquam sit amet diam in magna bibendum imperdiet.",
-                                    "cost": 705
-                                },
-                                {
-                                    "id": 200,
-                                    "title": "Abbot",
-                                    "date": "2019-03-05",
-                                    "tags": ["bread", "bubble", "fun"],
-                                    "description": "Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus.",
-                                    "cost": 882
-                                }]
-                            ))
+                            text: () => Promise.resolve(JSON.stringify(allCertificates))
                         });
                     } else {
                         resolve({status: 401, text: () => Promise.resolve()});
                     }
                     return;
                 }
+
+                if (url.endsWith('/certificates/buy') && opts.method === 'GET') {
+                    const headers = opts.headers;
+                    if (headers && getPriority(headers.role) >= 1) {
+                        userCertificates.push({
+                            userId: opts.userId,
+                            certificateId: opts.certificateId
+                        });
+                        resolve({ok: true});
+                    } else {
+                        resolve({status: 401, text: () => Promise.resolve()});
+                    }
+                    return;
+                }
+
+                if (url.endsWith('/certificates/userCertificates') && opts.method === 'GET') {
+                    const headers = opts.headers;
+                    if (headers && getPriority(headers.role) >= 1) {
+                        resolve({
+                            ok: true,
+                            text: () => Promise.resolve(userCertificates.map(userCertificate => {
+                                if (userCertificate.userId === opts.userId) {
+                                    return userCertificate.certificateId;
+                                }
+                            }))
+                        });
+                    } else {
+                        resolve({status: 401, text: () => Promise.resolve()});
+                    }
+                    return;
+                }
+
 
                 realFetch(url, opts).then(response => resolve(response));
             }, 500);
