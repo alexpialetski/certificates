@@ -1,3 +1,6 @@
+import {useContext} from 'react';
+import UserContext from "../context/UserContext";
+
 import config from 'config';
 import {authHeader} from '../util/auth-header';
 
@@ -14,18 +17,12 @@ function login(username, password) {
         body: JSON.stringify({username, password})
     };
     return fetch(`${config.apiUrl}/users/authenticate`, requestOptions)
-        .then(handleResponse)
-        .then(user => {
-            if (user) {
-                user.authdata = window.btoa(username + ':' + password);
-            }
-            return user;
-        });
+        .then(handleResponse);
 }
 
 function logout() {
-    // remove user from local storage to log user out
-    localStorage.removeItem('user');
+    let context = useContext(UserContext);
+    context.deleteUser();
 }
 
 function getAll() {
