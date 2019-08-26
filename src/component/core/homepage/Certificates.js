@@ -21,4 +21,8 @@ const Certificates = ({certificates, role, loading, tagClick}) => {
     )
 };
 
+function isBought(certificateId) {
+
+}
+
 export default Certificates

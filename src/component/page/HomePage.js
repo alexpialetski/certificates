@@ -5,9 +5,8 @@ import Container from "../core/Container";
 import {ErrorMessage} from "../core/messages"
 import {sortCertificatesByDate} from "../util/comparators"
 import {filterCertificateByTitle} from "../util/filters"
+import {filterCertificateByTag} from "../util/filters"
 import {certificateService} from "../service/certificates.service";
-// import styles from "../../css/homePage.css"
-import Certificate from "../core/homepage/certificate/Certificate";
 import ColumnOfButtons from "../core/homepage/ColumnOfButtons";
 import Pagination from "../core/homepage/Pagination";
 import Certificates from "../core/homepage/Certificates";
@@ -15,25 +14,25 @@ import Certificates from "../core/homepage/Certificates";
 export default (props) => {
     const contextType = useContext(UserContext);
     const [errorMessage, setErrorMessage] = useState('');
-    // const [search, setSearch] = useState('');
+    const [search, setSearch] = useState('');
     const [certificates, setCertificates] = useState([]);
+    const [userCertificates, setUserCertificates] = useState([]);
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [certificatesPerPage, setCertificatesPerPage] = useState(2);
 
     useEffect(() => {
-        const fetchPosts = async () => {
-            setLoading(true);
-            const res = await certificateService.getAll(contextType.user);
-            setCertificates(res.sort(sortCertificatesByDate));
-            setLoading(false);
-        };
-
-        fetchPosts();
+        contextType.user.username && getAllUserCertificates();
+        getAllCertificates();
     }, []);
 
     const typeOfCertificates = e => {
-        console.log('typeOfCertificates' + e.target.value);
+        if (e.target.value === 'All') {
+            setSearch('');
+            getAllCertificates();
+        } else {
+            console.log('Not done yet');
+        }
     };
 
     const quantityOfCertificates = e => {
@@ -42,51 +41,57 @@ export default (props) => {
     };
 
     const searchEvent = (e) => {
-        const fetchPosts = async () => {
-            setLoading(true);
-            let res = [];
-            if (e.target.value !== '') {
-                res = await certificateService.searchByMultipleFilters(contextType.user, [
-                    filterCertificateByTitle(e.target.value)
-                ]);
+        const filterObject = {};
+        const tags = [];
+        const searchValues = search.split(' ');
+        searchValues.forEach(value => {
+            if (value.indexOf('#') === 0) {
+                tags.push(value.slice(1));
             } else {
-                res = await certificateService.getAll(contextType.user);
+                filterObject.title = value;
             }
-            setCertificates(res.sort(sortCertificatesByDate));
-            setLoading(false);
-        };
-
-        fetchPosts();
+        });
+        if (tags.length) {
+            filterObject.tags = tags;
+        }
+        searchByFilters(filterObject);
     };
 
     const tagClick = (e) => {
-        searchBytTag(e.target.value);
+        setSearch(search + ' #' + e.target.value);
     };
 
-    const searchBytTag = (tag) => {
-        searchByFilters({tags:[tag]});
+    const searchByFilters = async (filterObject) => {
+        setLoading(true);
+        let res = [];
+        const arrayOfFilters = [];
+        filterObject.title && arrayOfFilters.push((filterCertificateByTitle(filterObject.title)));
+        filterObject.tags && filterObject.tags.forEach(tag => arrayOfFilters.push(filterCertificateByTag(tag)));
+        res = await certificateService.searchByMultipleFilters(contextType.user, arrayOfFilters);
+        setCertificates(res.sort(sortCertificatesByDate));
+        setLoading(false);
     };
 
-    const searchByFilters = (filterObject) => {
-        const fetchPosts = async () => {
-            setLoading(true);
-            let res = [];
-            const arrayOfFilters = [];
-            arrayOfFilters.push(filterObject.title && filterCertificateByTitle(filterObject.title));
-            for (let i = 0; i < filterObject.tags.length; i++) {
-                arrayOfFilters.push(filterCertificateByTag(filterObject.tags[i]));
-            }
-            res = await certificateService.searchByMultipleFilters(contextType.user, arrayOfFilters);
-            setCertificates(res.sort(sortCertificatesByDate));
-            setLoading(false);
-        };
-        fetchPosts();
+    const getAllUserCertificates = async () => {
+        setLoading(true);
+        const res = await certificateService.getUserCertificates(contextType.user);
+        setUserCertificates(res);
+    };
+
+    const getAllCertificates = async () => {
+        setLoading(true);
+        const res = await certificateService.getAll(contextType.user);
+        res && setCertificates(res.sort(sortCertificatesByDate));
+        setLoading(false);
+    };
+
+    const onChange = e => {
+        setSearch(e.target.value);
     };
 
     const indexOfLasCertificate = currentPage * certificatesPerPage;
     const indexOfFirstCertificate = indexOfLasCertificate - certificatesPerPage;
     const currentCertificates = certificates.slice(indexOfFirstCertificate, indexOfLasCertificate);
-
     const paginate = pageNumber => setCurrentPage(pageNumber);
 
     return (
@@ -95,8 +100,8 @@ export default (props) => {
                 <div>
                     <Header user={context.user}/>
                     <ErrorMessage message={errorMessage} className={errorMessage ? '' : 'fade in'}/>
-                    <Container className=" p-3">
-                        <h1>Certificates</h1>
+                    <Container className=" mt-5 p-3">
+                        <h1 className={'mb-5'}>Certificates</h1>
                         <div className={"container"}>
                             <div className={'row '} style={sticky}>
                                 <ColumnOfButtons
@@ -104,9 +109,13 @@ export default (props) => {
                                     action={typeOfCertificates}
                                     className={'col-md-2 shadow'}
                                 />
-                                <div className="active-cyan-3 active-cyan-4 mb-4 col-md-10">
-                                    <input className="form-control" type="text" placeholder="Search"
-                                           aria-label="Search" onChange={searchEvent}/>
+                                <div className="active-cyan-3 active-cyan-4 mb-4 col-md-9">
+                                    <input className="form-control" type="search" placeholder="Search"
+                                           aria-label="Search" onChange={onChange} value={search}/>
+                                </div>
+                                <div className="active-cyan-3 active-cyan-4 pl-0 mb-4 col-md-1">
+                                    <input className="btn btn-primary" type="button"
+                                           aria-label="Search" onClick={searchEvent} value="Search"/>
                                 </div>
                             </div>
                         </div>
@@ -129,7 +138,8 @@ export default (props) => {
                                     certificatesPerPage={certificatesPerPage}
                                     totalCertificates={certificates.length}
                                     paginate={paginate}
-                                    className={'col-md-7 push-md-2'}/>
+                                    className={'col-md-7 push-md-2'}
+                                    currentPage={currentPage}/>
                             </div>
                         </div>
                     </Container>
@@ -138,94 +148,6 @@ export default (props) => {
         </UserContext.Consumer>
     );
 }
-
-// class HomePage extends React.Component {
-//     static contextType = UserContext;
-//     constructor(props) {
-//         super(props);
-//         this.state = {
-//             errorMessages: 'Hi',
-//             search: '',
-//             certificates: {loading: true}
-//         };
-//
-//         const [posts, setPosts] = useState([]);
-//
-//     }
-//
-//     componentDidMount() {
-//         certificateService.getAll(this.context.user).then(certificates => this.setState({certificates}));
-//     }
-//
-//     handleChange = (e) => {
-//         const {name, value} = e.target;
-//         this.setState({[name]: value});
-//         console.log(this.state.password);
-//     };
-//
-//     typeOfCertificates = e =>{
-//
-//     };
-//
-//     quantityOfCertificates = e =>{
-//
-//     };
-//
-//     render() {
-//         const {errorMessages, certificates} = this.state;
-//         return (
-//             <UserContext.Consumer>
-//                 {context => (
-//                     <div>
-//                         <Header user={this.context.user}/>
-//                         <ErrorMessage message={errorMessages} className={errorMessages ? 'fade in' : ''}/>
-//                         <Container className=" p-3">
-//                             <div className={'row ' + styles.sticky}>
-//                                 <h1>Certificates</h1>
-//                                 <ColumnOfButtons
-//                                     items={['All', 'Only my certificates']}
-//                                     action={this.typeOfCertificates}
-//                                     className={'col-md-2 shadow'}
-//                                 />
-//                                 {/*<div className={'col-md-2 shadow' + styles.flexColumn}>*/}
-//                                 {/*    <button type="button" className="btn btn-light">All</button>*/}
-//                                 {/*    <button type="button" className="btn btn-light">Only my certificates</button>*/}
-//                                 {/*</div>*/}
-//                                 <div className="active-cyan-3 active-cyan-4 mb-4 col-md-10">
-//                                     <input className="form-control" type="text" placeholder="Search"
-//                                            aria-label="Search" onChange={this.handleChange}/>
-//                                 </div>
-//                             </div>
-//                             <div>
-//                                 {certificates.loading && <em>Loading certificates...</em>}
-//                                 {certificates.length &&
-//                                 certificates.map((certificate, index) =>
-//                                     <Certificate
-//                                         key={certificate.id}
-//                                         certificate={certificate}
-//                                         role={context.user.role}
-//                                     />
-//                                 )
-//                                 }
-//                             </div>
-//                             <div className={'row ' + styles.sticky}>
-//                                 <ColumnOfButtons
-//                                     items={[5, 25, 50, 100]}
-//                                     action={this.quantityOfCertificates}
-//                                     className={'col-md-2 shadow'}
-//                                 />
-//                             </div>
-//                         </Container>
-//                     </div>
-//                 )}
-//             </UserContext.Consumer>
-//         );
-//     }
-// }
-//
-// export {HomePage};
-
 const sticky = {
-    position: '-webkit-sticky',
     position: 'sticky'
 };
