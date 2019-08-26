@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useContext, useState} from 'react';
+import {Link} from "react-router-dom";
 
 import {userService} from '../service/user.service';
 import {valueGreaterOrEqualThan, valueLessThan} from "../validation/FormValidation";
@@ -10,102 +11,76 @@ import ConditionalInvalidFeedback from "../core/form/ConditionalFeedback";
 import img from "../resources/images/welcome.jpg"
 import smallLoader from "../resources/images/smallLoader.gif"
 
-class LoginPage extends React.Component {
-    static contextType = UserContext;
+export const LoginPage = (props) => {
+    const contextType = useContext(UserContext);
 
-    constructor(props) {
-        super(props);
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [submitted, setSubmitted] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(false);
+    const [usernameError, setUsernameError] = useState(false);
+    const [passwordError, setPasswordError] = useState(false);
 
-        userService.logout();
+    const userNameInput = (e) => {
+        setUsername(e.target.value);
 
-        this.state = {
-            username: '',
-            password: '',
-            submitted: false,
-            loading: false,
-            error: '',
-            usernameError: '',
-            passwordError: '',
-        };
-
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.userNameInput = this.userNameInput.bind(this);
-        this.passwordInput = this.passwordInput.bind(this);
-
-    }
-
-    userNameInput(e) {
-        this.handleChange(e);
         const {value} = e.target;
         if (valueGreaterOrEqualThan(value.length, 30)) {
-            this.setState({usernameError: "Login field length must not be greater than 30 characters."});
+            setUsernameError("Login field length must not be greater than 30 characters.");
         } else {
-            this.setState({usernameError: ""});
+            setUsernameError("");
         }
-    }
+    };
 
-    passwordInput(e) {
-        this.handleChange(e);
+    const passwordInput = (e) => {
+        setPassword(e.target.value);
         const {value} = e.target;
         if (valueLessThan(value.length, 4)) {
-            this.setState({passwordError: "Password length must not be less than 4 characters"});
+            setPasswordError("Password length must not be less than 4 characters");
         } else {
-            this.setState({passwordError: ""});
+            setPasswordError("");
         }
-    }
+    };
 
-    handleChange(e) {
-        const {name, value} = e.target;
-        this.setState({[name]: value});
-        console.log(this.state.password);
-    }
-
-    handleSubmit(e) {
-        this.setState({submitted: true});
-        const {username, password, returnUrl} = this.state;
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setSubmitted(true);
 
         if (!(username && password) || !valueLessThan(username.length, 30) || !valueGreaterOrEqualThan(password.length, 4)) {
             return;
         }
-        this.setState({loading: true});
+        setLoading(true);
         userService.login(username, password)
             .then(
                 user => {
-                    this.context.createUser(user);
-                    const {from} = this.props.location.state || {from: {pathname: "/"}};
-                    this.props.history.push(from);
+                    contextType.createUser(user);
+                    const {from} = props.location.state || {from: {pathname: "/"}};
+                    props.history.push(from);
                 },
-                error => this.setState({error, loading: false})
+                error => {
+                    setError(error);
+                    setLoading(false)
+                }
             );
-    }
+    };
 
-    render() {
-        const {
-            username,
-            password,
-            submitted,
-            loading,
-            error,
-            usernameError,
-            passwordError
-        } = this.state;
-        return (
-            <UserContext.Consumer>
-                {context => (
-                    <div>
-                        <Header/>
-                        <Container className="row mt-5 p-5">
-                            <h2>Certificates</h2>
-                            <div className={"row"}>
-                            <div className="col-md-6">
-                                <form name="form" onSubmit={this.handleSubmit}>
-                                    <FormGroup className="col-md-6">
+    return (
+        <UserContext.Consumer>
+            {context => (
+                <div>
+                    <Header/>
+                    <Container className="row mt-5 p-5">
+                        <h2>Certificates</h2>
+                        <div className={"row"}>
+                            <div className="col-md-4">
+                                <form name="form" onSubmit={handleSubmit} style={flexColumnLeftSpaceAround}>
+                                    <FormGroup>
                                         <label htmlFor="username">Login</label>
                                         <input type="text"
                                                className={'form-control' + (submitted && !username || usernameError ? ' is-invalid' : '')}
                                                name="username" value={username}
-                                               onChange={this.userNameInput}/>
+                                               onChange={userNameInput}/>
                                         <ConditionalInvalidFeedback
                                             condition={submitted && !username}
                                             className={'invalid-feedback'}>
@@ -114,7 +89,7 @@ class LoginPage extends React.Component {
                                         <ConditionalInvalidFeedback
                                             condition={submitted && !username}
                                             className={'invalid-feedback'}>
-                                            {this.state.usernameError}
+                                            {usernameError}
                                         </ConditionalInvalidFeedback>
                                     </FormGroup>
                                     <FormGroup>
@@ -122,7 +97,7 @@ class LoginPage extends React.Component {
                                         <input type="password"
                                                name="password" value={password}
                                                className={'form-control' + (submitted && !password || passwordError ? ' is-invalid' : '')}
-                                               onChange={this.passwordInput}/>
+                                               onChange={passwordInput}/>
                                         <ConditionalInvalidFeedback
                                             condition={submitted && !password}
                                             className={'invalid-feedback'}>
@@ -131,29 +106,40 @@ class LoginPage extends React.Component {
                                         <ConditionalInvalidFeedback
                                             condition={passwordError}
                                             className={'invalid-feedback'}>
-                                            {this.state.passwordError}
+                                            {passwordError}
                                         </ConditionalInvalidFeedback>
                                     </FormGroup>
-                                    <button className="btn btn-primary" disabled={loading}>Login</button>
-                                    {loading &&
-                                    <img
-                                        src={smallLoader}/>
-                                    }
-                                    {error &&
-                                    <div className={'alert alert-danger'}>{error}</div>
-                                    }
+                                    <div style={flexRowBetweenCenter}>
+                                        <button className="btn btn-lg btn-primary" disabled={loading}>Login</button>
+                                        <Link className="btn btn-lg btn-primary" disabled={loading} to={'/'}>Back</Link>
+                                    </div>
+                                    {loading && <img src={smallLoader}/>}
+                                    {error && <div className={'alert alert-danger'}>{error}</div>}
                                 </form>
                             </div>
-                            <div className="col-md-6">
+                            <div className="col-md-8">
                                 <img src={img} className="img-thumbnail img-responsive"/>
                             </div>
-                            </div>
-                        </Container>
-                    </div>
-                )}
-            </UserContext.Consumer>
-        );
-    }
-}
+                        </div>
+                    </Container>
+                </div>
+            )}
+        </UserContext.Consumer>
+    )
+};
 
-export {LoginPage};
+const flexColumnLeftSpaceAround = {
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'baseline',
+    justifyContent: 'space-around'
+};
+
+const flexRowBetweenCenter = {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between'
+};
