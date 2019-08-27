@@ -6,7 +6,8 @@ export const certificateService = {
     getAll,
     searchByMultipleFilters,
     getUserCertificates,
-    buy
+    buy,
+    deleteUserCertificate
 };
 
 function getAll(user) {
@@ -17,12 +18,12 @@ function getAll(user) {
     return fetch(`${config.apiUrl}/certificates/all`, requestOptions).then(handleResponse);
 }
 
-async function searchByMultipleFilters(user, arrayOfFilters) {
+function searchByMultipleFilters(user, arrayOfFilters) {
     const requestOptions = {
         method: 'GET',
         headers: authHeader(user)
     };
-    let array = await fetch(`${config.apiUrl}/certificates/all`, requestOptions).then(handleResponse);
+    let array = fetch(`${config.apiUrl}/certificates/all`, requestOptions).then(handleResponse);
     return array.filter(certificate => {
         for (let i = 0; i < arrayOfFilters.length; i++) {
             if (!arrayOfFilters[i](certificate)) {
@@ -40,10 +41,21 @@ function buy(certificateId, user) {
         userId: user.id,
         headers: authHeader(user)
     };
-    return fetch(`${config.apiUrl}/certificates/buy`, requestOptions).then(handleResponse);
+    return fetch(`${config.apiUrl}/certificates/buy`, requestOptions).then(handleResponse).then(result => getUserCertificates(user));
+}
+
+function deleteUserCertificate(certificateId, user) {
+    const requestOptions = {
+        method: 'GET',
+        certificateId,
+        userId: user.id,
+        headers: authHeader(user)
+    };
+    return fetch(`${config.apiUrl}/certificates/delete`, requestOptions).then(handleResponse).then(result => getUserCertificates(user));
 }
 
 function getUserCertificates(user) {
+    debugger;
     const requestOptions = {
         method: 'GET',
         userId: user.id,

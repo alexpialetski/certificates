@@ -79,7 +79,7 @@ export function configureFakeBackend() {
                     }
                     return;
                 }
-            debugger;
+
                 if (url.endsWith('/certificates/all') && opts.method === 'GET') {
 
                     const headers = opts.headers;
@@ -101,7 +101,22 @@ export function configureFakeBackend() {
                             userId: opts.userId,
                             certificateId: opts.certificateId
                         });
-                        resolve({ok: true});
+                        resolve({ok: true, text: () => Promise.resolve()});
+                    } else {
+                        resolve({status: 401, text: () => Promise.resolve()});
+                    }
+                    return;
+                }
+
+                if (url.endsWith('/certificates/delete') && opts.method === 'GET') {
+                    const headers = opts.headers;
+                    if (headers && getPriority(headers.role) >= 1) {
+                        for( var i = 0; i < userCertificates.length; i++){
+                            if ( userCertificates[i].certificateId === opts.certificateId) {
+                                userCertificates.splice(i, 1);
+                            }
+                        }
+                        resolve({ok: true, text: () => Promise.resolve()});
                     } else {
                         resolve({status: 401, text: () => Promise.resolve()});
                     }
@@ -111,13 +126,15 @@ export function configureFakeBackend() {
                 if (url.endsWith('/certificates/userCertificates') && opts.method === 'GET') {
                     const headers = opts.headers;
                     if (headers && getPriority(headers.role) >= 1) {
+                        const result = userCertificates.map(userCertificate => {
+                            if (userCertificate.userId === opts.userId) {
+                                return userCertificate.certificateId;
+                            }
+                        });
+                        debugger;
                         resolve({
                             ok: true,
-                            text: () => Promise.resolve(userCertificates.map(userCertificate => {
-                                if (userCertificate.userId === opts.userId) {
-                                    return userCertificate.certificateId;
-                                }
-                            }))
+                            text: () => Promise.resolve(JSON.stringify(result))
                         });
                     } else {
                         resolve({status: 401, text: () => Promise.resolve()});

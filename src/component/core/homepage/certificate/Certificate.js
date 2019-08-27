@@ -5,23 +5,11 @@ import Body from "./Body";
 import Footer from "./Footer";
 import UserContext from '../../../context/UserContext';
 
-export default (props) => {
+export default ({buyClick, deleteClick, deleteAdminClick, editClick, ...props}) => {
     let contextType = useContext(UserContext);
 
-    const buyClick = () => {
-        console.log('buyClick');
-    };
-
-    const deleteClick = () => {
-        console.log('deleteClick');
-    };
-
-    const editClick = () => {
-        console.log('editClick');
-    };
-
     return (
-        <div className={'col-md-6 shadow p-3 align-items-end'} style={certificate}>
+        <div className={'col-md-6 shadow p-3 align-items-end'} style={props.isUserCertificate ? certificate : undefined}>
             <Header date={props.certificate.date} title={props.certificate.title}/>
             <Body tags={props.certificate.tags}
                   description={props.certificate.description}
@@ -29,9 +17,11 @@ export default (props) => {
             <Footer
                 role={props.role}
                 cost={props.certificate.cost}
-                buyClick={buyClick}
+                userClick={props.isUserCertificate ? deleteClick : buyClick}
+                userButtonText={props.isUserCertificate ? 'Delete' : 'Buy'}
                 editClick={editClick}
-                deleteClick={deleteClick}/>
+                certificateId={props.certificate.id}
+                deleteClick={deleteAdminClick}/>
         </div>
     );
 }

@@ -22,7 +22,7 @@ export default (props) => {
     const [certificatesPerPage, setCertificatesPerPage] = useState(2);
 
     useEffect(() => {
-        // contextType.user && getAllUserCertificates();
+        contextType.user.username && getAllUserCertificates();
         getAllCertificates();
     }, []);
 
@@ -41,7 +41,7 @@ export default (props) => {
     };
 
     const searchEvent = (e) => {
-    debugger;
+        debugger;
         const filterObject = {};
         const tags = [];
         const searchValues = search.split(' ');
@@ -75,8 +75,8 @@ export default (props) => {
 
     const getAllUserCertificates = async () => {
         setLoading(true);
-        const res = await certificateService.getAll(contextType.user);
-        setCertificates(res.sort(sortCertificatesByDate));
+        const res = await certificateService.getUserCertificates(contextType.user);
+        setUserCertificates(res);
     };
 
     const getAllCertificates = async () => {
@@ -88,6 +88,38 @@ export default (props) => {
 
     const onChange = e => {
         setSearch(e.target.value);
+    };
+
+    const buyClick = async (e) => {
+        e.preventDefault();
+        const certificateId = e.target.getAttribute('certificateid');
+        if (confirm('Are you sure you want to buy?')) {
+            setLoading(true);
+            let res = [];
+            res = await certificateService.buy(parseInt(certificateId), contextType.user);
+            setUserCertificates(res);
+            setLoading(false);
+        }
+    };
+
+    const deleteClick = async (e) => {
+        e.preventDefault();
+        const certificateId = e.target.getAttribute('certificateid');
+        if (confirm('Are you sure you want to delete?')) {
+            setLoading(true);
+            let res = [];
+            res = await certificateService.deleteUserCertificate(parseInt(certificateId), contextType.user);
+            setUserCertificates(res);
+            setLoading(false);
+        }
+    };
+
+    const deleteAdminClick = () => {
+        console.log('deleteAdminClick');
+    };
+
+    const editClick = () => {
+        console.log('editClick');
     };
 
     const indexOfLasCertificate = currentPage * certificatesPerPage;
@@ -122,10 +154,15 @@ export default (props) => {
                         </div>
                         <div className={'m-5'}>
                             <Certificates
+                                userCertificates={userCertificates}
                                 certificates={currentCertificates}
                                 loading={loading}
                                 role={contextType.user.role}
                                 tagClick={tagClick}
+                                buyClick={buyClick}
+                                deleteClick={deleteClick}
+                                deleteAdminClick={deleteAdminClick}
+                                editClick={editClick}
                             />
                         </div>
                         <div className={'container'}>

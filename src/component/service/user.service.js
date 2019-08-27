@@ -21,8 +21,8 @@ function login(username, password) {
 }
 
 function logout() {
-    let context = useContext(UserContext);
-    context.deleteUser();
+    // let context = useContext(UserContext);
+    // context.deleteUser();
 }
 
 function getAll() {
