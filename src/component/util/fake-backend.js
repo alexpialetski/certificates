@@ -46,106 +46,122 @@ export function configureFakeBackend() {
 
     window.fetch = function (url, opts) {
         return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                if (url.endsWith('/users/authenticate') && opts.method === 'POST') {
-                    let params = JSON.parse(opts.body);
+                setTimeout(() => {
+                    if (url.endsWith('/users/authenticate') && opts.method === 'POST') {
+                        let params = JSON.parse(opts.body);
 
-                    let filteredUsers = users.filter(user => {
-                        return user.username === params.username && user.password === params.password;
-                    });
-
-                    if (filteredUsers.length) {
-                        let user = filteredUsers[0];
-                        let responseJson = {
-                            id: user.id,
-                            username: user.username,
-                            firstName: user.firstName,
-                            lastName: user.lastName,
-                            role: user.role
-                        };
-                        resolve({ok: true, text: () => Promise.resolve(JSON.stringify(responseJson))});
-                    } else {
-                        reject('Username or password is incorrect');
-                    }
-                    return;
-                }
-
-                // get users
-                if (url.endsWith('/users') && opts.method === 'GET') {
-                    if (opts.headers && getPriority(opts.headers.role) > 1) {
-                        resolve({ok: true, text: () => Promise.resolve(JSON.stringify(users))});
-                    } else {
-                        resolve({status: 401, text: () => Promise.resolve()});
-                    }
-                    return;
-                }
-
-                if (url.endsWith('/certificates/all') && opts.method === 'GET') {
-
-                    const headers = opts.headers;
-                    if (headers && getPriority(headers.role) >= 0) {
-                        resolve({
-                            ok: true,
-                            text: () => Promise.resolve(JSON.stringify(allCertificates))
+                        let filteredUsers = users.filter(user => {
+                            return user.username === params.username && user.password === params.password;
                         });
-                    } else {
-                        resolve({status: 401, text: () => Promise.resolve()});
-                    }
-                    return;
-                }
 
-                if (url.endsWith('/certificates/buy') && opts.method === 'GET') {
-                    const headers = opts.headers;
-                    if (headers && getPriority(headers.role) >= 1) {
-                        userCertificates.push({
-                            userId: opts.userId,
-                            certificateId: opts.certificateId
-                        });
-                        resolve({ok: true, text: () => Promise.resolve()});
-                    } else {
-                        resolve({status: 401, text: () => Promise.resolve()});
-                    }
-                    return;
-                }
-
-                if (url.endsWith('/certificates/delete') && opts.method === 'GET') {
-                    const headers = opts.headers;
-                    if (headers && getPriority(headers.role) >= 1) {
-                        for( var i = 0; i < userCertificates.length; i++){
-                            if ( userCertificates[i].certificateId === opts.certificateId) {
-                                userCertificates.splice(i, 1);
-                            }
+                        if (filteredUsers.length) {
+                            let user = filteredUsers[0];
+                            let responseJson = {
+                                id: user.id,
+                                username: user.username,
+                                firstName: user.firstName,
+                                lastName: user.lastName,
+                                role: user.role
+                            };
+                            resolve({ok: true, text: () => Promise.resolve(JSON.stringify(responseJson))});
+                        } else {
+                            reject('Username or password is incorrect');
                         }
+                        return;
+                    }
+
+                    if (url.endsWith('/users/register') && opts.method === 'POST') {
+                        let params = JSON.parse(opts.body);
+                        const user = {};
+                        user.id = users[users.length - 1].id + 1;
+                        user.firstName = opts.firstName;
+                        user.lastName = opts.lastName;
+                        user.username = opts.username;
+                        user.password = opts.password;
+                        user.role = 'USER';
+                        users.push(user);
                         resolve({ok: true, text: () => Promise.resolve()});
-                    } else {
-                        resolve({status: 401, text: () => Promise.resolve()});
+                        return;
                     }
-                    return;
-                }
 
-                if (url.endsWith('/certificates/userCertificates') && opts.method === 'GET') {
-                    const headers = opts.headers;
-                    if (headers && getPriority(headers.role) >= 1) {
-                        const result = userCertificates.map(userCertificate => {
-                            if (userCertificate.userId === opts.userId) {
-                                return userCertificate.certificateId;
+                    // get users
+                    if (url.endsWith('/users') && opts.method === 'GET') {
+                        if (opts.headers && getPriority(opts.headers.role) > 1) {
+                            resolve({ok: true, text: () => Promise.resolve(JSON.stringify(users))});
+                        } else {
+                            resolve({status: 401, text: () => Promise.resolve()});
+                        }
+                        return;
+                    }
+
+                    if (url.endsWith('/certificates/all') && opts.method === 'GET') {
+
+                        const headers = opts.headers;
+                        if (headers && getPriority(headers.role) >= 0) {
+                            resolve({
+                                ok: true,
+                                text: () => Promise.resolve(JSON.stringify(allCertificates))
+                            });
+                        } else {
+                            resolve({status: 401, text: () => Promise.resolve()});
+                        }
+                        return;
+                    }
+
+                    if (url.endsWith('/certificates/buy') && opts.method === 'GET') {
+                        const headers = opts.headers;
+                        if (headers && getPriority(headers.role) >= 1) {
+                            userCertificates.push({
+                                userId: opts.userId,
+                                certificateId: opts.certificateId
+                            });
+                            // resolve({ok: true, text: () => Promise.resolve()});
+                            reject('Username or password is incorrect');
+                        } else {
+                            resolve({status: 401, text: () => Promise.resolve()});
+                        }
+                        return;
+                    }
+
+                    if (url.endsWith('/certificates/delete') && opts.method === 'GET') {
+                        const headers = opts.headers;
+                        if (headers && getPriority(headers.role) >= 1) {
+                            for (var i = 0; i < userCertificates.length; i++) {
+                                if (userCertificates[i].certificateId === opts.certificateId) {
+                                    userCertificates.splice(i, 1);
+                                }
                             }
-                        });
-                        debugger;
-                        resolve({
-                            ok: true,
-                            text: () => Promise.resolve(JSON.stringify(result))
-                        });
-                    } else {
-                        resolve({status: 401, text: () => Promise.resolve()});
+                            resolve({ok: true, text: () => Promise.resolve()});
+                        } else {
+                            resolve({status: 401, text: () => Promise.resolve()});
+                        }
+                        return;
                     }
-                    return;
-                }
+
+                    if (url.endsWith('/certificates/userCertificates') && opts.method === 'GET') {
+                        const headers = opts.headers;
+                        if (headers && getPriority(headers.role) >= 1) {
+                            const result = userCertificates.map(userCertificate => {
+                                if (userCertificate.userId === opts.userId) {
+                                    return userCertificate.certificateId;
+                                }
+                            });
+                            debugger;
+                            resolve({
+                                ok: true,
+                                text: () => Promise.resolve(JSON.stringify(result))
+                            });
+                        } else {
+                            resolve({status: 401, text: () => Promise.resolve()});
+                        }
+                        return;
+                    }
 
 
-                realFetch(url, opts).then(response => resolve(response));
-            }, 500);
-        });
+                    realFetch(url, opts).then(response => resolve(response));
+                }, 500);
+            }
+        );
     }
 }
 

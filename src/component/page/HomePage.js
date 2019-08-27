@@ -3,6 +3,7 @@ import {Header} from './part/Header'
 import UserContext from './../context/UserContext';
 import Container from "../core/Container";
 import {ErrorMessage} from "../core/messages"
+import {SuccessMessage} from "../core/messages"
 import {sortCertificatesByDate} from "../util/comparators"
 import {filterCertificateByTitle} from "../util/filters"
 import {filterCertificateByTag} from "../util/filters"
@@ -14,6 +15,7 @@ import Certificates from "../core/homepage/Certificates";
 export default (props) => {
     const contextType = useContext(UserContext);
     const [errorMessage, setErrorMessage] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
     const [search, setSearch] = useState('');
     const [certificates, setCertificates] = useState([]);
     const [userCertificates, setUserCertificates] = useState([]);
@@ -64,25 +66,22 @@ export default (props) => {
 
     const searchByFilters = async (filterObject) => {
         setLoading(true);
-        let res = [];
         const arrayOfFilters = [];
         filterObject.title && arrayOfFilters.push((filterCertificateByTitle(filterObject.title)));
         filterObject.tags && filterObject.tags.forEach(tag => arrayOfFilters.push(filterCertificateByTag(tag)));
-        res = await certificateService.searchByMultipleFilters(contextType.user, arrayOfFilters);
-        setCertificates(res.sort(sortCertificatesByDate));
+        await certificateService.searchByMultipleFilters(contextType.user, arrayOfFilters)
+            .then(res => setCertificates(res.sort(sortCertificatesByDate)));
         setLoading(false);
     };
 
     const getAllUserCertificates = async () => {
-        setLoading(true);
-        const res = await certificateService.getUserCertificates(contextType.user);
-        setUserCertificates(res);
+        await certificateService.getUserCertificates(contextType.user)
+            .then(res => setUserCertificates(res));
     };
 
     const getAllCertificates = async () => {
         setLoading(true);
-        const res = await certificateService.getAll(contextType.user);
-        res && setCertificates(res.sort(sortCertificatesByDate));
+        await certificateService.getAll(contextType.user).then(res => setCertificates(res.sort(sortCertificatesByDate)));
         setLoading(false);
     };
 
@@ -95,10 +94,13 @@ export default (props) => {
         const certificateId = e.target.getAttribute('certificateid');
         if (confirm('Are you sure you want to buy?')) {
             setLoading(true);
-            let res = [];
-            res = await certificateService.buy(parseInt(certificateId), contextType.user);
-            setUserCertificates(res);
-            setLoading(false);
+            await certificateService.buy(parseInt(certificateId), contextType.user)
+                .then(message => setSuccessMessage(message))
+                .catch(error => setErrorMessage(error))
+                .then(async res => {
+                    await getAllUserCertificates();
+                    setLoading(false);
+                });
         }
     };
 
@@ -107,10 +109,13 @@ export default (props) => {
         const certificateId = e.target.getAttribute('certificateid');
         if (confirm('Are you sure you want to delete?')) {
             setLoading(true);
-            let res = [];
-            res = await certificateService.deleteUserCertificate(parseInt(certificateId), contextType.user);
-            setUserCertificates(res);
-            setLoading(false);
+            await certificateService.deleteUserCertificate(parseInt(certificateId), contextType.user)
+                .then(message => setSuccessMessage(message))
+                .catch(error => setErrorMessage(error))
+                .then(async res => {
+                    await getAllUserCertificates();
+                    setLoading(false);
+                });
         }
     };
 
@@ -132,7 +137,8 @@ export default (props) => {
             {context => (
                 <div>
                     <Header user={context.user}/>
-                    <ErrorMessage message={errorMessage} className={errorMessage ? '' : 'fade in'}/>
+                    {errorMessage && <ErrorMessage message={errorMessage} setErrorMessage={setErrorMessage}/>}
+                    {successMessage && <SuccessMessage message={successMessage} setSuccessMessage={setSuccessMessage}/>}
                     <Container className=" mt-5 p-3">
                         <h1 className={'mb-5'}>Certificates</h1>
                         <div className={"container"}>

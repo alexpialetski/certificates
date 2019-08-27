@@ -1,137 +1,199 @@
-import React from 'react';
+import React, {useContext, useState} from 'react';
+import {Link} from "react-router-dom";
 
 import {userService} from '../service/user.service';
-import {valueLessThan} from "../validation/FormValidation";
-import {valueGreaterOrEqualThan} from "../validation/FormValidation";
+import {valueGreaterOrEqualThan, valueLessThan} from "../validation/FormValidation";
 import {Header} from "./part/Header";
+import UserContext from './../context/UserContext';
+import Container from "../core/Container";
+import FormGroup from "../core/form/FormGroup";
+import ConditionalInvalidFeedback from "../core/form/ConditionalFeedback";
+import img from "../resources/images/register.jpg"
+import smallLoader from "../resources/images/smallLoader.gif"
 
-class RegisterPage extends React.Component {
-    constructor(props) {
-        super(props);
+export const RegisterPage = (props) => {
+    const contextType = useContext(UserContext);
 
-        userService.logout();
+    const [username, setUsername] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [password, setPassword] = useState('');
+    const [submitted, setSubmitted] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(false);
+    const [usernameError, setUsernameError] = useState(false);
+    const [firstNameError, setFirstNameError] = useState(false);
+    const [lastNameError, setLastNameError] = useState(false);
+    const [passwordError, setPasswordError] = useState(false);
 
-        this.state = {
-            username: '',
-            password: '',
-            submitted: false,
-            loading: false,
-            error: '',
-            usernameError: '',
-            passwordError: ''
-        };
+    const userNameInput = (e) => {
+        setUsername(e.target.value);
 
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.userNameInput = this.userNameInput.bind(this);
-        this.passwordInput = this.passwordInput.bind(this);
-    }
-
-    userNameInput(e) {
-        this.handleChange(e);
         const {value} = e.target;
         if (valueGreaterOrEqualThan(value.length, 30)) {
-            this.setState({usernameError: "Login field length must not be greater than 30 characters."});
+            setUsernameError("Login field length must not be greater than 30 characters.");
         } else {
-            this.setState({usernameError: ""});
+            setUsernameError("");
         }
-    }
+    };
 
-    passwordInput(e) {
-        this.handleChange(e);
+    const passwordInput = (e) => {
+        setPassword(e.target.value);
         const {value} = e.target;
         if (valueLessThan(value.length, 4)) {
-            this.setState({passwordError: "Password length must not be less than 4 characters"});
+            setPasswordError("Password length must not be less than 4 characters");
         } else {
-            this.setState({passwordError: ""});
+            setPasswordError("");
         }
-        // passwordInputValidation(e);
-    }
+    };
 
-    handleChange(e) {
-        const {name, value} = e.target;
-        this.setState({[name]: value});
-    }
-
-    handleSubmit(e) {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        this.setState({submitted: true});
-        const {username, password, returnUrl} = this.state;
+        setSubmitted(true);
 
-        // stop here if form is invalid
-        if (!(username && password) || !valueLessThan(username.length, 30) || !valueGreaterOrEqualThan(password.length, 4)) {
+        if (!(username && password) || usernameError || passwordError || firstNameError || lastNameError) {
             return;
         }
-        this.setState({loading: true});
-        userService.login(username, password)
+        setLoading(true);
+        userService.register(username, password, firstName, lastName)
             .then(
-                user => {
-                    const {from} = this.props.location.state || {from: {pathname: "/"}};
-                    this.props.history.push(from);
-                },
-                error => this.setState({error, loading: false})
-            );
-    }
+                result => {
+                    const {from} = props.location.state || {from: {pathname: "/login"}};
+                    props.history.push(from);
+                });
+    };
 
-    render() {
-        const {username, password, submitted, loading, error, usernameError, passwordError} = this.state;
-        return (
-            <div>
-                <Header/>
-                <div className="container mt-5 p-5 shadow rounded-sm">
-                    <h2>Certificates</h2>
-                    <form name="form" onSubmit={this.handleSubmit}>
-                        <div className={'form-group' + (submitted && !username && usernameError ? ' has-error' : '')}>
-                            <label htmlFor="username">Username</label>
-                            <input type="text" className="form-control" name="username" value={username}
-                                   onChange={this.userNameInput}/>
-                            {submitted && !username &&
-                            <div className="help-block">Username is required</div>
-                            }
-                            {usernameError && <div className="help-block">{this.state.usernameError}</div>}
+    const firstNameInput = (e) => {
+        setFirstName(e.target.value);
+
+        const {value} = e.target;
+        if (valueGreaterOrEqualThan(value.length, 10)) {
+            setFirstNameError("First name field length must not be greater than 10 characters.");
+        } else {
+            setFirstNameError("");
+        }
+    };
+
+    const lastNameInput = (e) => {
+        setLastName(e.target.value);
+
+        const {value} = e.target;
+        if (valueGreaterOrEqualThan(value.length, 10)) {
+            setLastNameError("Last name field length must not be greater than 30 characters.");
+        } else {
+            setLastNameError("");
+        }
+    };
+
+    return (
+        <UserContext.Consumer>
+            {context => (
+                <div>
+                    <Header/>
+                    <Container className="row mt-5 p-5">
+                        <h2>Register</h2>
+                        <div className={"row"}>
+                            <div className="col-md-4">
+                                <form name="form" onSubmit={handleSubmit} style={flexColumnLeftSpaceAround}>
+                                    <FormGroup>
+                                        <label htmlFor="username">First name</label>
+                                        <input type="text"
+                                               className={'form-control' + (submitted && !firstName || firstNameError ? ' is-invalid' : '')}
+                                               name="username" value={firstName}
+                                               onChange={firstNameInput}/>
+                                        <ConditionalInvalidFeedback
+                                            condition={submitted && !firstName}
+                                            className={'invalid-feedback'}>
+                                            First name is required
+                                        </ConditionalInvalidFeedback>
+                                        <ConditionalInvalidFeedback
+                                            condition={firstNameError}
+                                            className={'invalid-feedback'}>
+                                            {firstNameError}
+                                        </ConditionalInvalidFeedback>
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <label htmlFor="username">Last name</label>
+                                        <input type="text"
+                                               className={'form-control' + (submitted && !lastName || lastNameError ? ' is-invalid' : '')}
+                                               name="username" value={lastName}
+                                               onChange={lastNameInput}/>
+                                        <ConditionalInvalidFeedback
+                                            condition={submitted && !lastName}
+                                            className={'invalid-feedback'}>
+                                            Last name is required
+                                        </ConditionalInvalidFeedback>
+                                        <ConditionalInvalidFeedback
+                                            condition={lastNameError}
+                                            className={'invalid-feedback'}>
+                                            {lastNameError}
+                                        </ConditionalInvalidFeedback>
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <label htmlFor="username">Username</label>
+                                        <input type="text"
+                                               className={'form-control' + (submitted && !username || usernameError ? ' is-invalid' : '')}
+                                               name="username" value={username}
+                                               onChange={userNameInput}/>
+                                        <ConditionalInvalidFeedback
+                                            condition={submitted && !username}
+                                            className={'invalid-feedback'}>
+                                            Username is required
+                                        </ConditionalInvalidFeedback>
+                                        <ConditionalInvalidFeedback
+                                            condition={usernameError}
+                                            className={'invalid-feedback'}>
+                                            {usernameError}
+                                        </ConditionalInvalidFeedback>
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <label htmlFor="password">Password</label>
+                                        <input type="password"
+                                               name="password" value={password}
+                                               className={'form-control' + (submitted && !password || passwordError ? ' is-invalid' : '')}
+                                               onChange={passwordInput}/>
+                                        <ConditionalInvalidFeedback
+                                            condition={submitted && !password}
+                                            className={'invalid-feedback'}>
+                                            Password is required
+                                        </ConditionalInvalidFeedback>
+                                        <ConditionalInvalidFeedback
+                                            condition={passwordError}
+                                            className={'invalid-feedback'}>
+                                            {passwordError}
+                                        </ConditionalInvalidFeedback>
+                                    </FormGroup>
+                                    <div style={flexRowBetweenCenter}>
+                                        <button className="btn btn-lg btn-primary" disabled={loading}>Login</button>
+                                        <Link className="btn btn-lg btn-primary" disabled={loading} to={'/'}>Back</Link>
+                                    </div>
+                                    {loading && <img src={smallLoader}/>}
+                                    {error && <div className={'alert alert-danger'}>{error}</div>}
+                                </form>
+                            </div>
+                            <div className="col-md-8">
+                                <img src={img} className="img-thumbnail img-responsive" style={{height: '70%'}}/>
+                            </div>
                         </div>
-                        <div className={'form-group' + (submitted && !username && passwordError ? ' has-error' : '')}>
-                            <label htmlFor="username">Username</label>
-                            <input type="text" className="form-control" name="username" value={username}
-                                   onChange={this.userNameInput}/>
-                            {submitted && !username &&
-                            <div className="help-block">Username is required</div>
-                            }
-                            {usernameError && <div className="help-block">{this.state.usernameError}</div>}
-                        </div>
-                        <div className={'form-group' + (submitted && !username ? ' has-error' : '')}>
-                            <label htmlFor="username">Username</label>
-                            <input type="text" className="form-control" name="username" value={username}
-                                   onChange={this.userNameInput}/>
-                            {submitted && !username &&
-                            <div className="help-block">Username is required</div>
-                            }
-                            {usernameError && <div className="help-block">{this.state.usernameError}</div>}
-                        </div>
-                        <div className={'form-group' + (submitted && !password ? ' has-error' : '')}>
-                            <label htmlFor="password">Password</label>
-                            <input type="password" className="form-control" name="password" value={password}
-                                   onChange={this.passwordInput}/>
-                            {submitted && !password &&
-                            <div className="help-block">Password is required</div>
-                            }
-                            {passwordError && <div className="help-block">{this.state.passwordError}</div>}
-                        </div>
-                        <div className="form-group">
-                            <button className="btn btn-primary" disabled={loading}>Login</button>
-                            {loading &&
-                            <img
-                                src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>
-                            }
-                        </div>
-                        {error &&
-                        <div className={'alert alert-danger'}>{error}</div>
-                        }
-                    </form>
+                    </Container>
                 </div>
-            </div>
-        );
-    }
-}
+            )}
+        </UserContext.Consumer>
+    )
+};
 
-export {RegisterPage};
+const flexColumnLeftSpaceAround = {
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'baseline',
+    justifyContent: 'space-around'
+};
+
+const flexRowBetweenCenter = {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between'
+};

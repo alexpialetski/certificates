@@ -6,6 +6,7 @@ import {authHeader} from '../util/auth-header';
 
 export const userService = {
     login,
+    register,
     logout,
     getAll
 };
@@ -17,6 +18,16 @@ function login(username, password) {
         body: JSON.stringify({username, password})
     };
     return fetch(`${config.apiUrl}/users/authenticate`, requestOptions)
+        .then(handleResponse);
+}
+
+function register(username, password, firstName, lastName) {
+    const requestOptions = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({username, password, firstName, lastName})
+    };
+    return fetch(`${config.apiUrl}/users/register`, requestOptions)
         .then(handleResponse);
 }
 
