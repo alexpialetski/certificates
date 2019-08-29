@@ -23,6 +23,7 @@ class Header extends React.Component {
 
     logout = () => {
         this.context.deleteUser();
+        window.location.replace('/login');
     };
 
     render() {
@@ -39,6 +40,11 @@ class Header extends React.Component {
                                     <Link className="nav-link" to="/">Home <span
                                         className="sr-only">(current)</span></Link>
                                 </li>
+                                {context.user && context.user.role === 'ADMIN' &&
+                                <li className="nav-item active">
+                                    <Link className="nav-link" to="/addCertificate">Add certificate <span
+                                        className="sr-only">(current)</span></Link>
+                                </li>}
                             </LeftNavBar>
                             <div className="navbar-nav m-2">
                                 <button className="btn" onChange={this.changeLocale}>Ru / En</button>

@@ -7,7 +7,11 @@ export const certificateService = {
     searchByMultipleFilters,
     getUserCertificates,
     buy,
-    deleteUserCertificate
+    deleteUserCertificate,
+    deleteAdminCertificate,
+    createAdminCertificate,
+    editAdminCertificate,
+    findById
 };
 
 async function getAll(user) {
@@ -16,6 +20,15 @@ async function getAll(user) {
         headers: authHeader(user)
     };
     return await fetch(`${config.apiUrl}/certificates/all`, requestOptions).then(handleResponse);
+}
+
+async function findById(user, certificateId) {
+    const requestOptions = {
+        method: 'GET',
+        certificateId,
+        headers: authHeader(user)
+    };
+    return await fetch(`${config.apiUrl}/certificates/findById`, requestOptions).then(handleResponse);
 }
 
 async function searchByMultipleFilters(user, arrayOfFilters) {
@@ -59,6 +72,37 @@ async function deleteUserCertificate(certificateId, user) {
     return await fetch(`${config.apiUrl}/certificates/delete`, requestOptions)
         .then(handleResponse)
         .then(result => 'Everything went alright!!!');
+}
+
+async function deleteAdminCertificate(certificateId, user) {
+    const requestOptions = {
+        method: 'GET',
+        certificateId,
+        headers: authHeader(user)
+    };
+    return await fetch(`${config.apiUrl}/certificates/admin/delete`, requestOptions)
+        .then(handleResponse)
+        .then(result => 'Everything went alright!!!(ADMIN)');
+}
+
+async function createAdminCertificate(user, certificate) {
+    const requestOptions = {
+        method: 'GET',
+        certificate: certificate,
+        headers: authHeader(user)
+    };
+    return await fetch(`${config.apiUrl}/certificates/admin/create`, requestOptions)
+        .then(handleResponse);
+}
+
+async function editAdminCertificate(user, certificate) {
+    const requestOptions = {
+        method: 'GET',
+        certificate: certificate,
+        headers: authHeader(user)
+    };
+    return await fetch(`${config.apiUrl}/certificates/admin/edit`, requestOptions)
+        .then(handleResponse);
 }
 
 async function getUserCertificates(user) {

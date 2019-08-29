@@ -1,6 +1,7 @@
 import React from 'react';
-import styles from "../../../../css/certificate.css"
+import styles from "../../../../styles/certificate.css"
 import Tag from "./Tag";
+import Tags from './Tags'
 
 export default ({tags, description, tagClick}) => {
     const tagsComponents = tags.map(tag => {
@@ -8,9 +9,7 @@ export default ({tags, description, tagClick}) => {
     });
     return (
         <div className={styles.body}>
-            <div className={styles.tags}>
-                {tagsComponents}
-            </div>
+            <Tags tags={tags} tagClick={tagClick}/>
             <div className={'p-5'} style={descriptionStyle}>
                 {description}
             </div>

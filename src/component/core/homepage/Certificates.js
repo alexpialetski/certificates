@@ -1,13 +1,12 @@
 import React from 'react';
 import Certificate from "./certificate/Certificate";
 
-const Certificates = ({userCertificates, certificates, role, loading, tagClick, buyClick, deleteClick, deleteAdminClick, editClick}) => {
+const Certificates = ({userCertificates, certificates, role, loading, tagClick, buyClick, deleteClick, deleteAdminClick}) => {
     if (loading || certificates === undefined) {
         return <h2>Loading...</h2>
     }
 
     const isUserCertificate = (certificateId) => {
-        debugger;
         for (let i=0 ;i<userCertificates.length; i++){
             if (userCertificates[i] === certificateId) {
                 return true;
@@ -27,7 +26,6 @@ const Certificates = ({userCertificates, certificates, role, loading, tagClick, 
                         role={role}
                         tagClick={tagClick}
                         deleteClick={deleteClick}
-                        editClick={editClick}
                         buyClick={buyClick}
                         deleteAdminClick={deleteAdminClick}
                     />

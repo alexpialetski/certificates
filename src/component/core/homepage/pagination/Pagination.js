@@ -7,11 +7,10 @@ const Pagination = ({certificatesPerPage, totalCertificates, paginate, className
     return (
         <nav className={className}>
             <PaginatePanel
-                certificatesPerPage={certificatesPerPage}
                 paginate={paginate}
                 totalCertificates={totalCertificates}
                 lastPage={lastPage}
-                currentPageNumber={currentPageNumber}/>
+                currentPage={currentPage}/>
             <ul className={"pagination justify-content-between"}>
                 <li className={'page-item ' + currentPageNumber === 1 ? 'disabled' : undefined}>
                     <a onClick={() => paginate(currentPageNumber - 1)}

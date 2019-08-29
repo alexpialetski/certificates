@@ -8,3 +8,7 @@ html {
 .form-control{
   width: 100%;
 }
+
+footer{
+  background: blueviolet;
+}

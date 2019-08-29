@@ -164,8 +164,8 @@ export const RegisterPage = (props) => {
                                         </ConditionalInvalidFeedback>
                                     </FormGroup>
                                     <div style={flexRowBetweenCenter}>
-                                        <button className="btn btn-lg btn-primary" disabled={loading}>Login</button>
-                                        <Link className="btn btn-lg btn-primary" disabled={loading} to={'/'}>Back</Link>
+                                        <button className="btn btn-lg btn-primary" disabled={loading}>Register</button>
+                                        <Link className="btn btn-lg btn-primary" disabled={loading} to={'/login'}>Back</Link>
                                     </div>
                                     {loading && <img src={smallLoader}/>}
                                     {error && <div className={'alert alert-danger'}>{error}</div>}

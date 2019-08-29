@@ -1,7 +1,8 @@
 import React from 'react';
-import styles from "../../../../css/certificate.css"
+import styles from "../../../../styles/certificate.css"
+import {Link} from "react-router-dom";
 
-export default ({role, editClick, deleteClick, cost, userButtonText, certificateId, userClick}) => {
+export default ({role, deleteClick, cost, userButtonText, certificateId, userClick}) => {
     const userOptionsProperty = role === undefined ? {justifyContent: 'end'} : {
         width: '30%',
         justifyContent: 'space-between'
@@ -27,7 +28,7 @@ export default ({role, editClick, deleteClick, cost, userButtonText, certificate
         <div style={footer}>
             {role && role === "ADMIN" &&
             <div className={styles.adminButtons}>
-                <input type="button" className="btn btn-info" onClick={editClick} certificateid={certificateId} value={'Edit'}/>
+                <Link to={'/certificates/admin/edit?id=' + certificateId} type="button" className="btn btn-info">Edit</Link>
                 <input type="button" className="btn btn-info" onClick={deleteClick} certificateid={certificateId} value={'Delete'}/>
             </div>
             }
@@ -35,7 +36,7 @@ export default ({role, editClick, deleteClick, cost, userButtonText, certificate
                 {role && (role === "USER" || role === "ADMIN") &&
                 < input type="button" className="btn btn-info" onClick={userClick} certificateid={certificateId} value={userButtonText}/>
                 }
-                <h4>{cost}</h4>
+                <h4>{'$' + cost}</h4>
             </div>
         </div>
     );

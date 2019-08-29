@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from "../../../../css/certificate.css"
+import styles from "../../../../styles/certificate.css"
 
 export default ({title, date}) => {
     const options = {year: 'numeric', month: 'long', day: 'numeric'};

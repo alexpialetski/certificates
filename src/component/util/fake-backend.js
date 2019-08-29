@@ -1,5 +1,6 @@
 import React, {useContext} from 'react'
 import UserContext from "../context/UserContext";
+import allcertificate from '../../json/certificates'
 
 export function configureFakeBackend() {
     let users = [{
@@ -17,31 +18,7 @@ export function configureFakeBackend() {
             "certificateId": 300
         }
     ];
-    let allCertificates = [
-        {
-            "id": 1,
-            "title": "Dita",
-            "date": "2019-07-08",
-            "tags": ["computer", "fun"],
-            "description": "Aliquam sit amet diam in magna bibendum imperdiet.",
-            "cost": 705
-        },
-        {
-            "id": 200,
-            "title": "Abbot",
-            "date": "2019-03-05",
-            "tags": ["bread", "bubble", "fun"],
-            "description": "Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus.",
-            "cost": 882
-        },
-        {
-            "id": 300,
-            "title": "Dorn",
-            "date": "2019-04-05",
-            "tags": ["story", "hard"],
-            "description": "Bliquam lacus purus, magna at, imperdiet non, pretium quis, lectus.",
-            "cost": 1000
-        }];
+    let allCertificates = allcertificate;
     let realFetch = window.fetch;
 
     window.fetch = function (url, opts) {
@@ -49,7 +26,6 @@ export function configureFakeBackend() {
                 setTimeout(() => {
                     if (url.endsWith('/users/authenticate') && opts.method === 'POST') {
                         let params = JSON.parse(opts.body);
-
                         let filteredUsers = users.filter(user => {
                             return user.username === params.username && user.password === params.password;
                         });
@@ -74,10 +50,10 @@ export function configureFakeBackend() {
                         let params = JSON.parse(opts.body);
                         const user = {};
                         user.id = users[users.length - 1].id + 1;
-                        user.firstName = opts.firstName;
-                        user.lastName = opts.lastName;
-                        user.username = opts.username;
-                        user.password = opts.password;
+                        user.firstName = params.firstName;
+                        user.lastName = params.lastName;
+                        user.username = params.username;
+                        user.password = params.password;
                         user.role = 'USER';
                         users.push(user);
                         resolve({ok: true, text: () => Promise.resolve()});
@@ -95,12 +71,25 @@ export function configureFakeBackend() {
                     }
 
                     if (url.endsWith('/certificates/all') && opts.method === 'GET') {
-
                         const headers = opts.headers;
                         if (headers && getPriority(headers.role) >= 0) {
                             resolve({
                                 ok: true,
                                 text: () => Promise.resolve(JSON.stringify(allCertificates))
+                            });
+                        } else {
+                            resolve({status: 401, text: () => Promise.resolve()});
+                        }
+                        return;
+                    }
+
+                    if (url.endsWith('/certificates/findById') && opts.method === 'GET') {
+                        const headers = opts.headers;
+                        if (headers && getPriority(headers.role) >= 0) {
+                            resolve({
+                                ok: true,
+                                text: () => Promise.resolve(JSON.stringify(allCertificates
+                                    .filter(certificate=>certificate.id === opts.certificateId)[0]))
                             });
                         } else {
                             resolve({status: 401, text: () => Promise.resolve()});
@@ -115,8 +104,7 @@ export function configureFakeBackend() {
                                 userId: opts.userId,
                                 certificateId: opts.certificateId
                             });
-                            // resolve({ok: true, text: () => Promise.resolve()});
-                            reject('Username or password is incorrect');
+                            resolve({ok: true, text: () => Promise.resolve()});
                         } else {
                             resolve({status: 401, text: () => Promise.resolve()});
                         }
@@ -126,10 +114,61 @@ export function configureFakeBackend() {
                     if (url.endsWith('/certificates/delete') && opts.method === 'GET') {
                         const headers = opts.headers;
                         if (headers && getPriority(headers.role) >= 1) {
-                            for (var i = 0; i < userCertificates.length; i++) {
+                            for (let i = 0; i < userCertificates.length; i++) {
+                                if (userCertificates[i].certificateId === opts.certificateId
+                                    && userCertificates[i].userId === opts.userId) {
+                                    userCertificates.splice(i, 1);
+                                }
+                            }
+                            resolve({ok: true, text: () => Promise.resolve()});
+                        } else {
+                            resolve({status: 401, text: () => Promise.resolve()});
+                        }
+                        return;
+                    }
+
+                    if (url.endsWith('/certificates/admin/delete') && opts.method === 'GET') {
+                        const headers = opts.headers;
+                        if (headers && getPriority(headers.role) > 1) {
+                            for (let i = 0; i < userCertificates.length; i++) {
                                 if (userCertificates[i].certificateId === opts.certificateId) {
                                     userCertificates.splice(i, 1);
                                 }
+                            }
+                            for (let i = 0; i < allCertificates.length; i++) {
+                                if (allCertificates[i].id === opts.certificateId) {
+                                    allCertificates.splice(i, 1);
+                                }
+                            }
+                            resolve({ok: true, text: () => Promise.resolve()});
+                        } else {
+                            resolve({status: 401, text: () => Promise.resolve()});
+                        }
+                        return;
+                    }
+
+                    if (url.endsWith('/certificates/admin/create') && opts.method === 'GET') {
+                        const headers = opts.headers;
+                        if (headers && getPriority(headers.role) > 1) {
+                            const certificate = opts.certificate;
+                            certificate.id = allCertificates[allCertificates.length - 1] + 1;
+                            certificate.date = new Date().toDateString();
+                            allCertificates.push(certificate);
+                            resolve({ok: true, text: () => Promise.resolve()});
+                        } else {
+                            resolve({status: 401, text: () => Promise.resolve()});
+                        }
+                        return;
+                    }
+
+                    if (url.endsWith('/certificates/admin/edit') && opts.method === 'GET') {
+                        const headers = opts.headers;
+                        if (headers && getPriority(headers.role) > 1) {
+                            const certificate = opts.certificate;
+                            const oldCertificate = allCertificates
+                                .filter(certificate=>certificate.id === opts.certificate.id)[0];
+                            for (let key in oldCertificate) {
+                                oldCertificate[key] = certificate[key];
                             }
                             resolve({ok: true, text: () => Promise.resolve()});
                         } else {
@@ -141,12 +180,12 @@ export function configureFakeBackend() {
                     if (url.endsWith('/certificates/userCertificates') && opts.method === 'GET') {
                         const headers = opts.headers;
                         if (headers && getPriority(headers.role) >= 1) {
-                            const result = userCertificates.map(userCertificate => {
+                            const result = [];
+                            userCertificates.forEach(userCertificate => {
                                 if (userCertificate.userId === opts.userId) {
-                                    return userCertificate.certificateId;
+                                    result.push(userCertificate.certificateId);
                                 }
                             });
-                            debugger;
                             resolve({
                                 ok: true,
                                 text: () => Promise.resolve(JSON.stringify(result))

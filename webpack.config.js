@@ -1,64 +1,100 @@
-var webpack = require('webpack');
-var path = require('path');
+const HtmlWebPackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 require("babel-core/register");
 require("babel-polyfill");
-var htmlWebpackPlugin = require('html-webpack-plugin');
-
-var BUILD_DIR = path.join(__dirname, 'dist');
-var APP_DIR = path.join(__dirname, 'src');
-
-const VENDOR_LIBS = [
-    'react', 'react-dom', 'react-router-dom'
-];
-
-var config = {
-    // entry: APP_DIR + '/index.js',
-    entry: {
-        main: [
-            'babel-polyfill',
-            APP_DIR + '/index.js'
-        ],
-        bundle: APP_DIR + '/index.js',
-        vendor: VENDOR_LIBS,
-    },
+const webpack = require('webpack');
+const extractSass = new ExtractTextPlugin({
+    filename: '[name].[hash].css',
+    disable: process.env.NODE_ENV === 'development',
+});
+module.exports = {
+    // mode: 'production',
+    entry: ['babel-polyfill', './src/index.js'],
+    // entry: { app: './src/index.js' },
     output: {
-        path: BUILD_DIR,
-        filename: '[name].[hash].js'
+        filename: '[name].[hash].js',
     },
     module: {
         rules: [
             {
                 test: /\.(js|jsx)$/,
-                // include: APP_DIR,
                 exclude: /node_modules/,
-                use: 'babel-loader'
+                use: {
+                    loader: 'babel-loader',
+                },
             },
             {
-                test: /\.css$/,
-                use: ['style-loader', 'css-loader']
+                test: /\.(png|svg|jpg|gif)$/,
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            // name: "./images/[name].[hash].[ext]",
+                            name: '[path][name]-[hash:8].[ext]',
+                        },
+                    },
+                    {
+                        loader: 'image-webpack-loader',
+                        options: {
+                            mozjpeg: {
+                                progressive: true,
+                                quality: 65,
+                            },
+                            // optipng.enabled: false will disable optipng
+                            optipng: {
+                                enabled: false,
+                            },
+                            pngquant: {
+                                quality: '65-90',
+                                speed: 4,
+                            },
+                            gifsicle: {
+                                interlaced: false,
+                            },
+                            // the webp option will enable WEBP
+                            webp: {
+                                quality: 75,
+                            },
+                        },
+                    },
+                ],
+            },
+            {
+                test: /\.html$/,
+                use: [
+                    {
+                        loader: 'html-loader',
+                        options: { minimize: true },
+                    },
+                ],
             },
             {
                 test: /\.scss$/,
-                use: ['style-loader', 'css-loader', 'sass-loader']
+                use: extractSass.extract({
+                    use: [
+                        {
+                            loader: 'css-loader',
+                        },
+                        {
+                            loader: 'sass-loader',
+                        },
+                    ],
+                    // use style-loader in development
+                    fallback: 'style-loader',
+                }),
             },
             {
-                test: /\.(jpeg|jpg|png|gif|svg)$/i,
-                use: {
-                    loader: 'file-loader',
-                    options: {
-                        name: '[path][name].[ext]',
-                        outputPath: '/'
-                    }
-                }
+                test: /\.css$/,
+                use: extractSass.extract({
+                    fallback: 'style-loader',
+                    use: 'css-loader',
+                }),
             },
-            {
-                test: /\.json$/,
-                loader: 'json-loader'
-            }
-        ]
+        ],
     },
     devServer: {
-        contentBase: BUILD_DIR,
+        contentBase: './dist',
         compress: true,
         port: 9000,
         disableHostCheck: false,
@@ -72,15 +108,29 @@ var config = {
             apiUrl: 'http://localhost:9000'
         })
     },
+    node: {
+        fs: "empty"
+    },
     plugins: [
-        new htmlWebpackPlugin({
-            template: 'index.html'
+        extractSass,
+        // new ExtractTextPlugin('[name].[hash].css'),
+        new HtmlWebPackPlugin({
+            template: './src/index.html',
+            filename: './index.html',
         }),
-        new webpack.optimize.CommonsChunkPlugin({
-            names: ['vendor', 'manifest']
-        }),
-        new webpack.HotModuleReplacementPlugin()
-    ]
+        new CleanWebpackPlugin(),
+        new webpack.NamedModulesPlugin(),
+        new webpack.HotModuleReplacementPlugin(),
+    ],
+    optimization: {
+        splitChunks: {
+            cacheGroups: {
+                commons: {
+                    test: /[\\/]node_modules[\\/]/,
+                    name: 'vendor',
+                    chunks: 'all',
+                },
+            },
+        },
+    },
 };
-
-module.exports = config;

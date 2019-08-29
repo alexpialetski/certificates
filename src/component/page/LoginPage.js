@@ -1,6 +1,6 @@
 import React, {useContext, useState} from 'react';
 import {Link} from "react-router-dom";
-
+import {useTranslation} from "react-i18next";
 import {userService} from '../service/user.service';
 import {valueGreaterOrEqualThan, valueLessThan} from "../validation/FormValidation";
 import {Header} from "./part/Header";
@@ -21,7 +21,7 @@ export const LoginPage = (props) => {
     const [error, setError] = useState(false);
     const [usernameError, setUsernameError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
-
+    const {t, i18n} = useTranslation();
     const userNameInput = (e) => {
         setUsername(e.target.value);
 
@@ -76,7 +76,7 @@ export const LoginPage = (props) => {
                             <div className="col-md-4">
                                 <form name="form" onSubmit={handleSubmit} style={flexColumnLeftSpaceAround}>
                                     <FormGroup>
-                                        <label htmlFor="username">Login</label>
+                                        <label htmlFor="username">{t("login")}</label>
                                         <input type="text"
                                                className={'form-control' + (submitted && !username || usernameError ? ' is-invalid' : '')}
                                                name="username" value={username}

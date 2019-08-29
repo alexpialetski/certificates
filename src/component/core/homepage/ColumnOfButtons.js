@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from "../../../css/homePage.css"
+import styles from "../../../styles/homePage.css"
 
 const flexColumn = {
     display: 'flex',

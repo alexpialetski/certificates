@@ -9,8 +9,9 @@ import {filterCertificateByTitle} from "../util/filters"
 import {filterCertificateByTag} from "../util/filters"
 import {certificateService} from "../service/certificates.service";
 import ColumnOfButtons from "../core/homepage/ColumnOfButtons";
-import Pagination from "../core/homepage/Pagination";
+import Pagination from "../core/homepage/pagination/Pagination";
 import Certificates from "../core/homepage/Certificates";
+import {Footer} from "./part/Footer";
 
 export default (props) => {
     const contextType = useContext(UserContext);
@@ -28,12 +29,28 @@ export default (props) => {
         getAllCertificates();
     }, []);
 
-    const typeOfCertificates = e => {
+    const typeOfCertificatesEvent = e => {
         if (e.target.value === 'All') {
             setSearch('');
             getAllCertificates();
-        } else {
-            console.log('Not done yet');
+        } else if (e.target.value === 'Only my certificates') {
+            const isUserCertificate = (certificateId) => {
+                for (let i = 0; i < userCertificates.length; i++) {
+                    if (userCertificates[i] === certificateId) {
+                        return true;
+                    }
+                }
+                return false;
+            };
+
+            const array = [];
+            for (let i = 0; i < certificates.length; i++) {
+                if (isUserCertificate(certificates[i].id)) {
+                    array.push(certificates[i]);
+                }
+            }
+            setCertificates(array);
+            setCurrentPage(1);
         }
     };
 
@@ -119,18 +136,33 @@ export default (props) => {
         }
     };
 
-    const deleteAdminClick = () => {
-        console.log('deleteAdminClick');
+    const deleteAdminClick = async (e) => {
+        e.preventDefault();
+        const certificateId = e.target.getAttribute('certificateid');
+        if (confirm('Are you sure you want to delete?(ADMIN)')) {
+            setLoading(true);
+            await certificateService.deleteAdminCertificate(parseInt(certificateId), contextType.user)
+                .then(message => setSuccessMessage(message))
+                .catch(error => setErrorMessage(error))
+                .then(async res => {
+                    await getAllCertificates();
+                    await getAllUserCertificates();
+                    setLoading(false);
+                });
+        }
     };
 
-    const editClick = () => {
-        console.log('editClick');
-    };
-
-    const indexOfLasCertificate = currentPage * certificatesPerPage;
-    const indexOfFirstCertificate = indexOfLasCertificate - certificatesPerPage;
-    const currentCertificates = certificates.slice(indexOfFirstCertificate, indexOfLasCertificate);
+    const indexOfLastCertificate = currentPage * certificatesPerPage;
+    const indexOfFirstCertificate = indexOfLastCertificate - certificatesPerPage;
+    const currentCertificates = certificates.slice(indexOfFirstCertificate, indexOfLastCertificate);
     const paginate = pageNumber => setCurrentPage(pageNumber);
+
+    let userActions = ['All'];
+    if (contextType.user.username && userCertificates.length) {
+        userActions.push('Only my certificates');
+    } else {
+        userActions = ['All'];
+    }
 
     return (
         <UserContext.Consumer>
@@ -144,8 +176,8 @@ export default (props) => {
                         <div className={"container"}>
                             <div className={'row '} style={sticky}>
                                 <ColumnOfButtons
-                                    items={['All', 'Only my certificates']}
-                                    action={typeOfCertificates}
+                                    items={userActions}
+                                    action={typeOfCertificatesEvent}
                                     className={'col-md-2 shadow'}
                                 />
                                 <div className="active-cyan-3 active-cyan-4 mb-4 col-md-9">
@@ -158,7 +190,7 @@ export default (props) => {
                                 </div>
                             </div>
                         </div>
-                        <div className={'m-5'}>
+                        <div className={'m-5'} style={certificatesStyle}>
                             <Certificates
                                 userCertificates={userCertificates}
                                 certificates={currentCertificates}
@@ -168,13 +200,12 @@ export default (props) => {
                                 buyClick={buyClick}
                                 deleteClick={deleteClick}
                                 deleteAdminClick={deleteAdminClick}
-                                editClick={editClick}
                             />
                         </div>
                         <div className={'container'}>
                             <div className={'row align-items-center'} style={sticky}>
                                 <ColumnOfButtons
-                                    items={[1, 2, 50, 100]}
+                                    items={[2, 25, 50, 100]}
                                     action={quantityOfCertificates}
                                     className={'col-md-2 offset-md-1 shadow'}
                                 />
@@ -187,6 +218,7 @@ export default (props) => {
                             </div>
                         </div>
                     </Container>
+                    <Footer/>
                 </div>
             )}
         </UserContext.Consumer>
@@ -194,4 +226,10 @@ export default (props) => {
 }
 const sticky = {
     position: 'sticky'
+};
+
+const certificatesStyle = {
+    height: '350px',
+    overflowX: 'hidden',
+    overflowY: 'auto'
 };

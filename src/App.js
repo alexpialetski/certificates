@@ -5,6 +5,8 @@ import HomePage from "./component/page/HomePage";
 import {LoginPage} from "./component/page/LoginPage";
 import {RegisterPage} from "./component/page/RegisterPage";
 import UserContext from "./component/context/UserContext";
+import {AddCertificatePage} from "./component/page/AddCertificatePage";
+import {EditCertificatePage} from "./component/page/EditCertificatePage";
 
 class CertificateApp extends React.Component {
     constructor(props) {
@@ -16,7 +18,7 @@ class CertificateApp extends React.Component {
         this.deleteUser = this.deleteUser.bind(this);
     }
 
-    createUser = user => {
+    createUser = (user) => {
         this.setState({user: user});
     };
 
@@ -30,10 +32,11 @@ class CertificateApp extends React.Component {
                 user: this.state.user, createUser: this.createUser, deleteUser: this.deleteUser
             }}>
                 <Switch>
-                    {/*<PrivateRoute exact path="/" component={HomePage}/>*/}
                     <Route exact path="/" component={HomePage}/>
                     <Route exact path="/login" component={LoginPage}/>
                     <Route exact path="/register" component={RegisterPage}/>
+                    <PrivateRoute exact path="/addCertificate" component={AddCertificatePage}/>
+                    <PrivateRoute exact path="/certificates/admin/edit" component={EditCertificatePage}/>
                 </Switch>
             </UserContext.Provider>
         )

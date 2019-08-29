@@ -7,8 +7,7 @@ import {authHeader} from '../util/auth-header';
 export const userService = {
     login,
     register,
-    logout,
-    getAll
+    logout
 };
 
 function login(username, password) {
