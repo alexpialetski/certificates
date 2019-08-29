@@ -1,23 +1,16 @@
 import React from 'react';
-import styles from "../../../styles/homePage.css"
-
-const flexColumn = {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItemstems: 'center'
-};
 
 export default ({items, action, ...rest}) => {
     const buttons = items.map((item, index) => {
         return <input
             key={index}
-            className={'btn btn-light'}
+            className={'btn btn-light full-width'}
             type={'button'}
             onClick={action}
-        value={item}/>
+            value={item}/>
     });
     return (
-        <div className={rest.className} style={flexColumn}>
+        <div className={'flex-column ' + rest.className}>
             {buttons}
         </div>
     );

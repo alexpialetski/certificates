@@ -7,7 +7,7 @@ const Certificates = ({userCertificates, certificates, role, loading, tagClick, 
     }
 
     const isUserCertificate = (certificateId) => {
-        for (let i=0 ;i<userCertificates.length; i++){
+        for (let i = 0; i < userCertificates.length; i++) {
             if (userCertificates[i] === certificateId) {
                 return true;
             }
@@ -17,20 +17,23 @@ const Certificates = ({userCertificates, certificates, role, loading, tagClick, 
 
     return (
         <div className={"row"}>
-            {certificates.map((certificate, index) => {
-                const boolean = isUserCertificate(certificate.id);
-                    return <Certificate
-                        key={certificate.id}
-                        certificate={certificate}
-                        isUserCertificate={boolean}
-                        role={role}
-                        tagClick={tagClick}
-                        deleteClick={deleteClick}
-                        buyClick={buyClick}
-                        deleteAdminClick={deleteAdminClick}
-                    />
-                }
-            )
+            {certificates.length ?
+                certificates.map((certificate, index) => {
+                        const boolean = isUserCertificate(certificate.id);
+                        return <Certificate
+                            key={certificate.id}
+                            certificate={certificate}
+                            isUserCertificate={boolean}
+                            role={role}
+                            tagClick={tagClick}
+                            deleteClick={deleteClick}
+                            buyClick={buyClick}
+                            deleteAdminClick={deleteAdminClick}
+                        />
+                    }
+                )
+                :
+                <h1 className={'ml-5'}>Nothing here...</h1>
             }
         </div>
     );

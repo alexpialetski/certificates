@@ -1,0 +1,50 @@
+.absolute{
+    position: absolute;
+}
+
+.certificates{
+    height: 350px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.description{
+    text-align: center;
+}
+
+.user-certificate{
+    background-color: aliceblue;
+}
+
+.user-footer-options{
+    justify-content: end;
+}
+
+.admin-footer-options{
+    justify-content: space-between;
+}
+
+.user-options{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    width: 30%;
+    justify-content: space-between;
+}
+
+.anonymous-options{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    justify-content: end;
+}
+
+.footer-options{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.certificate-header{
+    display: flex;
+    justify-content: space-between;
+}

@@ -1,15 +1,15 @@
 import React, {useContext, useState} from 'react';
 import {Link} from "react-router-dom";
-import {useTranslation} from "react-i18next";
-import {userService} from '../service/user.service';
-import {valueGreaterOrEqualThan, valueLessThan} from "../validation/FormValidation";
+import {initReactI18next, useTranslation} from "react-i18next";
+import {userService} from '../../service/user.service';
+import {valueGreaterOrEqualThan, valueLessThan} from "../../validation/FormValidation";
 import {Header} from "./part/Header";
 import UserContext from './../context/UserContext';
 import Container from "../core/Container";
 import FormGroup from "../core/form/FormGroup";
 import ConditionalInvalidFeedback from "../core/form/ConditionalFeedback";
-import img from "../resources/images/welcome.jpg"
-import smallLoader from "../resources/images/smallLoader.gif"
+import img from "../../resources/images/welcome.jpg"
+import smallLoader from "../../resources/images/smallLoader.gif"
 
 export const LoginPage = (props) => {
     const contextType = useContext(UserContext);
@@ -21,7 +21,7 @@ export const LoginPage = (props) => {
     const [error, setError] = useState(false);
     const [usernameError, setUsernameError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
-    const {t, i18n} = useTranslation();
+    const {t, i18n} = useTranslation(initReactI18next);
     const userNameInput = (e) => {
         setUsername(e.target.value);
 
@@ -66,80 +66,60 @@ export const LoginPage = (props) => {
     };
 
     return (
-        <UserContext.Consumer>
-            {context => (
-                <div>
-                    <Header/>
-                    <Container className="row mt-5 p-5">
-                        <h2>Certificates</h2>
-                        <div className={"row"}>
-                            <div className="col-md-4">
-                                <form name="form" onSubmit={handleSubmit} style={flexColumnLeftSpaceAround}>
-                                    <FormGroup>
-                                        <label htmlFor="username">{t("login")}</label>
-                                        <input type="text"
-                                               className={'form-control' + (submitted && !username || usernameError ? ' is-invalid' : '')}
-                                               name="username" value={username}
-                                               onChange={userNameInput}/>
-                                        <ConditionalInvalidFeedback
-                                            condition={submitted && !username}
-                                            className={'invalid-feedback'}>
-                                            Username is required
-                                        </ConditionalInvalidFeedback>
-                                        <ConditionalInvalidFeedback
-                                            condition={submitted && !username}
-                                            className={'invalid-feedback'}>
-                                            {usernameError}
-                                        </ConditionalInvalidFeedback>
-                                    </FormGroup>
-                                    <FormGroup>
-                                        <label htmlFor="password">Password</label>
-                                        <input type="password"
-                                               name="password" value={password}
-                                               className={'form-control' + (submitted && !password || passwordError ? ' is-invalid' : '')}
-                                               onChange={passwordInput}/>
-                                        <ConditionalInvalidFeedback
-                                            condition={submitted && !password}
-                                            className={'invalid-feedback'}>
-                                            Password is required
-                                        </ConditionalInvalidFeedback>
-                                        <ConditionalInvalidFeedback
-                                            condition={passwordError}
-                                            className={'invalid-feedback'}>
-                                            {passwordError}
-                                        </ConditionalInvalidFeedback>
-                                    </FormGroup>
-                                    <div style={flexRowBetweenCenter}>
-                                        <button className="btn btn-lg btn-primary" disabled={loading}>Login</button>
-                                        <Link className="btn btn-lg btn-primary" disabled={loading} to={'/'}>Back</Link>
-                                    </div>
-                                    {loading && <img src={smallLoader}/>}
-                                    {error && <div className={'alert alert-danger'}>{error}</div>}
-                                </form>
+        <div>
+            <Header/>
+            <Container className="row mt-5 p-5">
+                <h2>Certificates</h2>
+                <div className={"row"}>
+                    <div className="col-md-4">
+                        <form name="form flex-column-left-space-around" onSubmit={handleSubmit}>
+                            <FormGroup>
+                                <label htmlFor="username">{t("login")}</label>
+                                <input type="text"
+                                       className={'form-control' + (submitted && !username || usernameError ? ' is-invalid' : '')}
+                                       name="username" value={username}
+                                       onChange={userNameInput}/>
+                                <ConditionalInvalidFeedback
+                                    condition={submitted && !username}
+                                    className={'invalid-feedback'}>
+                                    Username is required
+                                </ConditionalInvalidFeedback>
+                                <ConditionalInvalidFeedback
+                                    condition={submitted && !username}
+                                    className={'invalid-feedback'}>
+                                    {usernameError}
+                                </ConditionalInvalidFeedback>
+                            </FormGroup>
+                            <FormGroup>
+                                <label htmlFor="password">Password</label>
+                                <input type="password"
+                                       name="password" value={password}
+                                       className={'form-control' + (submitted && !password || passwordError ? ' is-invalid' : '')}
+                                       onChange={passwordInput}/>
+                                <ConditionalInvalidFeedback
+                                    condition={submitted && !password}
+                                    className={'invalid-feedback'}>
+                                    Password is required
+                                </ConditionalInvalidFeedback>
+                                <ConditionalInvalidFeedback
+                                    condition={passwordError}
+                                    className={'invalid-feedback'}>
+                                    {passwordError}
+                                </ConditionalInvalidFeedback>
+                            </FormGroup>
+                            <div className={'flex-row-between-center'}>
+                                <button className="btn btn-lg btn-primary" disabled={loading}>Login</button>
+                                <Link className="btn btn-lg btn-primary" disabled={loading} to={'/'}>Back</Link>
                             </div>
-                            <div className="col-md-8">
-                                <img src={img} className="img-thumbnail img-responsive"/>
-                            </div>
-                        </div>
-                    </Container>
+                            {loading && <img alt={'Loader'} src={smallLoader}/>}
+                            {error && <div className={'alert alert-danger'}>{error}</div>}
+                        </form>
+                    </div>
+                    <div className="col-md-8">
+                        <img src={img} alt={'Login image'} className="img-thumbnail img-responsive"/>
+                    </div>
                 </div>
-            )}
-        </UserContext.Consumer>
+            </Container>
+        </div>
     )
-};
-
-const flexColumnLeftSpaceAround = {
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'baseline',
-    justifyContent: 'space-around'
-};
-
-const flexRowBetweenCenter = {
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between'
 };

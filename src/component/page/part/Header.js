@@ -7,7 +7,6 @@ import NavBarCollapsed from "../../core/header/NavBarCollapsed";
 
 class Header extends React.Component {
     static contextType = UserContext;
-
     constructor(props) {
         super(props);
         this.state = {
@@ -15,7 +14,7 @@ class Header extends React.Component {
         };
     }
 
-    changeLocale = (e) => {
+    changeLocale = () => {
         this.setState((state) => ({
             locale: state.locale && 'en',
         }));

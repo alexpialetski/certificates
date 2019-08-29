@@ -1,16 +1,15 @@
-import React, {useState, useContext, useEffect} from 'react';
-import $ from 'jquery';
+import React, {useContext, useEffect, useState} from 'react';
 import {Link} from "react-router-dom";
-import {valueGreaterOrEqualThan} from "../validation/FormValidation";
+import {valueGreaterOrEqualThan} from "../../validation/FormValidation";
 import {Header} from "./part/Header";
 import Container from "../core/Container";
 import FormGroup from "../core/form/FormGroup";
 import ConditionalInvalidFeedback from "../core/form/ConditionalFeedback";
-import img from "../resources/images/welcome.jpg"
-import smallLoader from "../resources/images/smallLoader.gif"
+import img from "../../resources/images/welcome.jpg"
+import smallLoader from "../../resources/images/smallLoader.gif"
 import {Footer} from "./part/Footer";
 import Tags from "../core/homepage/certificate/Tags";
-import {certificateService} from "../service/certificates.service";
+import {certificateService} from "../../service/certificates.service";
 import UserContext from "../context/UserContext";
 import DatePicker from "react-datepicker";
 
@@ -70,7 +69,7 @@ export const EditCertificatePage = (props) => {
         }
     };
 
-    const addTagClick = (e) => {
+    const addTagClick = () => {
         tags.push(tag);
         setTags([...tags]);
         setTag('');
@@ -95,10 +94,10 @@ export const EditCertificatePage = (props) => {
             return;
         }
         const dateString = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDay();
-        const certificate = {id: certificateId,date: dateString, title, description, cost, tags};
+        const certificate = {id: certificateId, date: dateString, title, description, cost, tags};
         certificateService.editAdminCertificate(contextType.user, certificate)
             .then(
-                result => {
+                () => {
                     const {from} = props.location.state || {from: {pathname: "/"}};
                     props.history.push(from);
                 },
@@ -107,8 +106,6 @@ export const EditCertificatePage = (props) => {
                     setLoading(false)
                 }
             );
-
-        console.log('success');
     };
 
     return (
@@ -116,7 +113,7 @@ export const EditCertificatePage = (props) => {
             <Header/>
             <Container className="row mt-5 p-5">
                 <h2>Add certificates</h2>
-                <form name="form" onSubmit={handleSubmit} style={flexColumnLeftSpaceAround}>
+                <form name="form flex-column-left-space-around" onSubmit={handleSubmit}>
                     <FormGroup>
                         <label htmlFor="title">Title</label>
                         <input type="text"
@@ -194,31 +191,15 @@ export const EditCertificatePage = (props) => {
                         </div>
                     </div>
                     <Tags tags={tags} tagClick={deleteTagClick}/>
-                    <div className={'mt-5'} style={flexRowBetweenCenter}>
+                    <div className={'mt-5 flex-row-between-center'}>
                         <button className="btn btn-lg btn-primary" disabled={loading}>Save</button>
                         <Link className="btn btn-lg btn-primary" disabled={loading} to={'/'}>Back</Link>
                     </div>
-                    {loading && <img src={smallLoader}/>}
+                    {loading && <img alt={'Loader'} src={smallLoader}/>}
                     {error && <div className={'alert alert-danger'}>{error}</div>}
                 </form>
             </Container>
             <Footer/>
         </div>
     )
-};
-
-const flexColumnLeftSpaceAround = {
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'baseline',
-    justifyContent: 'space-around'
-};
-
-const flexRowBetweenCenter = {
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between'
 };

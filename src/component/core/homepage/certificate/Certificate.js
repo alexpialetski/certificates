@@ -4,8 +4,9 @@ import Body from "./Body";
 import Footer from "./Footer";
 
 export default ({buyClick, deleteClick, deleteAdminClick, editClick, isUserCertificate, ...props}) => {
+    const isUserCertificateClass = isUserCertificate ? 'user-certificate' : '';
     return (
-        <div className={'col-md-6 shadow p-3 align-items-end'} style={isUserCertificate ? certificate : undefined}>
+        <div className={'col-md-6 shadow p-3 align-items-end ' + isUserCertificateClass}>
             <Header date={props.certificate.date} title={props.certificate.title}/>
             <Body tags={props.certificate.tags}
                   description={props.certificate.description}
@@ -21,7 +22,3 @@ export default ({buyClick, deleteClick, deleteAdminClick, editClick, isUserCerti
         </div>
     );
 }
-
-const certificate = {
-    backgroundColor: "aliceblue",
-};

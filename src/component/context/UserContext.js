@@ -8,21 +8,3 @@ export default React.createContext({
     deleteUser: () => {
     }
 });
-
-// export default ({children}) => {
-//     const [user, setUser] = useState({});
-//     // const setUser = (user) =>{
-//     //     defaultContext.user = user;
-//     // };
-//
-//     const defaultContext = {
-//         user,
-//         setUser
-//     };
-//
-//     return (
-//         <UserContext.Provider value={defaultContext}>
-//             {children}
-//         </UserContext.Provider>
-//     );
-// }

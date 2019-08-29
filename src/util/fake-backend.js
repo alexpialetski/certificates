@@ -1,24 +1,12 @@
-import React, {useContext} from 'react'
-import UserContext from "../context/UserContext";
-import allcertificate from '../../json/certificates'
+import React from 'react'
+import allCertificate from '../resources/json/certificates'
+import user from '../resources/json/users'
+import userCertificate from '../resources/json/userCertificates'
 
 export function configureFakeBackend() {
-    let users = [{
-        id: 1, username: 'user', password: 'user', firstName: 'UserFirst', lastName: 'UserLast', role: 'USER'
-    }, {
-        id: 2, username: 'admin', password: 'admin', firstName: 'AdminFirst', lastName: 'AdminLast', role: 'ADMIN'
-    }];
-    let userCertificates = [
-        {
-            "userId": 1,
-            "certificateId": 200
-        },
-        {
-            "userId": 1,
-            "certificateId": 300
-        }
-    ];
-    let allCertificates = allcertificate;
+    let users = user;
+    let userCertificates = userCertificate;
+    let allCertificates = allCertificate;
     let realFetch = window.fetch;
 
     window.fetch = function (url, opts) {
@@ -89,7 +77,7 @@ export function configureFakeBackend() {
                             resolve({
                                 ok: true,
                                 text: () => Promise.resolve(JSON.stringify(allCertificates
-                                    .filter(certificate=>certificate.id === opts.certificateId)[0]))
+                                    .filter(certificate => certificate.id === opts.certificateId)[0]))
                             });
                         } else {
                             resolve({status: 401, text: () => Promise.resolve()});
@@ -151,7 +139,7 @@ export function configureFakeBackend() {
                         const headers = opts.headers;
                         if (headers && getPriority(headers.role) > 1) {
                             const certificate = opts.certificate;
-                            certificate.id = allCertificates[allCertificates.length - 1] + 1;
+                            certificate.id = allCertificates[allCertificates.length - 1].id + 1;
                             certificate.date = new Date().toDateString();
                             allCertificates.push(certificate);
                             resolve({ok: true, text: () => Promise.resolve()});
@@ -166,7 +154,7 @@ export function configureFakeBackend() {
                         if (headers && getPriority(headers.role) > 1) {
                             const certificate = opts.certificate;
                             const oldCertificate = allCertificates
-                                .filter(certificate=>certificate.id === opts.certificate.id)[0];
+                                .filter(certificate => certificate.id === opts.certificate.id)[0];
                             for (let key in oldCertificate) {
                                 oldCertificate[key] = certificate[key];
                             }

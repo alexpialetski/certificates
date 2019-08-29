@@ -1,19 +1,17 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Header} from './part/Header'
 import UserContext from './../context/UserContext';
 import Container from "../core/Container";
-import {ErrorMessage} from "../core/messages"
-import {SuccessMessage} from "../core/messages"
-import {sortCertificatesByDate} from "../util/comparators"
-import {filterCertificateByTitle} from "../util/filters"
-import {filterCertificateByTag} from "../util/filters"
-import {certificateService} from "../service/certificates.service";
+import {ErrorMessage, SuccessMessage} from "../core/messages"
+import {sortCertificatesByDate} from "../../util/comparators"
+import {filterCertificateByTag, filterCertificateByTitle} from "../../util/filters"
+import {certificateService} from "../../service/certificates.service";
 import ColumnOfButtons from "../core/homepage/ColumnOfButtons";
 import Pagination from "../core/homepage/pagination/Pagination";
 import Certificates from "../core/homepage/Certificates";
 import {Footer} from "./part/Footer";
 
-export default (props) => {
+export default () => {
     const contextType = useContext(UserContext);
     const [errorMessage, setErrorMessage] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
@@ -60,7 +58,6 @@ export default (props) => {
     };
 
     const searchEvent = (e) => {
-        debugger;
         const filterObject = {};
         const tags = [];
         const searchValues = search.split(' ');
@@ -93,7 +90,7 @@ export default (props) => {
 
     const getAllUserCertificates = async () => {
         await certificateService.getUserCertificates(contextType.user)
-            .then(res => setUserCertificates(res));
+            .then(res => setUserCertificates([...res]));
     };
 
     const getAllCertificates = async () => {
@@ -129,8 +126,9 @@ export default (props) => {
             await certificateService.deleteUserCertificate(parseInt(certificateId), contextType.user)
                 .then(message => setSuccessMessage(message))
                 .catch(error => setErrorMessage(error))
-                .then(async res => {
+                .then(async () => {
                     await getAllUserCertificates();
+                    await getAllCertificates();
                     setLoading(false);
                 });
         }
@@ -144,7 +142,7 @@ export default (props) => {
             await certificateService.deleteAdminCertificate(parseInt(certificateId), contextType.user)
                 .then(message => setSuccessMessage(message))
                 .catch(error => setErrorMessage(error))
-                .then(async res => {
+                .then(async () => {
                     await getAllCertificates();
                     await getAllUserCertificates();
                     setLoading(false);
@@ -163,7 +161,6 @@ export default (props) => {
     } else {
         userActions = ['All'];
     }
-
     return (
         <UserContext.Consumer>
             {context => (
@@ -174,7 +171,7 @@ export default (props) => {
                     <Container className=" mt-5 p-3">
                         <h1 className={'mb-5'}>Certificates</h1>
                         <div className={"container"}>
-                            <div className={'row '} style={sticky}>
+                            <div className={'row '}>
                                 <ColumnOfButtons
                                     items={userActions}
                                     action={typeOfCertificatesEvent}
@@ -190,7 +187,7 @@ export default (props) => {
                                 </div>
                             </div>
                         </div>
-                        <div className={'m-5'} style={certificatesStyle}>
+                        <div className={'m-5 certificates'}>
                             <Certificates
                                 userCertificates={userCertificates}
                                 certificates={currentCertificates}
@@ -203,7 +200,7 @@ export default (props) => {
                             />
                         </div>
                         <div className={'container'}>
-                            <div className={'row align-items-center'} style={sticky}>
+                            <div className={'row align-items-center'}>
                                 <ColumnOfButtons
                                     items={[2, 25, 50, 100]}
                                     action={quantityOfCertificates}
@@ -224,12 +221,3 @@ export default (props) => {
         </UserContext.Consumer>
     );
 }
-const sticky = {
-    position: 'sticky'
-};
-
-const certificatesStyle = {
-    height: '350px',
-    overflowX: 'hidden',
-    overflowY: 'auto'
-};

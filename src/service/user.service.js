@@ -1,6 +1,3 @@
-import {useContext} from 'react';
-import UserContext from "../context/UserContext";
-
 import config from 'config';
 import {authHeader} from '../util/auth-header';
 
