@@ -24,6 +24,7 @@ export const AddCertificatePage = (props) => {
     const [error, setError] = useState('');
     const [titleError, setTitleError] = useState('');
     const [descriptionError, setDescriptionError] = useState('');
+    const [costError, setCostError] = useState('');
 
     const titleInput = (e) => {
         setTitle(e.target.value);
@@ -41,9 +42,20 @@ export const AddCertificatePage = (props) => {
 
         const {value} = e.target;
         if (valueGreaterOrEqualThan(value.length, 230)) {
-            setDescriptionError("Description field length must not be greater than 30 characters.");
+            setDescriptionError("Description field length must not be less than 230 characters.");
         } else {
             setDescriptionError("");
+        }
+    };
+
+    const costInput = (e) => {
+        setCost(e.target.value);
+
+        const {value} = e.target;
+        if (!valueGreaterOrEqualThan(parseInt(value), 0)) {
+            setCostError("Cost field length must be greater than 0.");
+        } else {
+            setCostError("");
         }
     };
 
@@ -85,7 +97,6 @@ export const AddCertificatePage = (props) => {
                 }
             );
     };
-
 
     return (
         <div>
@@ -131,12 +142,17 @@ export const AddCertificatePage = (props) => {
                         <label htmlFor="cost">cost</label>
                         <input type="number"
                                name="cost" value={cost}
-                               className={'form-control' + (submitted && !cost ? ' is-invalid' : '')}
-                               onChange={(e) => setCost(e.target.value)}/>
+                               className={'form-control' + (submitted && !cost || costError ? ' is-invalid' : '')}
+                               onChange={costInput}/>
                         <ConditionalInvalidFeedback
                             condition={submitted && !cost}
                             className={'invalid-feedback'}>
                             Cost is required
+                        </ConditionalInvalidFeedback>
+                        <ConditionalInvalidFeedback
+                            condition={costError}
+                            className={'invalid-feedback'}>
+                            {costError}
                         </ConditionalInvalidFeedback>
                     </FormGroup>
                     <div className="container">

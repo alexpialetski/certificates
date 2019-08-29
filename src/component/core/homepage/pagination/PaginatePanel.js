@@ -27,8 +27,9 @@ const PaginatePanel = ({lastPage, paginate, currentPage}) => {
 
     const currentPageNumber = parseInt(currentPage);
     const nav = pageNumbers.map(number => {
+        const active = number === currentPageNumber ? "active" : "";
         return (
-            <li key={number} className={number === currentPageNumber ? "active" : "" + " page-item"}>
+            <li key={number} className={"page-item " + active}>
                 <a onClick={() => {
                     if (number === '...') {
                         (currentPage + 10) <= lastPage ? paginate(currentPage + 10) : paginate(lastPage);
