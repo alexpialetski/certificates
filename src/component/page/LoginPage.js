@@ -1,5 +1,4 @@
 import React, {useContext, useState} from 'react';
-import {Link} from "react-router-dom";
 import {initReactI18next, useTranslation} from "react-i18next";
 import {userService} from '../../service/user.service';
 import {valueGreaterOrEqualThan, valueLessThan} from "../../validation/FormValidation";
@@ -10,6 +9,7 @@ import FormGroup from "../core/form/FormGroup";
 import ConditionalInvalidFeedback from "../core/form/ConditionalFeedback";
 import img from "../../resources/images/welcome.jpg"
 import smallLoader from "../../resources/images/smallLoader.gif"
+import ControlButtons from "../core/form/ControlButtons";
 
 export const LoginPage = (props) => {
     const contextType = useContext(UserContext);
@@ -21,7 +21,8 @@ export const LoginPage = (props) => {
     const [error, setError] = useState(false);
     const [usernameError, setUsernameError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
-    const {t, i18n} = useTranslation(initReactI18next);
+    const {t, i18n} = useTranslation('en', initReactI18next);
+
     const userNameInput = (e) => {
         setUsername(e.target.value);
 
@@ -107,10 +108,10 @@ export const LoginPage = (props) => {
                                     {passwordError}
                                 </ConditionalInvalidFeedback>
                             </FormGroup>
-                            <div className={'flex-row-between-center'}>
-                                <button className="btn btn-lg btn-primary" disabled={loading}>Login</button>
-                                <Link className="btn btn-lg btn-primary" disabled={loading} to={'/'}>Back</Link>
-                            </div>
+                            <ControlButtons
+                                loading={loading}
+                                submitButtonText={'Login'}
+                                fieldsWithData={[username, password]}/>
                             {loading && <img alt={'Loader'} src={smallLoader}/>}
                             {error && <div className={'alert alert-danger'}>{error}</div>}
                         </form>

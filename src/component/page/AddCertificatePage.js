@@ -11,6 +11,7 @@ import {Footer} from "./part/Footer";
 import Tags from "../core/homepage/certificate/Tags";
 import {certificateService} from "../../service/certificates.service";
 import UserContext from "../context/UserContext";
+import ControlButtons from "../core/form/ControlButtons";
 
 export const AddCertificatePage = (props) => {
     const contextType = useContext(UserContext);
@@ -181,10 +182,10 @@ export const AddCertificatePage = (props) => {
                         </div>
                     </div>
                     <Tags tags={tags} tagClick={deleteTagClick}/>
-                    <div className={'mt-5 flex-row-between-center'}>
-                        <button className="btn btn-lg btn-primary" disabled={loading}>Save</button>
-                        <Link className="btn btn-lg btn-primary" disabled={loading} to={'/'}>Back</Link>
-                    </div>
+                    <ControlButtons
+                        loading={loading}
+                        submitButtonText={'Register'}
+                        fieldsWithData={[title, description, cost, tags.length]}/>
                     {loading && <img alt="Loader" src={smallLoader}/>}
                     {error && <div className={'alert alert-danger'}>{error}</div>}
                 </form>

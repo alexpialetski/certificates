@@ -9,6 +9,7 @@ import FormGroup from "../core/form/FormGroup";
 import ConditionalInvalidFeedback from "../core/form/ConditionalFeedback";
 import img from "../../resources/images/register.jpg"
 import smallLoader from "../../resources/images/smallLoader.gif"
+import ControlButtons from "../core/form/ControlButtons";
 
 export const RegisterPage = (props) => {
     const [username, setUsername] = useState('');
@@ -158,17 +159,17 @@ export const RegisterPage = (props) => {
                                     {passwordError}
                                 </ConditionalInvalidFeedback>
                             </FormGroup>
-                            <div className={'flex-row-between-center'}>
-                                <button className="btn btn-lg btn-primary" disabled={loading}>Register</button>
-                                <Link className="btn btn-lg btn-primary" disabled={loading}
-                                      to={'/login'}>Back</Link>
-                            </div>
+                            <ControlButtons
+                                loading={loading}
+                                submitButtonText={'Register'}
+                                fieldsWithData={[username, firstName, lastName, password]}/>
                             {loading && <img alt={'Loader'} src={smallLoader}/>}
                             {error && <div className={'alert alert-danger'}>{error}</div>}
                         </form>
                     </div>
                     <div className="col-md-8">
-                        <img src={img} alt={'Register page'} className="img-thumbnail img-responsive" style={{height: '70%'}}/>
+                        <img src={img} alt={'Register page'} className="img-thumbnail img-responsive"
+                             style={{height: '70%'}}/>
                     </div>
                 </div>
             </Container>
