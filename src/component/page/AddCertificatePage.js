@@ -184,7 +184,7 @@ export const AddCertificatePage = (props) => {
                     <Tags tags={tags} tagClick={deleteTagClick}/>
                     <ControlButtons
                         loading={loading}
-                        submitButtonText={'Register'}
+                        submitButtonText={'Add'}
                         fieldsWithData={[title, description, cost, tags.length]}/>
                     {loading && <img alt="Loader" src={smallLoader}/>}
                     {error && <div className={'alert alert-danger'}>{error}</div>}
