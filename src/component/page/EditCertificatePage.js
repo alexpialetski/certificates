@@ -106,8 +106,7 @@ export const EditCertificatePage = (props) => {
             || descriptionError || titleError || error) {
             return;
         }
-        const dateString = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDay();
-        const certificate = {id: certificateId, date: dateString, title, description, cost, tags};
+        const certificate = {id: certificateId, date: createStringOfDate(date), title, description, cost, tags};
         certificateService.editAdminCertificate(contextType.user, certificate)
             .then(
                 () => {
@@ -147,7 +146,7 @@ export const EditCertificatePage = (props) => {
                     <DatePicker
                         dateFormat="yyyy-mm-dd"
                         selected={date}
-                        onChange={date => setDate(date)}
+                        onChange={date => setDate(new Date(date))}
                     />
                     <FormGroup>
                         <label htmlFor="description">Description</label>
@@ -221,3 +220,9 @@ export const EditCertificatePage = (props) => {
         </div>
     )
 };
+
+function createStringOfDate(date) {
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    const array = date.toLocaleDateString("en-US", options).split('/');
+    return [array[2], array[0], array[1]].join('-');
+}
