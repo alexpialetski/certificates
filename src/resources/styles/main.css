@@ -1,3 +1,22 @@
+html {
+    height: 100%;
+}
+.container-fluid{
+    width: 80%;
+}
+
+.form-control{
+    width: 100%;
+}
+
+#root{
+    background-color: #f2f2f2;
+}
+
+footer{
+    background: blueviolet;
+}
+
 .message-absolute {
     position: absolute;
     width: 100%;
@@ -27,4 +46,9 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+}
+
+.grid-two-columns{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
 }

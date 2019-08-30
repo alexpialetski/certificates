@@ -205,6 +205,7 @@ export default () => {
                                     items={[2, 25, 50, 100]}
                                     action={quantityOfCertificates}
                                     className={'col-md-2 offset-md-1 shadow'}
+                                    check={certificatesPerPage}
                                 />
                                 <Pagination
                                     certificatesPerPage={certificatesPerPage}

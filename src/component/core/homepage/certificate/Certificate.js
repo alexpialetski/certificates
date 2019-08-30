@@ -6,7 +6,7 @@ import Footer from "./Footer";
 export default ({buyClick, deleteClick, deleteAdminClick, editClick, isUserCertificate, ...props}) => {
     const isUserCertificateClass = isUserCertificate ? 'user-certificate' : '';
     return (
-        <div className={'col-md-6 shadow p-3 align-items-end ' + isUserCertificateClass}>
+        <div className={'shadow p-3 align-items-end certificate ' + isUserCertificateClass}>
             <Header date={props.certificate.date} title={props.certificate.title}/>
             <Body tags={props.certificate.tags}
                   description={props.certificate.description}

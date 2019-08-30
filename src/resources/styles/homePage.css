@@ -48,3 +48,8 @@
     display: flex;
     justify-content: space-between;
 }
+
+.certificate{
+    width: 95%;
+    margin: 2%;
+}

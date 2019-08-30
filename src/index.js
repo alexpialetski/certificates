@@ -8,8 +8,6 @@ import App from './App';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {BrowserRouter} from 'react-router-dom';
-import './index.css';
-import './resources/styles/App.css';
 import i18n from 'i18next'
 import {configureFakeBackend} from './util/fake-backend'
 console.log(i18n);

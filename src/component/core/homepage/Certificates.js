@@ -16,7 +16,7 @@ const Certificates = ({userCertificates, certificates, role, loading, tagClick, 
     };
 
     return (
-        <div className={"row"}>
+        <div className={"grid-two-columns"}>
             {certificates.length ?
                 certificates.map((certificate, index) => {
                         const boolean = isUserCertificate(certificate.id);
