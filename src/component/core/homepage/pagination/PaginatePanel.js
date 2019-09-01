@@ -7,20 +7,20 @@ const PaginatePanel = ({lastPage, paginate, currentPage}) => {
             pageNumbers.push(i)
         }
     } else {
-        if (currentPage && (currentPage - 9) > 0 && (lastPage - currentPage) >= 10) {
+        if (currentPage <= 5) {
             for (let i = 1; i <= 9; i++) {
-                pageNumbers.push(currentPage - 9 + i)
+                pageNumbers.push(i);
             }
             pageNumbers.push('...');
-        } else if ((lastPage - currentPage) < 10) {
+        } else if (currentPage > 5 && (lastPage - currentPage) > 5) {
+            for (let i = currentPage - 5; i < currentPage + 4; i++) {
+                pageNumbers.push(i);
+            }
+            pageNumbers.push('...');
+        } else {
             for (let i = lastPage - 10; i < lastPage; i++) {
                 pageNumbers.push(i);
             }
-        } else if (currentPage) {
-            for (let i = 1; i <= 9; i++) {
-                pageNumbers.push(i);
-            }
-            pageNumbers.push('...');
         }
         pageNumbers.push(lastPage);
     }

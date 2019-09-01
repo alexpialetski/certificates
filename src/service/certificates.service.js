@@ -1,6 +1,6 @@
 import {userService} from "./user.service";
 import config from 'config';
-import {authHeader} from '../util/auth-header';
+import {authHeader} from '../util/authorization';
 
 export const certificateService = {
     getAll,

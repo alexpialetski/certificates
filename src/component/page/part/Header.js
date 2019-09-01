@@ -4,9 +4,11 @@ import UserContext from "../../context/UserContext";
 import ToggleButton from "../../core/header/ToggleButton";
 import LeftNavBar from "../../core/header/LeftNavBar";
 import NavBarCollapsed from "../../core/header/NavBarCollapsed";
+import {isSatisfied} from "../../../util/authorization";
 
 class Header extends React.Component {
     static contextType = UserContext;
+
     constructor(props) {
         super(props);
         this.state = {
@@ -32,14 +34,13 @@ class Header extends React.Component {
                     <nav className="navbar navbar-expand-lg navbar-light bg-light shadow-sm mb-2">
                         <Link className="navbar-brand" to="/">Certificates</Link>
                         <ToggleButton toggleContentId={"navbarSupportedContent"}/>
-                        {/*<div className="collapse navbar-collapse" id="navbarSupportedContent">*/}
                         <NavBarCollapsed id={"navbarSupportedContent"}>
                             <LeftNavBar>
                                 <li className="nav-item active">
                                     <Link className="nav-link" to="/">Home <span
                                         className="sr-only">(current)</span></Link>
                                 </li>
-                                {context.user && context.user.role === 'ADMIN' &&
+                                {context.user && isSatisfied(context.user.roles, 'ADMIN') &&
                                 <li className="nav-item active">
                                     <Link className="nav-link" to="/addCertificate">Add certificate <span
                                         className="sr-only">(current)</span></Link>

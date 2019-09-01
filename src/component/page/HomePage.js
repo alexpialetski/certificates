@@ -10,6 +10,7 @@ import ColumnOfButtons from "../core/homepage/ColumnOfButtons";
 import Pagination from "../core/homepage/pagination/Pagination";
 import Certificates from "../core/homepage/Certificates";
 import {Footer} from "./part/Footer";
+import {isSatisfied} from "../../util/authorization";
 
 export default () => {
     const contextType = useContext(UserContext);
@@ -192,7 +193,7 @@ export default () => {
                                 userCertificates={userCertificates}
                                 certificates={currentCertificates}
                                 loading={loading}
-                                role={contextType.user.role}
+                                role={contextType.user.roles}
                                 tagClick={tagClick}
                                 buyClick={buyClick}
                                 deleteClick={deleteClick}

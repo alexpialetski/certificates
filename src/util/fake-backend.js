@@ -2,6 +2,7 @@ import React from 'react'
 import allCertificate from '../resources/json/certificates'
 import user from '../resources/json/users'
 import userCertificate from '../resources/json/userCertificates'
+import {createRoles, isSatisfied} from "./authorization";
 
 export function configureFakeBackend() {
     let users = user;
@@ -25,7 +26,7 @@ export function configureFakeBackend() {
                                 username: user.username,
                                 firstName: user.firstName,
                                 lastName: user.lastName,
-                                role: user.role
+                                roles: createRoles(user.role)
                             };
                             resolve({ok: true, text: () => Promise.resolve(JSON.stringify(responseJson))});
                         } else {
@@ -50,7 +51,7 @@ export function configureFakeBackend() {
 
                     // get users
                     if (url.endsWith('/users') && opts.method === 'GET') {
-                        if (opts.headers && getPriority(opts.headers.role) > 1) {
+                        if (opts.headers && isSatisfied(opts.headers.roles, 'ADMIN')) {
                             resolve({ok: true, text: () => Promise.resolve(JSON.stringify(users))});
                         } else {
                             resolve({status: 401, text: () => Promise.resolve()});
@@ -60,7 +61,7 @@ export function configureFakeBackend() {
 
                     if (url.endsWith('/certificates/all') && opts.method === 'GET') {
                         const headers = opts.headers;
-                        if (headers && getPriority(headers.role) >= 0) {
+                        if (headers && isSatisfied(headers.roles, 'ANONYMOUS')) {
                             resolve({
                                 ok: true,
                                 text: () => Promise.resolve(JSON.stringify(allCertificates))
@@ -73,7 +74,7 @@ export function configureFakeBackend() {
 
                     if (url.endsWith('/certificates/findById') && opts.method === 'GET') {
                         const headers = opts.headers;
-                        if (headers && getPriority(headers.role) >= 0) {
+                        if (headers && isSatisfied(headers.roles, 'ANONYMOUS')) {
                             resolve({
                                 ok: true,
                                 text: () => Promise.resolve(JSON.stringify(allCertificates
@@ -87,7 +88,7 @@ export function configureFakeBackend() {
 
                     if (url.endsWith('/certificates/buy') && opts.method === 'GET') {
                         const headers = opts.headers;
-                        if (headers && getPriority(headers.role) >= 1) {
+                        if (headers && isSatisfied(headers.roles, 'USER')) {
                             userCertificates.push({
                                 userId: opts.userId,
                                 certificateId: opts.certificateId
@@ -101,7 +102,7 @@ export function configureFakeBackend() {
 
                     if (url.endsWith('/certificates/delete') && opts.method === 'GET') {
                         const headers = opts.headers;
-                        if (headers && getPriority(headers.role) >= 1) {
+                        if (headers && isSatisfied(headers.roles, 'USER')) {
                             for (let i = 0; i < userCertificates.length; i++) {
                                 if (userCertificates[i].certificateId === opts.certificateId
                                     && userCertificates[i].userId === opts.userId) {
@@ -117,7 +118,7 @@ export function configureFakeBackend() {
 
                     if (url.endsWith('/certificates/admin/delete') && opts.method === 'GET') {
                         const headers = opts.headers;
-                        if (headers && getPriority(headers.role) > 1) {
+                        if (headers && isSatisfied(headers.roles, 'ADMIN')) {
                             for (let i = 0; i < userCertificates.length; i++) {
                                 if (userCertificates[i].certificateId === opts.certificateId) {
                                     userCertificates.splice(i, 1);
@@ -137,7 +138,7 @@ export function configureFakeBackend() {
 
                     if (url.endsWith('/certificates/admin/create') && opts.method === 'GET') {
                         const headers = opts.headers;
-                        if (headers && getPriority(headers.role) > 1) {
+                        if (headers && isSatisfied(headers.roles, 'ADMIN')) {
                             const certificate = opts.certificate;
                             certificate.id = allCertificates[allCertificates.length - 1].id + 1;
                             certificate.date = new Date().toDateString();
@@ -151,7 +152,7 @@ export function configureFakeBackend() {
 
                     if (url.endsWith('/certificates/admin/edit') && opts.method === 'GET') {
                         const headers = opts.headers;
-                        if (headers && getPriority(headers.role) > 1) {
+                        if (headers && isSatisfied(headers.roles, 'ADMIN')) {
                             const certificate = opts.certificate;
                             const oldCertificate = allCertificates
                                 .filter(certificate => certificate.id === opts.certificate.id)[0];
@@ -167,7 +168,7 @@ export function configureFakeBackend() {
 
                     if (url.endsWith('/certificates/userCertificates') && opts.method === 'GET') {
                         const headers = opts.headers;
-                        if (headers && getPriority(headers.role) >= 1) {
+                        if (headers && isSatisfied(headers.roles, 'USER')) {
                             const result = [];
                             userCertificates.forEach(userCertificate => {
                                 if (userCertificate.userId === opts.userId) {
@@ -190,13 +191,4 @@ export function configureFakeBackend() {
             }
         );
     }
-}
-
-function getPriority(role) {
-    if (role === "ADMIN") {
-        return 2;
-    } else if (role === "USER") {
-        return 1;
-    }
-    return 0
 }

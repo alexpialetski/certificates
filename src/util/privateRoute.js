@@ -1,6 +1,7 @@
 import React, {useContext} from 'react';
 import {Route, Redirect} from 'react-router-dom';
 import UserContext from '../component/context/UserContext';
+import {isSatisfied} from "./authorization";
 
 export const PrivateRoute = ({component: Component, ...rest}) => {
     const {user} = useContext(UserContext);
@@ -8,7 +9,7 @@ export const PrivateRoute = ({component: Component, ...rest}) => {
         <Route
             {...rest}
             render={props => (
-                user && user.role === 'ADMIN'
+                user && isSatisfied(user.roles, 'ADMIN')
                     ? <Component {...props} />
                     : <Redirect to={{pathname: '/login', state: {from: props.location}}}/>
             )}/>);
