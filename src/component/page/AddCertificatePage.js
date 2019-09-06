@@ -1,5 +1,4 @@
-import React, {useState, useContext} from 'react';
-import {Link} from "react-router-dom";
+import React, {useContext, useState} from 'react';
 import {valueGreaterOrEqualThan} from "../../validation/FormValidation";
 import {Header} from "./part/Header";
 import Container from "../core/Container";
@@ -10,7 +9,7 @@ import smallLoader from "../../resources/images/smallLoader.gif"
 import {Footer} from "./part/Footer";
 import Tags from "../core/homepage/certificate/Tags";
 import {certificateService} from "../../service/certificates.service";
-import UserContext from "../context/UserContext";
+import UserContext from "../context/AppContext";
 import ControlButtons from "../core/form/ControlButtons";
 
 export const AddCertificatePage = (props) => {
@@ -32,7 +31,7 @@ export const AddCertificatePage = (props) => {
 
         const {value} = e.target;
         if (valueGreaterOrEqualThan(value.length, 30)) {
-            setTitleError("Title field length must not be greater than 30 characters.");
+            setTitleError(__("addCertificate.error.titleError"));
         } else {
             setTitleError("");
         }
@@ -43,7 +42,7 @@ export const AddCertificatePage = (props) => {
 
         const {value} = e.target;
         if (valueGreaterOrEqualThan(value.length, 230)) {
-            setDescriptionError("Description field length must not be less than 230 characters.");
+            setDescriptionError(__("addCertificate.error.descriptionError"));
         } else {
             setDescriptionError("");
         }
@@ -54,7 +53,7 @@ export const AddCertificatePage = (props) => {
 
         const {value} = e.target;
         if (!valueGreaterOrEqualThan(parseInt(value), 0)) {
-            setCostError("Cost field length must be greater than 0.");
+            setCostError(__("addCertificate.error.costError"));
         } else {
             setCostError("");
         }
@@ -103,10 +102,10 @@ export const AddCertificatePage = (props) => {
         <div>
             <Header/>
             <Container className="row mt-5 p-5">
-                <h2>Add certificates</h2>
+                <h2>{__("addCertificate.label")}</h2>
                 <form name="form flex-column-left-space-around" onSubmit={handleSubmit}>
                     <FormGroup>
-                        <label htmlFor="title">Title</label>
+                        <label htmlFor="title">{__("addCertificate.title.label")}</label>
                         <input type="text"
                                className={'form-control' + (submitted && !title || titleError ? ' is-invalid' : '')}
                                name="title" value={title}
@@ -114,7 +113,7 @@ export const AddCertificatePage = (props) => {
                         <ConditionalInvalidFeedback
                             condition={submitted && !title}
                             className={'invalid-feedback'}>
-                            Title is required
+                            {__("addCertificate.error.fieldRequired")}
                         </ConditionalInvalidFeedback>
                         <ConditionalInvalidFeedback
                             condition={titleError}
@@ -123,7 +122,7 @@ export const AddCertificatePage = (props) => {
                         </ConditionalInvalidFeedback>
                     </FormGroup>
                     <FormGroup>
-                        <label htmlFor="description">Description</label>
+                        <label htmlFor="description">{__("addCertificate.description.label")}</label>
                         <input type="text"
                                name="description" value={description}
                                className={'form-control' + (submitted && !description || descriptionError ? ' is-invalid' : '')}
@@ -131,7 +130,7 @@ export const AddCertificatePage = (props) => {
                         <ConditionalInvalidFeedback
                             condition={submitted && !description}
                             className={'invalid-feedback'}>
-                            Description is required
+                            {__("addCertificate.error.fieldRequired")}
                         </ConditionalInvalidFeedback>
                         <ConditionalInvalidFeedback
                             condition={descriptionError}
@@ -140,7 +139,7 @@ export const AddCertificatePage = (props) => {
                         </ConditionalInvalidFeedback>
                     </FormGroup>
                     <FormGroup>
-                        <label htmlFor="cost">cost</label>
+                        <label htmlFor="cost">{__("addCertificate.cost.label")}</label>
                         <input type="number"
                                name="cost" value={cost}
                                className={'form-control' + (submitted && !cost || costError ? ' is-invalid' : '')}
@@ -148,7 +147,7 @@ export const AddCertificatePage = (props) => {
                         <ConditionalInvalidFeedback
                             condition={submitted && !cost}
                             className={'invalid-feedback'}>
-                            Cost is required
+                            {__("addCertificate.error.fieldRequired")}
                         </ConditionalInvalidFeedback>
                         <ConditionalInvalidFeedback
                             condition={costError}
@@ -168,7 +167,7 @@ export const AddCertificatePage = (props) => {
                                 </button>
                             </div>
                             <FormGroup className={'col-md-9'}>
-                                <label htmlFor="tag">Tag</label>
+                                <label htmlFor="tag">{__("addCertificate.tag.label")}</label>
                                 <input type="text"
                                        name="tag" value={tag}
                                        className={'form-control' + (submitted && !tags.length ? ' is-invalid' : '')}
@@ -176,7 +175,7 @@ export const AddCertificatePage = (props) => {
                                 <ConditionalInvalidFeedback
                                     condition={submitted && !tags.length}
                                     className={'invalid-feedback'}>
-                                    At least one tag is required
+                                    {__("addCertificate.error.tagError")}
                                 </ConditionalInvalidFeedback>
                             </FormGroup>
                         </div>
@@ -184,7 +183,7 @@ export const AddCertificatePage = (props) => {
                     <Tags tags={tags} tagClick={deleteTagClick}/>
                     <ControlButtons
                         loading={loading}
-                        submitButtonText={'Add'}
+                        submitButtonText={__("addCertificate.button")}
                         fieldsWithData={[title, description, cost, tags.length]}/>
                     {loading && <img alt="Loader" src={smallLoader}/>}
                     {error && <div className={'alert alert-danger'}>{error}</div>}

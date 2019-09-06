@@ -4,7 +4,7 @@ import {PrivateRoute} from "./util/privateRoute";
 import HomePage from "./component/page/HomePage";
 import {LoginPage} from "./component/page/LoginPage";
 import {RegisterPage} from "./component/page/RegisterPage";
-import UserContext from "./component/context/UserContext";
+import UserContext from "./component/context/AppContext";
 import {AddCertificatePage} from "./component/page/AddCertificatePage";
 import {EditCertificatePage} from "./component/page/EditCertificatePage";
 

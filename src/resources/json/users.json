@@ -1,5 +1,18 @@
-[{
-  "id": 1, "username": "user", "password": "user", "firstName": "UserFirst", "lastName": "UserLast", "role": "USER"
-}, {
-  "id": 2, "username": "admin", "password": "admin", "firstName": "AdminFirst", "lastName": "AdminLast", "role": "ADMIN"
-}]
+[
+  {
+    "id": 1,
+    "username": "user",
+    "password": "user",
+    "firstName": "UserFirst",
+    "lastName": "UserLast",
+    "role": "USER"
+  },
+  {
+    "id": 2,
+    "username": "admin",
+    "password": "admin",
+    "firstName": "AdminFirst",
+    "lastName": "AdminLast",
+    "role": "ADMIN"
+  }
+]

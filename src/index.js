@@ -10,6 +10,7 @@ import ReactDOM from 'react-dom';
 import {BrowserRouter} from 'react-router-dom';
 import i18n from 'i18next'
 import {configureFakeBackend} from './util/fake-backend'
+
 console.log(i18n);
 configureFakeBackend();
 

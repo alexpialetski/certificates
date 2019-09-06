@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Header} from './part/Header'
-import UserContext from './../context/UserContext';
+import UserContext from '../context/AppContext';
 import Container from "../core/Container";
 import {ErrorMessage, SuccessMessage} from "../core/messages"
 import {sortCertificatesByDate} from "../../util/comparators"
@@ -10,7 +10,6 @@ import ColumnOfButtons from "../core/homepage/ColumnOfButtons";
 import Pagination from "../core/homepage/pagination/Pagination";
 import Certificates from "../core/homepage/Certificates";
 import {Footer} from "./part/Footer";
-import {isSatisfied} from "../../util/authorization";
 
 export default () => {
     const contextType = useContext(UserContext);
@@ -29,10 +28,10 @@ export default () => {
     }, []);
 
     const typeOfCertificatesEvent = e => {
-        if (e.target.value === 'All') {
+        if (e.target.value === __("homePage.label.all")) {
             setSearch('');
             getAllCertificates();
-        } else if (e.target.value === 'Only my certificates') {
+        } else if (e.target.value === __("homePage.label.onlyMy")) {
             const isUserCertificate = (certificateId) => {
                 for (let i = 0; i < userCertificates.length; i++) {
                     if (userCertificates[i] === certificateId) {
@@ -58,13 +57,17 @@ export default () => {
         setCertificatesPerPage(parseInt(e.target.value));
     };
 
-    const searchEvent = (e) => {
+    const searchEvent = (searchWords) => {
         const filterObject = {};
         const tags = [];
-        const searchValues = search.split(' ');
+        const searchValues = searchWords.match(/((#\(\S+( \S+)?\)\S)|(\S+))/gi);
+        if (!searchValues) {
+            getAllCertificates();
+            return;
+        }
         searchValues.forEach(value => {
-            if (value.indexOf('#') === 0) {
-                tags.push(value.slice(1));
+            if (value.indexOf('#') === 0 && value.match(/#\(.*\)/).length) {
+                tags.push(value.slice(2, -1));
             } else {
                 filterObject.title = value;
             }
@@ -76,7 +79,7 @@ export default () => {
     };
 
     const tagClick = (e) => {
-        setSearch(search + ' #' + e.target.value);
+        setSearch(search + ' #(' + e.target.value + ')');
     };
 
     const searchByFilters = async (filterObject) => {
@@ -85,7 +88,7 @@ export default () => {
         filterObject.title && arrayOfFilters.push((filterCertificateByTitle(filterObject.title)));
         filterObject.tags && filterObject.tags.forEach(tag => arrayOfFilters.push(filterCertificateByTag(tag)));
         await certificateService.searchByMultipleFilters(contextType.user, arrayOfFilters)
-            .then(res => setCertificates(res.sort(sortCertificatesByDate)));
+            .then(res => setCertificates(res.sort(sortCertificatesByDate))).then(() => paginate(1));
         setLoading(false);
     };
 
@@ -102,12 +105,13 @@ export default () => {
 
     const onChange = e => {
         setSearch(e.target.value);
+        searchEvent(e.target.value);
     };
 
     const buyClick = async (e) => {
         e.preventDefault();
         const certificateId = e.target.getAttribute('certificateid');
-        if (confirm('Are you sure you want to buy?')) {
+        if (confirm(__("homePage.alert.buy"))) {
             setLoading(true);
             await certificateService.buy(parseInt(certificateId), contextType.user)
                 .then(message => setSuccessMessage(message))
@@ -122,7 +126,7 @@ export default () => {
     const deleteClick = async (e) => {
         e.preventDefault();
         const certificateId = e.target.getAttribute('certificateid');
-        if (confirm('Are you sure you want to delete?')) {
+        if (confirm(__("homePage.alert.user.delete"))) {
             setLoading(true);
             await certificateService.deleteUserCertificate(parseInt(certificateId), contextType.user)
                 .then(message => setSuccessMessage(message))
@@ -138,7 +142,7 @@ export default () => {
     const deleteAdminClick = async (e) => {
         e.preventDefault();
         const certificateId = e.target.getAttribute('certificateid');
-        if (confirm('Are you sure you want to delete?(ADMIN)')) {
+        if (confirm(__("homePage.alert.admin.delete"))) {
             setLoading(true);
             await certificateService.deleteAdminCertificate(parseInt(certificateId), contextType.user)
                 .then(message => setSuccessMessage(message))
@@ -156,11 +160,11 @@ export default () => {
     const currentCertificates = certificates.slice(indexOfFirstCertificate, indexOfLastCertificate);
     const paginate = pageNumber => setCurrentPage(pageNumber);
 
-    let userActions = ['All'];
+    let userActions = [__("homePage.label.all")];
     if (contextType.user.username && userCertificates.length) {
-        userActions.push('Only my certificates');
+        userActions.push(__("homePage.label.onlyMy"));
     } else {
-        userActions = ['All'];
+        userActions = [__("homePage.label.all")];
     }
     return (
         <UserContext.Consumer>
@@ -170,7 +174,7 @@ export default () => {
                     {errorMessage && <ErrorMessage message={errorMessage} setErrorMessage={setErrorMessage}/>}
                     {successMessage && <SuccessMessage message={successMessage} setSuccessMessage={setSuccessMessage}/>}
                     <Container className=" mt-5 p-3">
-                        <h1 className={'mb-5'}>Certificates</h1>
+                        <h1 className={'mb-5'}>{__("homePage.label.certificates")}</h1>
                         <div className={"container"}>
                             <div className={'row '}>
                                 <ColumnOfButtons
@@ -179,12 +183,13 @@ export default () => {
                                     className={'col-md-2 shadow'}
                                 />
                                 <div className="active-cyan-3 active-cyan-4 mb-4 col-md-9">
-                                    <input className="form-control" type="search" placeholder="Search"
+                                    <input className="form-control" type="search" placeholder={__("homePage.ph.search")}
                                            aria-label="Search" onChange={onChange} value={search}/>
                                 </div>
                                 <div className="active-cyan-3 active-cyan-4 pl-0 mb-4 col-md-1">
                                     <input className="btn btn-primary" type="button"
-                                           aria-label="Search" onClick={searchEvent} value="Search"/>
+                                           aria-label="Search" onClick={() => searchEvent(search)}
+                                           value={__("homePage.ph.search")}/>
                                 </div>
                             </div>
                         </div>

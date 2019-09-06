@@ -15,7 +15,7 @@ export default ({buyClick, deleteClick, deleteAdminClick, editClick, isUserCerti
                 role={props.role}
                 cost={props.certificate.cost}
                 userClick={isUserCertificate ? deleteClick : buyClick}
-                userButtonText={isUserCertificate ? 'Delete' : 'Buy'}
+                userButtonText={isUserCertificate ? __("certificate.button.delete") : __("certificate.button.buy")}
                 editClick={editClick}
                 certificateId={props.certificate.id}
                 deleteClick={deleteAdminClick}/>

@@ -3,7 +3,7 @@ import {initReactI18next, useTranslation} from "react-i18next";
 import {userService} from '../../service/user.service';
 import {valueGreaterOrEqualThan, valueLessThan} from "../../validation/FormValidation";
 import {Header} from "./part/Header";
-import UserContext from './../context/UserContext';
+import UserContext from '../context/AppContext';
 import Container from "../core/Container";
 import FormGroup from "../core/form/FormGroup";
 import ConditionalInvalidFeedback from "../core/form/ConditionalFeedback";
@@ -28,7 +28,7 @@ export const LoginPage = (props) => {
 
         const {value} = e.target;
         if (valueGreaterOrEqualThan(value.length, 30)) {
-            setUsernameError("Login field length must not be greater than 30 characters.");
+            setUsernameError(__("login.error.userNameError"));
         } else {
             setUsernameError("");
         }
@@ -38,7 +38,7 @@ export const LoginPage = (props) => {
         setPassword(e.target.value);
         const {value} = e.target;
         if (valueLessThan(value.length, 4)) {
-            setPasswordError("Password length must not be less than 4 characters");
+            setPasswordError(__("login.error.passwordError"));
         } else {
             setPasswordError("");
         }
@@ -70,12 +70,12 @@ export const LoginPage = (props) => {
         <div>
             <Header/>
             <Container className="row mt-5 p-5">
-                <h2>Certificates</h2>
+                <h2>{__("login.login.label")}</h2>
                 <div className={"row"}>
                     <div className="col-md-4">
                         <form name="form flex-column-left-space-around" onSubmit={handleSubmit}>
                             <FormGroup>
-                                <label htmlFor="username">{t("login")}</label>
+                                <label htmlFor="username">{__("login.userName")}</label>
                                 <input type="text"
                                        className={'form-control' + (submitted && !username || usernameError ? ' is-invalid' : '')}
                                        name="username" value={username}
@@ -83,7 +83,7 @@ export const LoginPage = (props) => {
                                 <ConditionalInvalidFeedback
                                     condition={submitted && !username}
                                     className={'invalid-feedback'}>
-                                    Username is required
+                                    {__("login.error.fieldRequired")}
                                 </ConditionalInvalidFeedback>
                                 <ConditionalInvalidFeedback
                                     condition={submitted && !username}
@@ -92,7 +92,7 @@ export const LoginPage = (props) => {
                                 </ConditionalInvalidFeedback>
                             </FormGroup>
                             <FormGroup>
-                                <label htmlFor="password">Password</label>
+                                <label htmlFor="password">{__("login.password")}</label>
                                 <input type="password"
                                        name="password" value={password}
                                        className={'form-control' + (submitted && !password || passwordError ? ' is-invalid' : '')}
@@ -100,7 +100,7 @@ export const LoginPage = (props) => {
                                 <ConditionalInvalidFeedback
                                     condition={submitted && !password}
                                     className={'invalid-feedback'}>
-                                    Password is required
+                                    {__("login.error.fieldRequired")}
                                 </ConditionalInvalidFeedback>
                                 <ConditionalInvalidFeedback
                                     condition={passwordError}
@@ -110,7 +110,7 @@ export const LoginPage = (props) => {
                             </FormGroup>
                             <ControlButtons
                                 loading={loading}
-                                submitButtonText={'Login'}
+                                submitButtonText={__("login.login.button")}
                                 fieldsWithData={[username, password]}/>
                             {loading && <img alt={'Loader'} src={smallLoader}/>}
                             {error && <div className={'alert alert-danger'}>{error}</div>}

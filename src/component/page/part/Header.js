@@ -1,10 +1,10 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import UserContext from "../../context/UserContext";
+import UserContext from "../../context/AppContext";
 import ToggleButton from "../../core/header/ToggleButton";
 import LeftNavBar from "../../core/header/LeftNavBar";
 import NavBarCollapsed from "../../core/header/NavBarCollapsed";
-import {isSatisfied} from "../../../util/authorization";
+import {isSatisfied, Role} from "../../../util/authorization";
 
 class Header extends React.Component {
     static contextType = UserContext;
@@ -32,17 +32,18 @@ class Header extends React.Component {
             <UserContext.Consumer>
                 {context => (
                     <nav className="navbar navbar-expand-lg navbar-light bg-light shadow-sm mb-2">
-                        <Link className="navbar-brand" to="/">Certificates</Link>
+                        <Link className="navbar-brand" to="/">{__("header.logo.label")}</Link>
                         <ToggleButton toggleContentId={"navbarSupportedContent"}/>
                         <NavBarCollapsed id={"navbarSupportedContent"}>
                             <LeftNavBar>
                                 <li className="nav-item active">
-                                    <Link className="nav-link" to="/">Home <span
+                                    <Link className="nav-link" to="/">{__("header.home.label")}<span
                                         className="sr-only">(current)</span></Link>
                                 </li>
-                                {context.user && isSatisfied(context.user.roles, 'ADMIN') &&
+                                {context.user && isSatisfied(context.user.roles, Role.ADMIN) &&
                                 <li className="nav-item active">
-                                    <Link className="nav-link" to="/addCertificate">Add certificate <span
+                                    <Link className="nav-link"
+                                          to="/addCertificate">{__("header.addCertificate.label")}<span
                                         className="sr-only">(current)</span></Link>
                                 </li>}
                             </LeftNavBar>
@@ -58,12 +59,13 @@ class Header extends React.Component {
                             <div className="form-inline my-2 my-lg-0">
                                 {context.user.username ?
                                     <button className="btn btn-primary  my-2 my-sm-0"
-                                            onClick={this.logout}>Logout</button>
+                                            onClick={this.logout}>{__("header.logout.label")}</button>
                                     :
                                     <div className="btn-group">
-                                        <Link className="btn btn-outline-success my-2 my-sm-0" to="/login">Login </Link>
+                                        <Link className="btn btn-outline-success my-2 my-sm-0"
+                                              to="/login">{__("header.login.label")}</Link>
                                         <Link className="btn btn-info ml-2"
-                                              to="/register">{this.state.locale ? "Регистрация" : "Register"}</Link>
+                                              to="/register">{__("header.register.label")}</Link>
                                     </div>
                                 }
                             </div>

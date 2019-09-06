@@ -2,7 +2,7 @@ import React from 'react'
 import allCertificate from '../resources/json/certificates'
 import user from '../resources/json/users'
 import userCertificate from '../resources/json/userCertificates'
-import {createRoles, isSatisfied} from "./authorization";
+import {isSatisfied, Role, specifyRoles} from "./authorization";
 
 export function configureFakeBackend() {
     let users = user;
@@ -26,7 +26,7 @@ export function configureFakeBackend() {
                                 username: user.username,
                                 firstName: user.firstName,
                                 lastName: user.lastName,
-                                roles: createRoles(user.role)
+                                roles: specifyRoles(user.role)
                             };
                             resolve({ok: true, text: () => Promise.resolve(JSON.stringify(responseJson))});
                         } else {
@@ -43,7 +43,7 @@ export function configureFakeBackend() {
                         user.lastName = params.lastName;
                         user.username = params.username;
                         user.password = params.password;
-                        user.role = 'USER';
+                        user.role = Role.USER;
                         users.push(user);
                         resolve({ok: true, text: () => Promise.resolve()});
                         return;
@@ -51,7 +51,7 @@ export function configureFakeBackend() {
 
                     // get users
                     if (url.endsWith('/users') && opts.method === 'GET') {
-                        if (opts.headers && isSatisfied(opts.headers.roles, 'ADMIN')) {
+                        if (opts.headers && isSatisfied(opts.headers.roles, Role.ADMIN)) {
                             resolve({ok: true, text: () => Promise.resolve(JSON.stringify(users))});
                         } else {
                             resolve({status: 401, text: () => Promise.resolve()});
@@ -61,7 +61,7 @@ export function configureFakeBackend() {
 
                     if (url.endsWith('/certificates/all') && opts.method === 'GET') {
                         const headers = opts.headers;
-                        if (headers && isSatisfied(headers.roles, 'ANONYMOUS')) {
+                        if (headers && isSatisfied(headers.roles, Role.ANONYMOUS)) {
                             resolve({
                                 ok: true,
                                 text: () => Promise.resolve(JSON.stringify(allCertificates))
@@ -74,7 +74,7 @@ export function configureFakeBackend() {
 
                     if (url.endsWith('/certificates/findById') && opts.method === 'GET') {
                         const headers = opts.headers;
-                        if (headers && isSatisfied(headers.roles, 'ANONYMOUS')) {
+                        if (headers && isSatisfied(headers.roles, Role.ANONYMOUS)) {
                             resolve({
                                 ok: true,
                                 text: () => Promise.resolve(JSON.stringify(allCertificates
@@ -88,7 +88,7 @@ export function configureFakeBackend() {
 
                     if (url.endsWith('/certificates/buy') && opts.method === 'GET') {
                         const headers = opts.headers;
-                        if (headers && isSatisfied(headers.roles, 'USER')) {
+                        if (headers && isSatisfied(headers.roles, Role.USER)) {
                             userCertificates.push({
                                 userId: opts.userId,
                                 certificateId: opts.certificateId
@@ -102,7 +102,7 @@ export function configureFakeBackend() {
 
                     if (url.endsWith('/certificates/delete') && opts.method === 'GET') {
                         const headers = opts.headers;
-                        if (headers && isSatisfied(headers.roles, 'USER')) {
+                        if (headers && isSatisfied(headers.roles, Role.USER)) {
                             for (let i = 0; i < userCertificates.length; i++) {
                                 if (userCertificates[i].certificateId === opts.certificateId
                                     && userCertificates[i].userId === opts.userId) {
@@ -118,7 +118,7 @@ export function configureFakeBackend() {
 
                     if (url.endsWith('/certificates/admin/delete') && opts.method === 'GET') {
                         const headers = opts.headers;
-                        if (headers && isSatisfied(headers.roles, 'ADMIN')) {
+                        if (headers && isSatisfied(headers.roles, Role.ADMIN)) {
                             for (let i = 0; i < userCertificates.length; i++) {
                                 if (userCertificates[i].certificateId === opts.certificateId) {
                                     userCertificates.splice(i, 1);
@@ -138,7 +138,7 @@ export function configureFakeBackend() {
 
                     if (url.endsWith('/certificates/admin/create') && opts.method === 'GET') {
                         const headers = opts.headers;
-                        if (headers && isSatisfied(headers.roles, 'ADMIN')) {
+                        if (headers && isSatisfied(headers.roles, Role.ADMIN)) {
                             const certificate = opts.certificate;
                             certificate.id = allCertificates[allCertificates.length - 1].id + 1;
                             certificate.date = new Date().toDateString();
@@ -152,7 +152,7 @@ export function configureFakeBackend() {
 
                     if (url.endsWith('/certificates/admin/edit') && opts.method === 'GET') {
                         const headers = opts.headers;
-                        if (headers && isSatisfied(headers.roles, 'ADMIN')) {
+                        if (headers && isSatisfied(headers.roles, Role.ADMIN)) {
                             const certificate = opts.certificate;
                             const oldCertificate = allCertificates
                                 .filter(certificate => certificate.id === opts.certificate.id)[0];
@@ -168,7 +168,7 @@ export function configureFakeBackend() {
 
                     if (url.endsWith('/certificates/userCertificates') && opts.method === 'GET') {
                         const headers = opts.headers;
-                        if (headers && isSatisfied(headers.roles, 'USER')) {
+                        if (headers && isSatisfied(headers.roles, Role.USER)) {
                             const result = [];
                             userCertificates.forEach(userCertificate => {
                                 if (userCertificate.userId === opts.userId) {

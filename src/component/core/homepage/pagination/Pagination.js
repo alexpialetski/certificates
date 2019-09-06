@@ -4,8 +4,8 @@ import PaginatePanel from "./PaginatePanel";
 const Pagination = ({certificatesPerPage, totalCertificates, paginate, className, currentPage}) => {
     const lastPage = Math.ceil(totalCertificates / certificatesPerPage);
     const currentPageNumber = parseInt(currentPage);
-    const newerDisabled =  currentPageNumber === 1 ? 'disabled' : '';
-    const olderDisabled =  currentPageNumber === lastPage ? 'disabled' : '';
+    const newerDisabled = currentPageNumber === 1 ? 'disabled' : '';
+    const olderDisabled = currentPageNumber === lastPage ? 'disabled' : '';
     return (
         <nav className={className}>
             <PaginatePanel
@@ -17,13 +17,13 @@ const Pagination = ({certificatesPerPage, totalCertificates, paginate, className
                 <li className={'page-item ' + newerDisabled}>
                     <a onClick={() => paginate(currentPageNumber - 1)}
                        className={"page-link"}>
-                        {"<--- Older"}
+                        {__("pagination.older.label")}
                     </a>
                 </li>
                 <li className={'page-item ' + olderDisabled}>
                     <a onClick={() => paginate(currentPageNumber + 1)}
                        className={"page-link"}>
-                        {"Newer --->"}
+                        {__("pagination.newer.label")}
                     </a>
                 </li>
             </ul>

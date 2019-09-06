@@ -1,55 +1,54 @@
-.absolute{
+.absolute {
     position: absolute;
 }
 
-.certificates{
+.certificates {
     height: 350px;
     overflow-x: hidden;
     overflow-y: auto;
 }
 
-.description{
+.description {
     text-align: center;
 }
 
-.user-certificate{
+.user-certificate {
     background-color: aliceblue;
 }
 
-.user-footer-options{
+.user-footer-options {
     justify-content: end;
 }
 
-.admin-footer-options{
+.admin-footer-options {
     justify-content: space-between;
 }
 
-.user-options{
+.user-options {
     display: flex;
     flex-wrap: wrap;
     align-items: end;
-    width: 30%;
     justify-content: space-between;
 }
 
-.anonymous-options{
+.anonymous-options {
     display: flex;
     flex-wrap: wrap;
     align-items: end;
     justify-content: end;
 }
 
-.footer-options{
+.footer-options {
     display: flex;
     flex-wrap: wrap;
 }
 
-.certificate-header{
+.certificate-header {
     display: flex;
     justify-content: space-between;
 }
 
-.certificate{
+.certificate {
     width: 95%;
     margin: 2%;
 }

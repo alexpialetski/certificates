@@ -2,23 +2,24 @@ import React from 'react'
 
 const PaginatePanel = ({lastPage, paginate, currentPage}) => {
     const pageNumbers = [];
-    if (lastPage < 10) {
+    const numberOfPagesOnPanel = 8;
+    if (lastPage < numberOfPagesOnPanel + 1) {
         for (let i = 1; i <= lastPage; i++) {
             pageNumbers.push(i)
         }
     } else {
-        if (currentPage <= 5) {
-            for (let i = 1; i <= 9; i++) {
+        if (currentPage <= numberOfPagesOnPanel / 2) {
+            for (let i = 1; i <= numberOfPagesOnPanel; i++) {
                 pageNumbers.push(i);
             }
             pageNumbers.push('...');
-        } else if (currentPage > 5 && (lastPage - currentPage) > 5) {
-            for (let i = currentPage - 5; i < currentPage + 4; i++) {
+        } else if (currentPage > numberOfPagesOnPanel / 2 && (lastPage - currentPage) > numberOfPagesOnPanel / 2) {
+            for (let i = currentPage - numberOfPagesOnPanel / 2; i < currentPage + 4; i++) {
                 pageNumbers.push(i);
             }
             pageNumbers.push('...');
         } else {
-            for (let i = lastPage - 10; i < lastPage; i++) {
+            for (let i = lastPage - numberOfPagesOnPanel; i < lastPage; i++) {
                 pageNumbers.push(i);
             }
         }
@@ -45,21 +46,28 @@ const PaginatePanel = ({lastPage, paginate, currentPage}) => {
     });
     return (
         <ul className={"pagination justify-content-center"}>
-            <li className={'page-item ' + currentPageNumber === 1 ? 'disabled' : undefined}>
-                <a onClick={() => paginate(1)}
-                   className={"page-link"}>
-                    {"<<"}
-                </a>
-            </li>
+            {arrows({
+                text: '<<',
+                disabled: currentPageNumber === 1,
+                onClick: () => paginate(1)
+            })}
             {nav}
-            <li className={'page-item ' + currentPageNumber === lastPage ? 'disabled' : undefined}>
-                <a onClick={() => paginate(lastPage)}
-                   className={"page-link"}>
-                    {">>"}
-                </a>
-            </li>
+            {arrows({
+                text: '>>',
+                disabled: currentPageNumber === lastPage,
+                onClick: () => paginate(lastPage)
+            })}
         </ul>
     )
 };
+
+function arrows(props) {
+    return <li className={'page-item ' + disabled ? 'disabled' : undefined}>
+        <a onClick={props.onClick}
+           className={"page-link"}>
+            {props.text}
+        </a>
+    </li>
+}
 
 export default PaginatePanel

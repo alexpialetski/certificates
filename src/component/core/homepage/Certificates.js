@@ -3,7 +3,7 @@ import Certificate from "./certificate/Certificate";
 
 const Certificates = ({userCertificates, certificates, role, loading, tagClick, buyClick, deleteClick, deleteAdminClick}) => {
     if (loading || certificates === undefined) {
-        return <h2>Loading...</h2>
+        return <h2>{__("homePage.certificates.loading")}</h2>
     }
 
     const isUserCertificate = (certificateId) => {

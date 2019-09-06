@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import {Link} from "react-router-dom";
 
 import {userService} from '../../service/user.service';
 import {valueGreaterOrEqualThan, valueLessThan} from "../../validation/FormValidation";
@@ -29,7 +28,7 @@ export const RegisterPage = (props) => {
 
         const {value} = e.target;
         if (valueGreaterOrEqualThan(value.length, 30)) {
-            setUsernameError("Login field length must not be greater than 30 characters.");
+            setUsernameError(__("register.error.userNameError"));
         } else {
             setUsernameError("");
         }
@@ -39,9 +38,31 @@ export const RegisterPage = (props) => {
         setPassword(e.target.value);
         const {value} = e.target;
         if (valueLessThan(value.length, 4)) {
-            setPasswordError("Password length must not be less than 4 characters");
+            setPasswordError(__("register.error.passwordError"));
         } else {
             setPasswordError("");
+        }
+    };
+
+    const firstNameInput = (e) => {
+        setFirstName(e.target.value);
+
+        const {value} = e.target;
+        if (valueGreaterOrEqualThan(value.length, 10)) {
+            setFirstNameError(__("register.error.firstNameError"));
+        } else {
+            setFirstNameError("");
+        }
+    };
+
+    const lastNameInput = (e) => {
+        setLastName(e.target.value);
+
+        const {value} = e.target;
+        if (valueGreaterOrEqualThan(value.length, 10)) {
+            setLastNameError(__("register.error.lastNameError"));
+        } else {
+            setLastNameError("");
         }
     };
 
@@ -61,38 +82,16 @@ export const RegisterPage = (props) => {
                 });
     };
 
-    const firstNameInput = (e) => {
-        setFirstName(e.target.value);
-
-        const {value} = e.target;
-        if (valueGreaterOrEqualThan(value.length, 10)) {
-            setFirstNameError("First name field length must not be greater than 10 characters.");
-        } else {
-            setFirstNameError("");
-        }
-    };
-
-    const lastNameInput = (e) => {
-        setLastName(e.target.value);
-
-        const {value} = e.target;
-        if (valueGreaterOrEqualThan(value.length, 10)) {
-            setLastNameError("Last name field length must not be greater than 30 characters.");
-        } else {
-            setLastNameError("");
-        }
-    };
-
     return (
         <div>
             <Header/>
             <Container className="row mt-5 p-5">
-                <h2>Register</h2>
+                <h2>{__("register.register.label")}</h2>
                 <div className={"row"}>
                     <div className="col-md-4">
                         <form name="form flex-column-left-space-around" onSubmit={handleSubmit}>
                             <FormGroup>
-                                <label htmlFor="username">First name</label>
+                                <label htmlFor="username">{__("register.firstName")}</label>
                                 <input type="text"
                                        className={'form-control' + (submitted && !firstName || firstNameError ? ' is-invalid' : '')}
                                        name="username" value={firstName}
@@ -100,7 +99,7 @@ export const RegisterPage = (props) => {
                                 <ConditionalInvalidFeedback
                                     condition={submitted && !firstName}
                                     className={'invalid-feedback'}>
-                                    First name is required
+                                    {__("register.error.fieldRequired")}
                                 </ConditionalInvalidFeedback>
                                 <ConditionalInvalidFeedback
                                     condition={firstNameError}
@@ -109,7 +108,7 @@ export const RegisterPage = (props) => {
                                 </ConditionalInvalidFeedback>
                             </FormGroup>
                             <FormGroup>
-                                <label htmlFor="username">Last name</label>
+                                <label htmlFor="username">{__("register.lastName")}</label>
                                 <input type="text"
                                        className={'form-control' + (submitted && !lastName || lastNameError ? ' is-invalid' : '')}
                                        name="username" value={lastName}
@@ -117,7 +116,7 @@ export const RegisterPage = (props) => {
                                 <ConditionalInvalidFeedback
                                     condition={submitted && !lastName}
                                     className={'invalid-feedback'}>
-                                    Last name is required
+                                    {__("register.error.fieldRequired")}
                                 </ConditionalInvalidFeedback>
                                 <ConditionalInvalidFeedback
                                     condition={lastNameError}
@@ -126,7 +125,7 @@ export const RegisterPage = (props) => {
                                 </ConditionalInvalidFeedback>
                             </FormGroup>
                             <FormGroup>
-                                <label htmlFor="username">Username</label>
+                                <label htmlFor="username">{__("register.userName")}</label>
                                 <input type="text"
                                        className={'form-control' + (submitted && !username || usernameError ? ' is-invalid' : '')}
                                        name="username" value={username}
@@ -134,7 +133,7 @@ export const RegisterPage = (props) => {
                                 <ConditionalInvalidFeedback
                                     condition={submitted && !username}
                                     className={'invalid-feedback'}>
-                                    Username is required
+                                    {__("register.error.fieldRequired")}
                                 </ConditionalInvalidFeedback>
                                 <ConditionalInvalidFeedback
                                     condition={usernameError}
@@ -143,7 +142,7 @@ export const RegisterPage = (props) => {
                                 </ConditionalInvalidFeedback>
                             </FormGroup>
                             <FormGroup>
-                                <label htmlFor="password">Password</label>
+                                <label htmlFor="password">{__("register.password")}</label>
                                 <input type="password"
                                        name="password" value={password}
                                        className={'form-control' + (submitted && !password || passwordError ? ' is-invalid' : '')}
@@ -151,7 +150,7 @@ export const RegisterPage = (props) => {
                                 <ConditionalInvalidFeedback
                                     condition={submitted && !password}
                                     className={'invalid-feedback'}>
-                                    Password is required
+                                    {__("register.error.fieldRequired")}
                                 </ConditionalInvalidFeedback>
                                 <ConditionalInvalidFeedback
                                     condition={passwordError}
@@ -161,7 +160,7 @@ export const RegisterPage = (props) => {
                             </FormGroup>
                             <ControlButtons
                                 loading={loading}
-                                submitButtonText={'Register'}
+                                submitButtonText={__("register.register.button")}
                                 fieldsWithData={[username, firstName, lastName, password]}/>
                             {loading && <img alt={'Loader'} src={smallLoader}/>}
                             {error && <div className={'alert alert-danger'}>{error}</div>}

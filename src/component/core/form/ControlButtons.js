@@ -17,7 +17,6 @@ export default ({fieldsWithData, loading, submitButtonText}) => {
 
     const onClick = (e) => {
         e.preventDefault();
-        debugger;
         if (canCancel) {
             setRedirect(true);
             return;
@@ -31,7 +30,7 @@ export default ({fieldsWithData, loading, submitButtonText}) => {
             <button
                 className="btn btn-lg btn-primary"
                 onClick={onClick}
-                disabled={loading}>Cancel
+                disabled={loading}>{__("form.button.cancel")}
             </button>
             {redirect && <Redirect to='/'/>}
         </div>)
