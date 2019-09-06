@@ -10,7 +10,7 @@ export default ({role, deleteClick, cost, userButtonText, certificateId, userCli
     }
     return (
         <div className={'footer-options ' + footer}>
-            {isSatisfied(role, "ADMIN") &&
+            {isSatisfied(role, Role.ADMIN) &&
             <div className={'user-options'}>
                 <Link to={'/certificates/admin/edit?id=' + certificateId} type="button"
                       className="btn btn-info">{__("certificate.button.admin.edit")}</Link>

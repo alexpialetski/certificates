@@ -14,6 +14,7 @@ import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
 import ControlButtons from "../core/form/ControlButtons";
+import FormInput from "../core/form/FormInput";
 
 export const EditCertificatePage = (props) => {
     const contextType = useContext(UserContext);
@@ -127,20 +128,11 @@ export const EditCertificatePage = (props) => {
                 <form name="form flex-column-left-space-around" onSubmit={handleSubmit}>
                     <FormGroup>
                         <label htmlFor="title">{__("editCertificate.title.label")}</label>
-                        <input type="text"
-                               className={'form-control' + (submitted && !title || titleError ? ' is-invalid' : '')}
-                               name="title" value={title}
-                               onChange={titleInput}/>
-                        <ConditionalInvalidFeedback
-                            condition={submitted && !title}
-                            className={'invalid-feedback'}>
-                            {__("editCertificate.error.fieldRequired")}
-                        </ConditionalInvalidFeedback>
-                        <ConditionalInvalidFeedback
-                            condition={titleError}
-                            className={'invalid-feedback'}>
-                            {titleError}
-                        </ConditionalInvalidFeedback>
+                        <FormInput
+                            onChange={titleInput}
+                            source={title}
+                            sourceError={titleError}
+                            submitted={submitted}/>
                     </FormGroup>
                     <DatePicker
                         dateFormat="yyyy-mm-dd"
@@ -149,37 +141,19 @@ export const EditCertificatePage = (props) => {
                     />
                     <FormGroup>
                         <label htmlFor="description">{__("editCertificate.description.label")}</label>
-                        <input type="text"
-                               name="description" value={description}
-                               className={'form-control' + (submitted && !description || descriptionError ? ' is-invalid' : '')}
-                               onChange={descriptionInput}/>
-                        <ConditionalInvalidFeedback
-                            condition={submitted && !description}
-                            className={'invalid-feedback'}>
-                            {__("editCertificate.error.fieldRequired")}
-                        </ConditionalInvalidFeedback>
-                        <ConditionalInvalidFeedback
-                            condition={descriptionError}
-                            className={'invalid-feedback'}>
-                            {descriptionError}
-                        </ConditionalInvalidFeedback>
+                        <FormInput
+                            onChange={descriptionInput}
+                            source={description}
+                            sourceError={descriptionError}
+                            submitted={submitted}/>
                     </FormGroup>
                     <FormGroup>
                         <label htmlFor="cost">{__("editCertificate.cost.label")}</label>
-                        <input type="number"
-                               name="cost" value={cost}
-                               className={'form-control' + (submitted && !cost || costError ? ' is-invalid' : '')}
-                               onChange={costInput}/>
-                        <ConditionalInvalidFeedback
-                            condition={submitted && !cost}
-                            className={'invalid-feedback'}>
-                            {__("editCertificate.error.fieldRequired")}
-                        </ConditionalInvalidFeedback>
-                        <ConditionalInvalidFeedback
-                            condition={costError}
-                            className={'invalid-feedback'}>
-                            {costError}
-                        </ConditionalInvalidFeedback>
+                        <FormInput
+                            onChange={costInput}
+                            source={cost}
+                            sourceError={costError}
+                            submitted={submitted}/>
                     </FormGroup>
                     <div className="container">
                         <div className="row">

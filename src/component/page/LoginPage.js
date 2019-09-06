@@ -6,6 +6,7 @@ import {Header} from "./part/Header";
 import UserContext from '../context/AppContext';
 import Container from "../core/Container";
 import FormGroup from "../core/form/FormGroup";
+import FormInput from "../core/form/FormInput";
 import ConditionalInvalidFeedback from "../core/form/ConditionalFeedback";
 import img from "../../resources/images/welcome.jpg"
 import smallLoader from "../../resources/images/smallLoader.gif"
@@ -76,37 +77,19 @@ export const LoginPage = (props) => {
                         <form name="form flex-column-left-space-around" onSubmit={handleSubmit}>
                             <FormGroup>
                                 <label htmlFor="username">{__("login.userName")}</label>
-                                <input type="text"
-                                       className={'form-control' + (submitted && !username || usernameError ? ' is-invalid' : '')}
-                                       name="username" value={username}
-                                       onChange={userNameInput}/>
-                                <ConditionalInvalidFeedback
-                                    condition={submitted && !username}
-                                    className={'invalid-feedback'}>
-                                    {__("login.error.fieldRequired")}
-                                </ConditionalInvalidFeedback>
-                                <ConditionalInvalidFeedback
-                                    condition={submitted && !username}
-                                    className={'invalid-feedback'}>
-                                    {usernameError}
-                                </ConditionalInvalidFeedback>
+                                <FormInput
+                                    onChange={userNameInput}
+                                    source={username}
+                                    sourceError={usernameError}
+                                    submitted={submitted}/>
                             </FormGroup>
                             <FormGroup>
                                 <label htmlFor="password">{__("login.password")}</label>
-                                <input type="password"
-                                       name="password" value={password}
-                                       className={'form-control' + (submitted && !password || passwordError ? ' is-invalid' : '')}
-                                       onChange={passwordInput}/>
-                                <ConditionalInvalidFeedback
-                                    condition={submitted && !password}
-                                    className={'invalid-feedback'}>
-                                    {__("login.error.fieldRequired")}
-                                </ConditionalInvalidFeedback>
-                                <ConditionalInvalidFeedback
-                                    condition={passwordError}
-                                    className={'invalid-feedback'}>
-                                    {passwordError}
-                                </ConditionalInvalidFeedback>
+                                <FormInput
+                                    onChange={passwordInput}
+                                    source={password}
+                                    sourceError={passwordError}
+                                    submitted={submitted}/>
                             </FormGroup>
                             <ControlButtons
                                 loading={loading}

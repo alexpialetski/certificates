@@ -9,6 +9,7 @@ import ConditionalInvalidFeedback from "../core/form/ConditionalFeedback";
 import img from "../../resources/images/register.jpg"
 import smallLoader from "../../resources/images/smallLoader.gif"
 import ControlButtons from "../core/form/ControlButtons";
+import FormInput from "../core/form/FormInput";
 
 export const RegisterPage = (props) => {
     const [username, setUsername] = useState('');
@@ -92,71 +93,35 @@ export const RegisterPage = (props) => {
                         <form name="form flex-column-left-space-around" onSubmit={handleSubmit}>
                             <FormGroup>
                                 <label htmlFor="username">{__("register.firstName")}</label>
-                                <input type="text"
-                                       className={'form-control' + (submitted && !firstName || firstNameError ? ' is-invalid' : '')}
-                                       name="username" value={firstName}
-                                       onChange={firstNameInput}/>
-                                <ConditionalInvalidFeedback
-                                    condition={submitted && !firstName}
-                                    className={'invalid-feedback'}>
-                                    {__("register.error.fieldRequired")}
-                                </ConditionalInvalidFeedback>
-                                <ConditionalInvalidFeedback
-                                    condition={firstNameError}
-                                    className={'invalid-feedback'}>
-                                    {firstNameError}
-                                </ConditionalInvalidFeedback>
+                                <FormInput
+                                    onChange={firstNameInput}
+                                    source={firstName}
+                                    sourceError={firstNameError}
+                                    submitted={submitted}/>
                             </FormGroup>
                             <FormGroup>
                                 <label htmlFor="username">{__("register.lastName")}</label>
-                                <input type="text"
-                                       className={'form-control' + (submitted && !lastName || lastNameError ? ' is-invalid' : '')}
-                                       name="username" value={lastName}
-                                       onChange={lastNameInput}/>
-                                <ConditionalInvalidFeedback
-                                    condition={submitted && !lastName}
-                                    className={'invalid-feedback'}>
-                                    {__("register.error.fieldRequired")}
-                                </ConditionalInvalidFeedback>
-                                <ConditionalInvalidFeedback
-                                    condition={lastNameError}
-                                    className={'invalid-feedback'}>
-                                    {lastNameError}
-                                </ConditionalInvalidFeedback>
+                                <FormInput
+                                    onChange={lastNameInput}
+                                    source={lastName}
+                                    sourceError={lastNameError}
+                                    submitted={submitted}/>
                             </FormGroup>
                             <FormGroup>
                                 <label htmlFor="username">{__("register.userName")}</label>
-                                <input type="text"
-                                       className={'form-control' + (submitted && !username || usernameError ? ' is-invalid' : '')}
-                                       name="username" value={username}
-                                       onChange={userNameInput}/>
-                                <ConditionalInvalidFeedback
-                                    condition={submitted && !username}
-                                    className={'invalid-feedback'}>
-                                    {__("register.error.fieldRequired")}
-                                </ConditionalInvalidFeedback>
-                                <ConditionalInvalidFeedback
-                                    condition={usernameError}
-                                    className={'invalid-feedback'}>
-                                    {usernameError}
-                                </ConditionalInvalidFeedback>
+                                <FormInput
+                                    onChange={userNameInput}
+                                    source={username}
+                                    sourceError={usernameError}
+                                    submitted={submitted}/>
                             </FormGroup>
                             <FormGroup>
                                 <label htmlFor="password">{__("register.password")}</label>
-                                <input type="password"
-                                       name="password" value={password}
-                                       className={'form-control' + (submitted && !password || passwordError ? ' is-invalid' : '')}
-                                       onChange={passwordInput}/>
-                                <ConditionalInvalidFeedback
-                                    condition={submitted && !password}
-                                    className={'invalid-feedback'}>
-                                    {__("register.error.fieldRequired")}
-                                </ConditionalInvalidFeedback>
-                                <ConditionalInvalidFeedback
-                                    condition={passwordError}
-                                    className={'invalid-feedback'}>
-                                    {passwordError}
-                                </ConditionalInvalidFeedback>
+                                <FormInput
+                                    onChange={passwordInput}
+                                    source={password}
+                                    sourceError={passwordError}
+                                    submitted={submitted}/>
                             </FormGroup>
                             <ControlButtons
                                 loading={loading}

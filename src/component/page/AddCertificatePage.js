@@ -11,6 +11,7 @@ import Tags from "../core/homepage/certificate/Tags";
 import {certificateService} from "../../service/certificates.service";
 import UserContext from "../context/AppContext";
 import ControlButtons from "../core/form/ControlButtons";
+import FormInput from "../core/form/FormInput";
 
 export const AddCertificatePage = (props) => {
     const contextType = useContext(UserContext);
@@ -106,54 +107,27 @@ export const AddCertificatePage = (props) => {
                 <form name="form flex-column-left-space-around" onSubmit={handleSubmit}>
                     <FormGroup>
                         <label htmlFor="title">{__("addCertificate.title.label")}</label>
-                        <input type="text"
-                               className={'form-control' + (submitted && !title || titleError ? ' is-invalid' : '')}
-                               name="title" value={title}
-                               onChange={titleInput}/>
-                        <ConditionalInvalidFeedback
-                            condition={submitted && !title}
-                            className={'invalid-feedback'}>
-                            {__("addCertificate.error.fieldRequired")}
-                        </ConditionalInvalidFeedback>
-                        <ConditionalInvalidFeedback
-                            condition={titleError}
-                            className={'invalid-feedback'}>
-                            {titleError}
-                        </ConditionalInvalidFeedback>
+                        <FormInput
+                            onChange={titleInput}
+                            source={title}
+                            sourceError={titleError}
+                            submitted={submitted}/>
                     </FormGroup>
                     <FormGroup>
                         <label htmlFor="description">{__("addCertificate.description.label")}</label>
-                        <input type="text"
-                               name="description" value={description}
-                               className={'form-control' + (submitted && !description || descriptionError ? ' is-invalid' : '')}
-                               onChange={descriptionInput}/>
-                        <ConditionalInvalidFeedback
-                            condition={submitted && !description}
-                            className={'invalid-feedback'}>
-                            {__("addCertificate.error.fieldRequired")}
-                        </ConditionalInvalidFeedback>
-                        <ConditionalInvalidFeedback
-                            condition={descriptionError}
-                            className={'invalid-feedback'}>
-                            {descriptionError}
-                        </ConditionalInvalidFeedback>
+                        <FormInput
+                            onChange={descriptionInput}
+                            source={description}
+                            sourceError={descriptionError}
+                            submitted={submitted}/>
                     </FormGroup>
                     <FormGroup>
                         <label htmlFor="cost">{__("addCertificate.cost.label")}</label>
-                        <input type="number"
-                               name="cost" value={cost}
-                               className={'form-control' + (submitted && !cost || costError ? ' is-invalid' : '')}
-                               onChange={costInput}/>
-                        <ConditionalInvalidFeedback
-                            condition={submitted && !cost}
-                            className={'invalid-feedback'}>
-                            {__("addCertificate.error.fieldRequired")}
-                        </ConditionalInvalidFeedback>
-                        <ConditionalInvalidFeedback
-                            condition={costError}
-                            className={'invalid-feedback'}>
-                            {costError}
-                        </ConditionalInvalidFeedback>
+                        <FormInput
+                            onChange={costInput}
+                            source={cost}
+                            sourceError={costError}
+                            submitted={submitted}/>
                     </FormGroup>
                     <div className="container">
                         <div className="row">
