@@ -49,7 +49,6 @@ export function configureFakeBackend() {
                         return;
                     }
 
-                    // get users
                     if (url.endsWith('/users') && opts.method === 'GET') {
                         if (opts.headers && isSatisfied(opts.headers.roles, Role.ADMIN)) {
                             resolve({ok: true, text: () => Promise.resolve(JSON.stringify(users))});

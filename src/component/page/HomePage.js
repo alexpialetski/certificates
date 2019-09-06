@@ -194,16 +194,19 @@ export default () => {
                             </div>
                         </div>
                         <div className={'m-5 certificates'}>
-                            <Certificates
-                                userCertificates={userCertificates}
-                                certificates={currentCertificates}
-                                loading={loading}
-                                role={contextType.user.roles}
-                                tagClick={tagClick}
-                                buyClick={buyClick}
-                                deleteClick={deleteClick}
-                                deleteAdminClick={deleteAdminClick}
-                            />
+                            {loading || certificates === undefined ?
+                                <h2>{__("homePage.certificates.loading")}</h2>
+                                :
+                                <Certificates
+                                    userCertificates={userCertificates}
+                                    certificates={currentCertificates}
+                                    role={contextType.user.roles}
+                                    tagClick={tagClick}
+                                    buyClick={buyClick}
+                                    deleteClick={deleteClick}
+                                    deleteAdminClick={deleteAdminClick}
+                                />
+                            }
                         </div>
                         <div className={'container'}>
                             <div className={'row align-items-center'}>
