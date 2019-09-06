@@ -1,11 +1,7 @@
 import React from 'react';
 import Certificate from "./certificate/Certificate";
 
-const Certificates = ({userCertificates, certificates, role, loading, tagClick, buyClick, deleteClick, deleteAdminClick}) => {
-    if (loading || certificates === undefined) {
-        return <h2>{__("homePage.certificates.loading")}</h2>
-    }
-
+const Certificates = ({userCertificates, certificates, role, tagClick, buyClick, deleteClick, deleteAdminClick}) => {
     const isUserCertificate = (certificateId) => {
         for (let i = 0; i < userCertificates.length; i++) {
             if (userCertificates[i] === certificateId) {

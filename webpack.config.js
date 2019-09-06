@@ -19,7 +19,6 @@ module.exports = Object.keys(languages).map(function (language) {
     return {
         name: language,
         entry: ['babel-polyfill', './src/index.js'],
-        // entry: { app: './src/index.js' },
         output: {
             path: path.join(__dirname, "dist"),
             filename: language + '[name].[hash].js',
@@ -109,7 +108,6 @@ module.exports = Object.keys(languages).map(function (language) {
             historyApiFallback: true
         },
         externals: {
-            // global app config object
             config: JSON.stringify({
                 apiUrl: 'http://localhost:9000'
             })
@@ -119,7 +117,6 @@ module.exports = Object.keys(languages).map(function (language) {
         },
         plugins: [
             extractSass,
-            // new ExtractTextPlugin('[name].[hash].css'),
             new HtmlWebPackPlugin({
                 template: './src/index.html',
                 filename: './index.html',
