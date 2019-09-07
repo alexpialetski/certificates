@@ -52,7 +52,7 @@
   "homePage.label.all": "All",
   "homePage.label.onlyMy": "Only my certificates",
   "homePage.label.certificates": "Certificates",
-  "homePage.ph.search": "Certificates",
+  "homePage.ph.search": "Search",
   "homePage.certificates.loading": "Loading...",
   "pagination.older.label": "<--- Older",
   "pagination.newer.label": "Newer --->",
@@ -61,6 +61,5 @@
   "certificate.button.admin.edit": "Edit",
   "certificate.button.buy": "Buy",
   "form.button.cancel": "Cancel"
-
 }
 

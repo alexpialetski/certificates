@@ -1,5 +1,4 @@
 import React, {useContext, useState} from 'react';
-import {initReactI18next, useTranslation} from "react-i18next";
 import {userService} from '../../service/user.service';
 import {valueGreaterOrEqualThan, valueLessThan} from "../../validation/FormValidation";
 import {Header} from "./part/Header";
@@ -7,7 +6,6 @@ import UserContext from '../context/AppContext';
 import Container from "../core/Container";
 import FormGroup from "../core/form/FormGroup";
 import FormInput from "../core/form/FormInput";
-import ConditionalInvalidFeedback from "../core/form/ConditionalFeedback";
 import img from "../../resources/images/welcome.jpg"
 import smallLoader from "../../resources/images/smallLoader.gif"
 import ControlButtons from "../core/form/ControlButtons";
@@ -20,36 +18,14 @@ export const LoginPage = (props) => {
     const [submitted, setSubmitted] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
-    const [usernameError, setUsernameError] = useState(false);
-    const [passwordError, setPasswordError] = useState(false);
-    const {t, i18n} = useTranslation('en', initReactI18next);
-
-    const userNameInput = (e) => {
-        setUsername(e.target.value);
-
-        const {value} = e.target;
-        if (valueGreaterOrEqualThan(value.length, 30)) {
-            setUsernameError(__("login.error.userNameError"));
-        } else {
-            setUsernameError("");
-        }
-    };
-
-    const passwordInput = (e) => {
-        setPassword(e.target.value);
-        const {value} = e.target;
-        if (valueLessThan(value.length, 4)) {
-            setPasswordError(__("login.error.passwordError"));
-        } else {
-            setPasswordError("");
-        }
-    };
+    const [usernameError, setUsernameError] = useState([]);
+    const [passwordError, setPasswordError] = useState([]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
         setSubmitted(true);
 
-        if (!(username && password) || !valueLessThan(username.length, 30) || !valueGreaterOrEqualThan(password.length, 4)) {
+        if (!(username && password) || usernameError.length || passwordError.length) {
             return;
         }
         setLoading(true);
@@ -78,18 +54,36 @@ export const LoginPage = (props) => {
                             <FormGroup>
                                 <label htmlFor="username">{__("login.userName")}</label>
                                 <FormInput
-                                    onChange={userNameInput}
+                                    required={true}
                                     source={username}
+                                    setSource={setUsername}
                                     sourceError={usernameError}
-                                    submitted={submitted}/>
+                                    setSourceError={setUsernameError}
+                                    submitted={submitted}
+                                    type={'text'}
+                                    onChange={(e) => {
+                                        const {value} = e.target;
+                                        if (valueGreaterOrEqualThan(value.length, 30)) {
+                                            return __("login.error.userNameError")
+                                        }
+                                    }}/>
                             </FormGroup>
                             <FormGroup>
                                 <label htmlFor="password">{__("login.password")}</label>
                                 <FormInput
-                                    onChange={passwordInput}
+                                    required={true}
                                     source={password}
+                                    setSource={setPassword}
                                     sourceError={passwordError}
-                                    submitted={submitted}/>
+                                    setSourceError={setPasswordError}
+                                    submitted={submitted}
+                                    type={'password'}
+                                    onChange={(e) => {
+                                        const {value} = e.target;
+                                        if (valueLessThan(value.length, 4)) {
+                                            return __("login.error.passwordError")
+                                        }
+                                    }}/>
                             </FormGroup>
                             <ControlButtons
                                 loading={loading}

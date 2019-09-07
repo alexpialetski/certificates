@@ -60,14 +60,14 @@ export default () => {
     const searchEvent = (searchWords) => {
         const filterObject = {};
         const tags = [];
-        const searchValues = searchWords.match(/((#\(\S+( \S+)?\)\S)|(\S+))/gi);
+        const searchValues = searchWords.split(' ');
         if (!searchValues) {
             getAllCertificates();
             return;
         }
         searchValues.forEach(value => {
-            if (value.indexOf('#') === 0 && value.match(/#\(.*\)/).length) {
-                tags.push(value.slice(2, -1));
+            if (value.indexOf('#') === 0) {
+                tags.push(value.slice(1));
             } else {
                 filterObject.title = value;
             }
@@ -79,7 +79,7 @@ export default () => {
     };
 
     const tagClick = (e) => {
-        setSearch(search + ' #(' + e.target.value + ')');
+        setSearch(search + ' #' + e.target.value);
     };
 
     const searchByFilters = async (filterObject) => {

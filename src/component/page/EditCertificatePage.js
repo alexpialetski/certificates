@@ -15,6 +15,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import ControlButtons from "../core/form/ControlButtons";
 import FormInput from "../core/form/FormInput";
+import {addTagClick, deleteTagClick} from "../../util/tag-helper";
 
 export const EditCertificatePage = (props) => {
     const contextType = useContext(UserContext);
@@ -28,9 +29,9 @@ export const EditCertificatePage = (props) => {
     const [loading, setLoading] = useState(false);
     const [submitted, setSubmitted] = useState(false);
     const [error, setError] = useState('');
-    const [titleError, setTitleError] = useState('');
-    const [costError, setCostError] = useState('');
-    const [descriptionError, setDescriptionError] = useState('');
+    const [titleError, setTitleError] = useState([]);
+    const [costError, setCostError] = useState([]);
+    const [descriptionError, setDescriptionError] = useState([]);
 
     useEffect(() => {
         const certificateId = window.location.href.match(/id=\d+/)[0].slice(3);
@@ -49,61 +50,12 @@ export const EditCertificatePage = (props) => {
         func();
     }, []);
 
-    const titleInput = (e) => {
-        setTitle(e.target.value);
-
-        const {value} = e.target;
-        if (valueGreaterOrEqualThan(value.length, 30)) {
-            setTitleError(__("editCertificate.error.titleError"));
-        } else {
-            setTitleError("");
-        }
-    };
-
-    const descriptionInput = (e) => {
-        setDescription(e.target.value);
-
-        const {value} = e.target;
-        if (valueGreaterOrEqualThan(value.length, 230)) {
-            setDescriptionError(__("editCertificate.error.descriptionError"));
-        } else {
-            setDescriptionError("");
-        }
-    };
-
-    const costInput = (e) => {
-        setCost(e.target.value);
-
-        const {value} = e.target;
-        if (!valueGreaterOrEqualThan(parseInt(value), 0)) {
-            setCostError(__("editCertificate.error.costError"));
-        } else {
-            setCostError("");
-        }
-    };
-
-    const addTagClick = () => {
-        tags.push(tag);
-        setTags([...tags]);
-        setTag('');
-    };
-
-    const deleteTagClick = (e) => {
-        for (let i = 0; i < tags.length; i++) {
-            if (tags[i] === e.target.value) {
-                tags.splice(i, 1);
-                break;
-            }
-        }
-        setTags([...tags]);
-    };
-
     const handleSubmit = (e) => {
         e.preventDefault();
         setSubmitted(true);
-
+        debugger;
         if (!(title && description && cost && tags.length)
-            || descriptionError || titleError || error) {
+            || costError.length || descriptionError.length || titleError.length || error) {
             return;
         }
         const certificate = {id: certificateId, date: createStringOfDate(date), title, description, cost, tags};
@@ -129,10 +81,19 @@ export const EditCertificatePage = (props) => {
                     <FormGroup>
                         <label htmlFor="title">{__("editCertificate.title.label")}</label>
                         <FormInput
-                            onChange={titleInput}
+                            required={true}
                             source={title}
+                            setSource={setTitle}
                             sourceError={titleError}
-                            submitted={submitted}/>
+                            setSourceError={setTitleError}
+                            submitted={submitted}
+                            type={'text'}
+                            onChange={(e) => {
+                                const {value} = e.target;
+                                if (valueGreaterOrEqualThan(value.length, 30)) {
+                                    return __("addCertificate.error.titleError");
+                                }
+                            }}/>
                     </FormGroup>
                     <DatePicker
                         dateFormat="yyyy-mm-dd"
@@ -142,25 +103,43 @@ export const EditCertificatePage = (props) => {
                     <FormGroup>
                         <label htmlFor="description">{__("editCertificate.description.label")}</label>
                         <FormInput
-                            onChange={descriptionInput}
+                            required={true}
                             source={description}
+                            setSource={setDescription}
                             sourceError={descriptionError}
-                            submitted={submitted}/>
+                            setSourceError={setDescriptionError}
+                            submitted={submitted}
+                            type={'text'}
+                            onChange={(e) => {
+                                const {value} = e.target;
+                                if (valueGreaterOrEqualThan(value.length, 230)) {
+                                    return __("addCertificate.error.descriptionError");
+                                }
+                            }}/>
                     </FormGroup>
                     <FormGroup>
                         <label htmlFor="cost">{__("editCertificate.cost.label")}</label>
                         <FormInput
-                            onChange={costInput}
+                            required={true}
                             source={cost}
+                            setSource={setCost}
                             sourceError={costError}
-                            submitted={submitted}/>
+                            setSourceError={setCostError}
+                            submitted={submitted}
+                            type={'number'}
+                            onChange={(e) => {
+                                const {value} = e.target;
+                                if (!valueGreaterOrEqualThan(parseInt(value), 0)) {
+                                    return __("addCertificate.error.costError");
+                                }
+                            }}/>
                     </FormGroup>
                     <div className="container">
                         <div className="row">
                             <div className={'col-md-3'}>
                                 <button
                                     type="button"
-                                    onClick={addTagClick}
+                                    onClick={() => addTagClick(tags, setTags, tag, setTag)}
                                     className="btn btn-warning"
                                     style={{borderRadius: '50%'}}>
                                     +
@@ -180,7 +159,7 @@ export const EditCertificatePage = (props) => {
                             </FormGroup>
                         </div>
                     </div>
-                    <Tags tags={tags} tagClick={deleteTagClick}/>
+                    <Tags tags={tags} tagClick={(e) => deleteTagClick(e, tags, setTags)}/>
                     <ControlButtons
                         loading={loading}
                         submitButtonText={__("editCertificate.button")}

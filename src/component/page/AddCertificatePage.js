@@ -12,6 +12,7 @@ import {certificateService} from "../../service/certificates.service";
 import UserContext from "../context/AppContext";
 import ControlButtons from "../core/form/ControlButtons";
 import FormInput from "../core/form/FormInput";
+import {addTagClick, deleteTagClick} from "../../util/tag-helper";
 
 export const AddCertificatePage = (props) => {
     const contextType = useContext(UserContext);
@@ -23,65 +24,16 @@ export const AddCertificatePage = (props) => {
     const [loading, setLoading] = useState(false);
     const [submitted, setSubmitted] = useState(false);
     const [error, setError] = useState('');
-    const [titleError, setTitleError] = useState('');
-    const [descriptionError, setDescriptionError] = useState('');
-    const [costError, setCostError] = useState('');
-
-    const titleInput = (e) => {
-        setTitle(e.target.value);
-
-        const {value} = e.target;
-        if (valueGreaterOrEqualThan(value.length, 30)) {
-            setTitleError(__("addCertificate.error.titleError"));
-        } else {
-            setTitleError("");
-        }
-    };
-
-    const descriptionInput = (e) => {
-        setDescription(e.target.value);
-
-        const {value} = e.target;
-        if (valueGreaterOrEqualThan(value.length, 230)) {
-            setDescriptionError(__("addCertificate.error.descriptionError"));
-        } else {
-            setDescriptionError("");
-        }
-    };
-
-    const costInput = (e) => {
-        setCost(e.target.value);
-
-        const {value} = e.target;
-        if (!valueGreaterOrEqualThan(parseInt(value), 0)) {
-            setCostError(__("addCertificate.error.costError"));
-        } else {
-            setCostError("");
-        }
-    };
-
-    const addTagClick = () => {
-        tags.push(tag);
-        setTags([...tags]);
-        setTag('');
-    };
-
-    const deleteTagClick = (e) => {
-        for (let i = 0; i < tags.length; i++) {
-            if (tags[i] === e.target.value) {
-                tags.splice(i, 1);
-                break;
-            }
-        }
-        setTags([...tags]);
-    };
+    const [titleError, setTitleError] = useState([]);
+    const [descriptionError, setDescriptionError] = useState([]);
+    const [costError, setCostError] = useState([]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
         setSubmitted(true);
 
         if (!(title && description && cost && tags.length)
-            || descriptionError || titleError || error) {
+            || descriptionError.length || costError.length || titleError.length || error) {
             return;
         }
 
@@ -108,33 +60,60 @@ export const AddCertificatePage = (props) => {
                     <FormGroup>
                         <label htmlFor="title">{__("addCertificate.title.label")}</label>
                         <FormInput
-                            onChange={titleInput}
+                            required={true}
                             source={title}
+                            setSource={setTitle}
                             sourceError={titleError}
-                            submitted={submitted}/>
+                            setSourceError={setTitleError}
+                            submitted={submitted}
+                            type={'text'}
+                            onChange={(e) => {
+                                const {value} = e.target;
+                                if (valueGreaterOrEqualThan(value.length, 30)) {
+                                    return __("addCertificate.error.titleError");
+                                }
+                            }}/>
                     </FormGroup>
                     <FormGroup>
                         <label htmlFor="description">{__("addCertificate.description.label")}</label>
                         <FormInput
-                            onChange={descriptionInput}
+                            required={true}
                             source={description}
+                            setSource={setDescription}
                             sourceError={descriptionError}
-                            submitted={submitted}/>
+                            setSourceError={setDescriptionError}
+                            submitted={submitted}
+                            type={'text'}
+                            onChange={(e) => {
+                                const {value} = e.target;
+                                if (valueGreaterOrEqualThan(value.length, 230)) {
+                                    return __("addCertificate.error.descriptionError");
+                                }
+                            }}/>
                     </FormGroup>
                     <FormGroup>
                         <label htmlFor="cost">{__("addCertificate.cost.label")}</label>
                         <FormInput
-                            onChange={costInput}
+                            required={true}
                             source={cost}
+                            setSource={setCost}
                             sourceError={costError}
-                            submitted={submitted}/>
+                            setSourceError={setCostError}
+                            submitted={submitted}
+                            type={'number'}
+                            onChange={(e) => {
+                                const {value} = e.target;
+                                if (!valueGreaterOrEqualThan(parseInt(value), 0)) {
+                                    return __("addCertificate.error.costError");
+                                }
+                            }}/>
                     </FormGroup>
                     <div className="container">
                         <div className="row">
                             <div className={'col-md-3'}>
                                 <button
                                     type="button"
-                                    onClick={addTagClick}
+                                    onClick={() => addTagClick(tags, setTags, tag, setTag)}
                                     className="btn btn-warning"
                                     style={{borderRadius: '50%'}}>
                                     +
@@ -154,7 +133,7 @@ export const AddCertificatePage = (props) => {
                             </FormGroup>
                         </div>
                     </div>
-                    <Tags tags={tags} tagClick={deleteTagClick}/>
+                    <Tags tags={tags} tagClick={(e => deleteTagClick(e, tags, setTags))}/>
                     <ControlButtons
                         loading={loading}
                         submitButtonText={__("addCertificate.button")}

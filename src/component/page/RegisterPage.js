@@ -5,7 +5,6 @@ import {valueGreaterOrEqualThan, valueLessThan} from "../../validation/FormValid
 import {Header} from "./part/Header";
 import Container from "../core/Container";
 import FormGroup from "../core/form/FormGroup";
-import ConditionalInvalidFeedback from "../core/form/ConditionalFeedback";
 import img from "../../resources/images/register.jpg"
 import smallLoader from "../../resources/images/smallLoader.gif"
 import ControlButtons from "../core/form/ControlButtons";
@@ -18,54 +17,10 @@ export const RegisterPage = (props) => {
     const [password, setPassword] = useState('');
     const [submitted, setSubmitted] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(false);
-    const [usernameError, setUsernameError] = useState(false);
-    const [firstNameError, setFirstNameError] = useState(false);
-    const [lastNameError, setLastNameError] = useState(false);
-    const [passwordError, setPasswordError] = useState(false);
-
-    const userNameInput = (e) => {
-        setUsername(e.target.value);
-
-        const {value} = e.target;
-        if (valueGreaterOrEqualThan(value.length, 30)) {
-            setUsernameError(__("register.error.userNameError"));
-        } else {
-            setUsernameError("");
-        }
-    };
-
-    const passwordInput = (e) => {
-        setPassword(e.target.value);
-        const {value} = e.target;
-        if (valueLessThan(value.length, 4)) {
-            setPasswordError(__("register.error.passwordError"));
-        } else {
-            setPasswordError("");
-        }
-    };
-
-    const firstNameInput = (e) => {
-        setFirstName(e.target.value);
-
-        const {value} = e.target;
-        if (valueGreaterOrEqualThan(value.length, 10)) {
-            setFirstNameError(__("register.error.firstNameError"));
-        } else {
-            setFirstNameError("");
-        }
-    };
-
-    const lastNameInput = (e) => {
-        setLastName(e.target.value);
-
-        const {value} = e.target;
-        if (valueGreaterOrEqualThan(value.length, 10)) {
-            setLastNameError(__("register.error.lastNameError"));
-        } else {
-            setLastNameError("");
-        }
-    };
+    const [usernameError, setUsernameError] = useState([]);
+    const [firstNameError, setFirstNameError] = useState([]);
+    const [lastNameError, setLastNameError] = useState([]);
+    const [passwordError, setPasswordError] = useState([]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -94,41 +49,76 @@ export const RegisterPage = (props) => {
                             <FormGroup>
                                 <label htmlFor="username">{__("register.firstName")}</label>
                                 <FormInput
-                                    onChange={firstNameInput}
+                                    required={true}
                                     source={firstName}
+                                    setSource={setFirstName}
                                     sourceError={firstNameError}
-                                    submitted={submitted}/>
+                                    setSourceError={setFirstNameError}
+                                    submitted={submitted}
+                                    type={'text'}
+                                    onChange={(e) => {
+                                        const {value} = e.target;
+                                        if (valueGreaterOrEqualThan(value.length, 10)) {
+                                            return __("register.error.firstNameError");
+                                        }
+                                    }}/>
                             </FormGroup>
                             <FormGroup>
                                 <label htmlFor="username">{__("register.lastName")}</label>
                                 <FormInput
-                                    onChange={lastNameInput}
+                                    required={true}
                                     source={lastName}
+                                    setSource={setLastName}
                                     sourceError={lastNameError}
-                                    submitted={submitted}/>
+                                    setSourceError={setLastNameError}
+                                    submitted={submitted}
+                                    type={'text'}
+                                    onChange={(e) => {
+                                        const {value} = e.target;
+                                        if (valueGreaterOrEqualThan(value.length, 10)) {
+                                            return __("register.error.lastNameError");
+                                        }
+                                    }}/>
                             </FormGroup>
                             <FormGroup>
                                 <label htmlFor="username">{__("register.userName")}</label>
                                 <FormInput
-                                    onChange={userNameInput}
+                                    required={true}
                                     source={username}
+                                    setSource={setUsername}
                                     sourceError={usernameError}
-                                    submitted={submitted}/>
+                                    setSourceError={setUsernameError}
+                                    submitted={submitted}
+                                    type={'text'}
+                                    onChange={(e) => {
+                                        const {value} = e.target;
+                                        if (valueGreaterOrEqualThan(value.length, 30)) {
+                                            return __("register.error.userNameError");
+                                        }
+                                    }}/>
                             </FormGroup>
                             <FormGroup>
                                 <label htmlFor="password">{__("register.password")}</label>
                                 <FormInput
-                                    onChange={passwordInput}
+                                    required={true}
                                     source={password}
+                                    setSource={setPassword}
                                     sourceError={passwordError}
-                                    submitted={submitted}/>
+                                    setSourceError={setPasswordError}
+                                    submitted={submitted}
+                                    type={'password'}
+                                    onChange={(e) => {
+                                        const {value} = e.target;
+                                        if (valueLessThan(value.length, 4)) {
+                                            return __("login.error.passwordError")
+                                        }
+                                    }}/>
                             </FormGroup>
                             <ControlButtons
                                 loading={loading}
                                 submitButtonText={__("register.register.button")}
                                 fieldsWithData={[username, firstName, lastName, password]}/>
                             {loading && <img alt={'Loader'} src={smallLoader}/>}
-                            {error && <div className={'alert alert-danger'}>{error}</div>}
                         </form>
                     </div>
                     <div className="col-md-8">

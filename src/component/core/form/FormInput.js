@@ -1,23 +1,45 @@
 import React from 'react';
-import ConditionalInvalidFeedback from "./ConditionalFeedback";
 
-export default ({source, submitted, sourceError, onChange, ...rest}) => {
+export default ({source, setSource, sourceError, setSourceError, onChange, type, required, submitted}) => {
+    let showError = false;
+
+    function onUpdate(e) {
+        const {value} = e.target;
+        setSource(value);
+
+        const arrayOfErrors = [];
+        if (required && !value) {
+            showError = true;
+            arrayOfErrors.push(__("login.error.fieldRequired"));
+        }
+        if (onChange) {
+            const error = onChange(e);
+            if (error) {
+                showError = true;
+                arrayOfErrors.push(error);
+            }
+        }
+        if (arrayOfErrors.length) {
+            setSourceError([...arrayOfErrors]);
+        } else {
+            showError = false;
+            setSourceError([]);
+        }
+    }
+
+    const errors = sourceError.map(error => {
+        return <div className={'invalid-feedback'}>
+            {error}
+        </div>
+    });
+
     return (
         <div>
-            <input type="text"
-                   className={'form-control' + (submitted && !source || sourceError ? ' is-invalid' : '')}
+            <input type={type}
+                   className={'form-control' + (submitted && !source || sourceError.length ? ' is-invalid' : '')}
                    name="username" value={source}
-                   onChange={onChange}/>
-            <ConditionalInvalidFeedback
-                condition={submitted && !source}
-                className={'invalid-feedback'}>
-                {__("login.error.fieldRequired")}
-            </ConditionalInvalidFeedback>
-            <ConditionalInvalidFeedback
-                condition={sourceError}
-                className={'invalid-feedback'}>
-                {sourceError}
-            </ConditionalInvalidFeedback>
+                   onChange={onUpdate}/>
+            {errors}
         </div>
     );
 }
