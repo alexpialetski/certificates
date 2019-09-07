@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from "react-router-dom";
-import {isSatisfied, Role} from "../../../../util/authorization";
+import {isSatisfied, Role} from "../../../util/authorization";
 
 export default ({role, deleteClick, cost, userButtonText, certificateId, userClick}) => {
     const options = role === undefined ? 'anonymous-options' : 'user-options';

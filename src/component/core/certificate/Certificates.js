@@ -1,5 +1,5 @@
 import React from 'react';
-import Certificate from "./certificate/Certificate";
+import Certificate from "./Certificate";
 
 const Certificates = ({userCertificates, certificates, role, tagClick, buyClick, deleteClick, deleteAdminClick}) => {
     const isUserCertificate = (certificateId) => {

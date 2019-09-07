@@ -28,6 +28,7 @@ export function configureFakeBackend() {
                                 lastName: user.lastName,
                                 roles: specifyRoles(user.role)
                             };
+                            localStorage.setItem('id', user.id);
                             resolve({ok: true, text: () => Promise.resolve(JSON.stringify(responseJson))});
                         } else {
                             reject('Username or password is incorrect');
@@ -79,6 +80,26 @@ export function configureFakeBackend() {
                                 text: () => Promise.resolve(JSON.stringify(allCertificates
                                     .filter(certificate => certificate.id === opts.certificateId)[0]))
                             });
+                        } else {
+                            resolve({status: 401, text: () => Promise.resolve()});
+                        }
+                        return;
+                    }
+
+                    if (url.endsWith('/admin/findById') && opts.method === 'GET') {
+                        const headers = opts.headers;
+                        if (headers && isSatisfied(headers.roles, Role.ANONYMOUS)) {
+                            let user = users
+                                .filter(user => user.id === opts.userId)[0];
+                            debugger;
+                            let responseJson = {
+                                id: user.id,
+                                username: user.username,
+                                firstName: user.firstName,
+                                lastName: user.lastName,
+                                roles: specifyRoles(user.role)
+                            };
+                            resolve({ok: true, text: () => Promise.resolve(JSON.stringify(responseJson))});
                         } else {
                             resolve({status: 401, text: () => Promise.resolve()});
                         }

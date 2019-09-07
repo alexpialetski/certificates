@@ -1,15 +1,15 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Header} from './part/Header'
+import {Header} from '../core/Header'
 import UserContext from '../context/AppContext';
 import Container from "../core/Container";
 import {ErrorMessage, SuccessMessage} from "../core/messages"
 import {sortCertificatesByDate} from "../../util/comparators"
 import {filterCertificateByTag, filterCertificateByTitle} from "../../util/filters"
 import {certificateService} from "../../service/certificates.service";
-import ColumnOfButtons from "../core/homepage/ColumnOfButtons";
-import Pagination from "../core/homepage/pagination/Pagination";
-import Certificates from "../core/homepage/Certificates";
-import {Footer} from "./part/Footer";
+import ColumnOfButtons from "../core/ColumnOfButtons";
+import Pagination from "../core/pagination/Pagination";
+import Certificates from "../core/certificate/Certificates";
+import {Footer} from "../core/Footer";
 
 export default () => {
     const contextType = useContext(UserContext);

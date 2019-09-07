@@ -1,10 +1,11 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import UserContext from "../../context/AppContext";
-import ToggleButton from "../../core/header/ToggleButton";
-import LeftNavBar from "../../core/header/LeftNavBar";
-import NavBarCollapsed from "../../core/header/NavBarCollapsed";
-import {isSatisfied, Role} from "../../../util/authorization";
+import UserContext from "../context/AppContext";
+import ToggleButton from "./header/ToggleButton";
+import LeftNavBar from "./header/LeftNavBar";
+import NavBarCollapsed from "./header/NavBarCollapsed";
+import {isSatisfied, Role} from "../../util/authorization";
+import {userService} from "../../service/user.service";
 
 class Header extends React.Component {
     static contextType = UserContext;
@@ -24,6 +25,7 @@ class Header extends React.Component {
 
     logout = () => {
         this.context.deleteUser();
+        userService.logout();
         window.location.replace('/login');
     };
 

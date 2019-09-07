@@ -4,7 +4,8 @@ import {authHeader} from '../util/authorization';
 export const userService = {
     login,
     register,
-    logout
+    logout,
+    findById
 };
 
 function login(username, password) {
@@ -14,6 +15,16 @@ function login(username, password) {
         body: JSON.stringify({username, password})
     };
     return fetch(`${config.apiUrl}/users/authenticate`, requestOptions)
+        .then(handleResponse);
+}
+
+async function findById(id, user) {
+    const requestOptions = {
+        method: 'GET',
+        userId: parseInt(id),
+        headers: authHeader(user)
+    };
+    return await fetch(`${config.apiUrl}/admin/findById`, requestOptions)
         .then(handleResponse);
 }
 
@@ -28,8 +39,7 @@ function register(username, password, firstName, lastName) {
 }
 
 function logout() {
-    // let context = useContext(UserContext);
-    // context.deleteUser();
+    localStorage.removeItem('id');
 }
 
 function getAll() {

@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 
 import {userService} from '../../service/user.service';
 import {valueGreaterOrEqualThan, valueLessThan} from "../../validation/FormValidation";
-import {Header} from "./part/Header";
+import {Header} from "../core/Header";
 import Container from "../core/Container";
 import FormGroup from "../core/form/FormGroup";
 import img from "../../resources/images/register.jpg"

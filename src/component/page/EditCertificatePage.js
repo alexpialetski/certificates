@@ -1,13 +1,13 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {valueGreaterOrEqualThan} from "../../validation/FormValidation";
-import {Header} from "./part/Header";
+import {Header} from "../core/Header";
 import Container from "../core/Container";
 import FormGroup from "../core/form/FormGroup";
 import ConditionalInvalidFeedback from "../core/form/ConditionalFeedback";
 import img from "../../resources/images/welcome.jpg"
 import smallLoader from "../../resources/images/smallLoader.gif"
-import {Footer} from "./part/Footer";
-import Tags from "../core/homepage/certificate/Tags";
+import {Footer} from "../core/Footer";
+import Tags from "../core/certificate/Tags";
 import {certificateService} from "../../service/certificates.service";
 import UserContext from "../context/AppContext";
 import DatePicker from "react-datepicker";

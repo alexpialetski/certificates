@@ -1,7 +1,7 @@
 import React, {useContext, useState} from 'react';
 import {userService} from '../../service/user.service';
 import {valueGreaterOrEqualThan, valueLessThan} from "../../validation/FormValidation";
-import {Header} from "./part/Header";
+import {Header} from "../core/Header";
 import UserContext from '../context/AppContext';
 import Container from "../core/Container";
 import FormGroup from "../core/form/FormGroup";
