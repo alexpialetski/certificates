@@ -2,6 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import './resources/styles/homePage.css';
 import './resources/styles/main.css';
+import './resources/styles/loading.css';
 
 import 'bootstrap';
 import App from './App';
