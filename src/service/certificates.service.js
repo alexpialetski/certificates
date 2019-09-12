@@ -1,6 +1,7 @@
 import {userService} from "./user.service";
 import config from 'config';
 import {authHeader} from '../util/authorization';
+import {postFetch} from "../util/backend-util";
 
 export const certificateService = {
     getAll,
@@ -20,6 +21,7 @@ async function getAll(user) {
         headers: authHeader(user)
     };
     return await fetch(`${config.apiUrl}/certificates/all`, requestOptions).then(handleResponse);
+    // return await fetch(`${config.tomcatUrl}/user/allCertificates`, {...postFetch()}).then(handleResponse);
 }
 
 async function findById(user, certificateId) {
@@ -36,6 +38,7 @@ async function searchByMultipleFilters(user, arrayOfFilters) {
         method: 'GET',
         headers: authHeader(user)
     };
+    // return await fetch(`${config.tomcatUrl}/user/allCertificates`, {...postFetch(), ...requestOptions})
     return await fetch(`${config.apiUrl}/certificates/all`, requestOptions)
         .then(handleResponse)
         .then(array => {

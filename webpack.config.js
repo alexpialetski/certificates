@@ -109,7 +109,8 @@ module.exports = Object.keys(languages).map(function (language) {
         },
         externals: {
             config: JSON.stringify({
-                apiUrl: 'http://localhost:9000'
+                apiUrl: 'http://localhost:9000',
+                tomcatUrl: 'http://localhost:8080/controller'
             })
         },
         node: {

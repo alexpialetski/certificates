@@ -1,5 +1,6 @@
 import config from 'config';
 import {authHeader} from '../util/authorization';
+import {postFetch} from "../util/backend-util";
 
 export const userService = {
     login,

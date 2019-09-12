@@ -200,6 +200,7 @@ export default () => {
                                 <Certificates
                                     userCertificates={userCertificates}
                                     certificates={currentCertificates}
+                                    setCertificates={setCertificates}
                                     role={contextType.user.roles}
                                     tagClick={tagClick}
                                     buyClick={buyClick}

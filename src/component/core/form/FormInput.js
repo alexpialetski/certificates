@@ -36,7 +36,7 @@ export default ({source, setSource, sourceError, setSourceError, onChange, type,
     return (
         <div>
             <input type={type}
-                   className={'form-control' + (submitted && !source || sourceError.length ? ' is-invalid' : '')}
+                   className={'form-control' + (sourceError.length ? ' is-invalid' : '')}
                    name="username" value={source}
                    onChange={onUpdate}/>
             {errors}
