@@ -91,7 +91,6 @@ export function configureFakeBackend() {
                         if (headers && isSatisfied(headers.roles, Role.ANONYMOUS)) {
                             let user = users
                                 .filter(user => user.id === opts.userId)[0];
-                            debugger;
                             let responseJson = {
                                 id: user.id,
                                 username: user.username,

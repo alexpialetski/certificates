@@ -12,10 +12,8 @@ class Certificate extends React.Component {
         }
     }
 
-
-
     render() {
-        const {isUserCertificate, tagClick, role, deleteClick, buyClick, editClick, deleteAdminClick} = this.props;
+        const {isUserCertificate, tagClick, role} = this.props;
         const isUserCertificateClass = isUserCertificate ? 'user-certificate' : '';
         return (
             <div className={'shadow p-3 certificate ' + isUserCertificateClass}>
@@ -26,11 +24,9 @@ class Certificate extends React.Component {
                 <Footer
                     role={role}
                     cost={this.state.cost}
-                    userClick={isUserCertificate ? deleteClick : buyClick}
+                    isUserCertificate={isUserCertificate}
                     userButtonText={isUserCertificate ? __("certificate.button.delete") : __("certificate.button.buy")}
-                    editClick={editClick}
-                    certificateId={this.state.id}
-                    deleteClick={deleteAdminClick}/>
+                    certificateId={this.state.id}/>
             </div>
         );
     }

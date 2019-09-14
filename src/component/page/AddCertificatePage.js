@@ -15,7 +15,7 @@ import FormInput from "../core/form/FormInput";
 import {addTagClick, deleteTagClick} from "../../util/tag-helper";
 
 export const AddCertificatePage = (props) => {
-    const contextType = useContext(UserContext);
+    const appContext = useContext(UserContext);
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [cost, setCost] = useState('');
@@ -38,7 +38,7 @@ export const AddCertificatePage = (props) => {
         }
 
         const certificate = {title, description, cost, tags};
-        certificateService.createAdminCertificate(contextType.user, certificate)
+        certificateService.createAdminCertificate(appContext.user, certificate)
             .then(
                 () => {
                     const {from} = props.location.state || {from: {pathname: "/"}};

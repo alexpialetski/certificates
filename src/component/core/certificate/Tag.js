@@ -1,7 +1,13 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Draggable} from "react-beautiful-dnd";
+import HomePageContext from "../../context/HomePageContext";
 
-export default ({tagName, action, index}) => {
+export default ({tagName, index}) => {
+    let contextType = useContext(HomePageContext);
+    const tagClick = (e) => {
+        contextType.setSearch(contextType.search + ' #' + e.target.value);
+    };
+
     return (
         <Draggable draggableId={tagName} index={index}>
             {(provided) => {
@@ -11,7 +17,7 @@ export default ({tagName, action, index}) => {
                 >
                     <div className={'tag'}>
                         <div {...provided.dragHandleProps} style={{...style}}/>
-                        <input type="button" onClick={action} className="btn btn-outline-warning" value={tagName}/>
+                        <input type="button" onClick={tagClick} className="btn btn-outline-warning" value={tagName}/>
                     </div>
                 </div>)
             }

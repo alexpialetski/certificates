@@ -18,7 +18,7 @@ import FormInput from "../core/form/FormInput";
 import {addTagClick, deleteTagClick} from "../../util/tag-helper";
 
 export const EditCertificatePage = (props) => {
-    const contextType = useContext(UserContext);
+    const appContext = useContext(UserContext);
     const [title, setTitle] = useState('');
     const [date, setDate] = useState(new Date());
     const [certificateId, setCertificateId] = useState('');
@@ -37,7 +37,7 @@ export const EditCertificatePage = (props) => {
         const certificateId = window.location.href.match(/id=\d+/)[0].slice(3);
 
         async function func() {
-            return await certificateService.findById(contextType.user, parseInt(certificateId)).then(certificate => {
+            return await certificateService.findById(appContext.user, parseInt(certificateId)).then(certificate => {
                 setTitle(certificate.title);
                 setTags(certificate.tags);
                 setDescription(certificate.description);
@@ -53,13 +53,12 @@ export const EditCertificatePage = (props) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         setSubmitted(true);
-        debugger;
         if (!(title && description && cost && tags.length)
             || costError.length || descriptionError.length || titleError.length || error) {
             return;
         }
         const certificate = {id: certificateId, date: createStringOfDate(date), title, description, cost, tags};
-        certificateService.editAdminCertificate(contextType.user, certificate)
+        certificateService.editAdminCertificate(appContext.user, certificate)
             .then(
                 () => {
                     const {from} = props.location.state || {from: {pathname: "/"}};
