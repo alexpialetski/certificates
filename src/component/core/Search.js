@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react'
+import React, {useContext} from 'react'
 import ColumnOfButtons from "./ColumnOfButtons";
 import HomePageContext from "../context/HomePageContext";
 import {filterCertificateByTag, filterCertificateByTitle} from "../../util/filters";
@@ -22,7 +22,7 @@ export default () => {
         const tags = [];
         const searchValues = searchWords.split(' ');
         if (!searchValues) {
-            updateAllCertificates(appContext.user, homeContext.setCertificates());
+            updateAllCertificates(appContext.user, homeContext.setCertificates);
             return;
         }
         searchValues.forEach(value => {
@@ -35,17 +35,16 @@ export default () => {
         if (tags.length) {
             filterObject.tags = tags;
         }
+        console.log(filterObject);
         searchByFilters(filterObject);
     };
 
     const searchByFilters = async (filterObject) => {
-        // homeContext.setLoading(true);
         const arrayOfFilters = [];
         filterObject.title && arrayOfFilters.push((filterCertificateByTitle(filterObject.title)));
         filterObject.tags && filterObject.tags.forEach(tag => arrayOfFilters.push(filterCertificateByTag(tag)));
         await certificateService.searchByMultipleFilters(homeContext.user, arrayOfFilters)
             .then(res => homeContext.setCertificates(res.sort(sortCertificatesByDate))).then(() => homeContext.paginate(1));
-        // homeContext.setLoading(false);
     };
 
     const typeOfCertificatesEvent = e => {

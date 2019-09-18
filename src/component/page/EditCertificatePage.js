@@ -29,9 +29,7 @@ export const EditCertificatePage = (props) => {
     const [loading, setLoading] = useState(false);
     const [submitted, setSubmitted] = useState(false);
     const [error, setError] = useState('');
-    const [titleError, setTitleError] = useState([]);
-    const [costError, setCostError] = useState([]);
-    const [descriptionError, setDescriptionError] = useState([]);
+    const [errorFlag, setErrorFlag] = useState(false);
 
     useEffect(() => {
         const certificateId = window.location.href.match(/id=\d+/)[0].slice(3);
@@ -53,8 +51,7 @@ export const EditCertificatePage = (props) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         setSubmitted(true);
-        if (!(title && description && cost && tags.length)
-            || costError.length || descriptionError.length || titleError.length || error) {
+        if (!(title && description && cost && tags.length) || error || errorFlag) {
             return;
         }
         const certificate = {id: certificateId, date: createStringOfDate(date), title, description, cost, tags};
@@ -83,9 +80,7 @@ export const EditCertificatePage = (props) => {
                             required={true}
                             source={title}
                             setSource={setTitle}
-                            sourceError={titleError}
-                            setSourceError={setTitleError}
-                            submitted={submitted}
+                            setErrorFlag={setErrorFlag}
                             type={'text'}
                             onChange={(e) => {
                                 const {value} = e.target;
@@ -105,9 +100,7 @@ export const EditCertificatePage = (props) => {
                             required={true}
                             source={description}
                             setSource={setDescription}
-                            sourceError={descriptionError}
-                            setSourceError={setDescriptionError}
-                            submitted={submitted}
+                            setErrorFlag={setErrorFlag}
                             type={'text'}
                             onChange={(e) => {
                                 const {value} = e.target;
@@ -122,9 +115,7 @@ export const EditCertificatePage = (props) => {
                             required={true}
                             source={cost}
                             setSource={setCost}
-                            sourceError={costError}
-                            setSourceError={setCostError}
-                            submitted={submitted}
+                            setErrorFlag={setErrorFlag}
                             type={'number'}
                             onChange={(e) => {
                                 const {value} = e.target;

@@ -15,17 +15,14 @@ export const LoginPage = (props) => {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [submitted, setSubmitted] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
-    const [usernameError, setUsernameError] = useState([]);
-    const [passwordError, setPasswordError] = useState([]);
+    const [errorFlag, setErrorFlag] = useState(false);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setSubmitted(true);
 
-        if (!(username && password) || usernameError.length || passwordError.length) {
+        if (!(username && password) || errorFlag) {
             return;
         }
         setLoading(true);
@@ -57,9 +54,7 @@ export const LoginPage = (props) => {
                                     required={true}
                                     source={username}
                                     setSource={setUsername}
-                                    sourceError={usernameError}
-                                    setSourceError={setUsernameError}
-                                    submitted={submitted}
+                                    setErrorFlag={setErrorFlag}
                                     type={'text'}
                                     onChange={(e) => {
                                         const {value} = e.target;
@@ -74,9 +69,7 @@ export const LoginPage = (props) => {
                                     required={true}
                                     source={password}
                                     setSource={setPassword}
-                                    sourceError={passwordError}
-                                    setSourceError={setPasswordError}
-                                    submitted={submitted}
+                                    setErrorFlag={setErrorFlag}
                                     type={'password'}
                                     onChange={(e) => {
                                         const {value} = e.target;

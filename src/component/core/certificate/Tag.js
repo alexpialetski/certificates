@@ -1,41 +1,7 @@
-import React, {useContext} from 'react';
-import {Draggable} from "react-beautiful-dnd";
-import HomePageContext from "../../context/HomePageContext";
+import React from 'react';
 
-export default ({tagName, index}) => {
-    let contextType = useContext(HomePageContext);
-    const tagClick = (e) => {
-        contextType.setSearch(contextType.search + ' #' + e.target.value);
-    };
-
-    return (
-        <Draggable draggableId={tagName} index={index}>
-            {(provided) => {
-                return (<div
-                    {...provided.draggableProps}
-                    ref={provided.innerRef}
-                >
-                    <div className={'tag'}>
-                        <div {...provided.dragHandleProps} style={{...style}}/>
-                        <input type="button" onClick={tagClick} className="btn btn-outline-warning" value={tagName}/>
-                    </div>
-                </div>)
-            }
-            }
-        </Draggable>
-    );
+export default ({tagName, action, index}) => {
+    return (<div className={'tag'}>
+        <input type="button" onClick={action} className="btn btn-outline-warning" value={tagName}/>
+    </div>);
 }
-const style = {
-    width: '15px',
-    height: '20px',
-    backgroundColor: 'orange',
-    borderRadius: '4px',
-    marginRight: '4px',
-    marginLeft: '8px'
-};
-
-const flex = {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-};

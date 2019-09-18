@@ -3,7 +3,7 @@
 }
 
 .certificates {
-    height: 350px;
+    /*height: 350px;*/
     overflow-x: hidden;
     overflow-y: auto;
 }
@@ -54,4 +54,6 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    background-color: white;
+    height: 350px;
 }

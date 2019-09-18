@@ -15,18 +15,13 @@ export const RegisterPage = (props) => {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [password, setPassword] = useState('');
-    const [submitted, setSubmitted] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [usernameError, setUsernameError] = useState([]);
-    const [firstNameError, setFirstNameError] = useState([]);
-    const [lastNameError, setLastNameError] = useState([]);
-    const [passwordError, setPasswordError] = useState([]);
+    const [errorFlag, setErrorFlag] = useState(false);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setSubmitted(true);
 
-        if (!(username && password) || usernameError || passwordError || firstNameError || lastNameError) {
+        if (!(username && password) || errorFlag) {
             return;
         }
         setLoading(true);
@@ -47,14 +42,12 @@ export const RegisterPage = (props) => {
                     <div className="col-md-4">
                         <form name="form flex-column-left-space-around" onSubmit={handleSubmit}>
                             <FormGroup>
-                                <label htmlFor="username">{__("register.firstName")}</label>
+                                <label htmlFor="firstName">{__("register.firstName")}</label>
                                 <FormInput
                                     required={true}
                                     source={firstName}
+                                    setErrorFlag={setErrorFlag}
                                     setSource={setFirstName}
-                                    sourceError={firstNameError}
-                                    setSourceError={setFirstNameError}
-                                    submitted={submitted}
                                     type={'text'}
                                     onChange={(e) => {
                                         const {value} = e.target;
@@ -64,14 +57,12 @@ export const RegisterPage = (props) => {
                                     }}/>
                             </FormGroup>
                             <FormGroup>
-                                <label htmlFor="username">{__("register.lastName")}</label>
+                                <label htmlFor="lastName">{__("register.lastName")}</label>
                                 <FormInput
                                     required={true}
                                     source={lastName}
                                     setSource={setLastName}
-                                    sourceError={lastNameError}
-                                    setSourceError={setLastNameError}
-                                    submitted={submitted}
+                                    setErrorFlag={setErrorFlag}
                                     type={'text'}
                                     onChange={(e) => {
                                         const {value} = e.target;
@@ -81,14 +72,12 @@ export const RegisterPage = (props) => {
                                     }}/>
                             </FormGroup>
                             <FormGroup>
-                                <label htmlFor="username">{__("register.userName")}</label>
+                                <label htmlFor="userName">{__("register.userName")}</label>
                                 <FormInput
                                     required={true}
                                     source={username}
                                     setSource={setUsername}
-                                    sourceError={usernameError}
-                                    setSourceError={setUsernameError}
-                                    submitted={submitted}
+                                    setErrorFlag={setErrorFlag}
                                     type={'text'}
                                     onChange={(e) => {
                                         const {value} = e.target;
@@ -103,9 +92,7 @@ export const RegisterPage = (props) => {
                                     required={true}
                                     source={password}
                                     setSource={setPassword}
-                                    sourceError={passwordError}
-                                    setSourceError={setPasswordError}
-                                    submitted={submitted}
+                                    setErrorFlag={setErrorFlag}
                                     type={'password'}
                                     onChange={(e) => {
                                         const {value} = e.target;

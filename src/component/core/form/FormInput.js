@@ -1,7 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 
-export default ({source, setSource, sourceError, setSourceError, onChange, type, required, submitted}) => {
-    let showError = false;
+export default ({source, setSource, onChange, submitted, setErrorFlag, type, required}) => {
+    const [sourceError, setSourceError] = useState([]);
+
+    if(submitted && required && !source){
+        setSourceError([...__("login.error.fieldRequired")]);
+    }
 
     function onUpdate(e) {
         const {value} = e.target;
@@ -9,21 +13,23 @@ export default ({source, setSource, sourceError, setSourceError, onChange, type,
 
         const arrayOfErrors = [];
         if (required && !value) {
-            showError = true;
             arrayOfErrors.push(__("login.error.fieldRequired"));
         }
         if (onChange) {
-            const error = onChange(e);
-            if (error) {
-                showError = true;
-                arrayOfErrors.push(error);
+            const errors = onChange(e);
+            if (errors) {
+                arrayOfErrors.push([...errors]);
             }
         }
         if (arrayOfErrors.length) {
             setSourceError([...arrayOfErrors]);
         } else {
-            showError = false;
             setSourceError([]);
+        }
+        if (arrayOfErrors.length) {
+            setErrorFlag(true)
+        }else{
+            setErrorFlag(false);
         }
     }
 
@@ -38,7 +44,8 @@ export default ({source, setSource, sourceError, setSourceError, onChange, type,
             <input type={type}
                    className={'form-control' + (sourceError.length ? ' is-invalid' : '')}
                    name="username" value={source}
-                   onChange={onUpdate}/>
+                   onChange={onUpdate}
+                   required/>
             {errors}
         </div>
     );
