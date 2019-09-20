@@ -1,5 +1,5 @@
 import React from 'react';
-import Tags from './DraggableTags'
+import Tags from './Tags'
 import {searchTagClick} from "../../../util/tag-helper";
 
 

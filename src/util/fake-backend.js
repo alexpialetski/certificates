@@ -13,28 +13,28 @@ export function configureFakeBackend() {
     window.fetch = function (url, opts) {
         return new Promise((resolve, reject) => {
                 setTimeout(() => {
-                    if (url.endsWith('/users/authenticate') && opts.method === 'POST') {
-                        let params = JSON.parse(opts.body);
-                        let filteredUsers = users.filter(user => {
-                            return user.username === params.username && user.password === params.password;
-                        });
-
-                        if (filteredUsers.length) {
-                            let user = filteredUsers[0];
-                            let responseJson = {
-                                id: user.id,
-                                username: user.username,
-                                firstName: user.firstName,
-                                lastName: user.lastName,
-                                roles: specifyRoles(user.role)
-                            };
-                            localStorage.setItem('id', user.id);
-                            resolve({ok: true, text: () => Promise.resolve(JSON.stringify(responseJson))});
-                        } else {
-                            reject('Username or password is incorrect');
-                        }
-                        return;
-                    }
+                    // if (url.endsWith('/users/authenticate') && opts.method === 'POST') {
+                    //     let params = JSON.parse(opts.body);
+                    //     let filteredUsers = users.filter(user => {
+                    //         return user.username === params.username && user.password === params.password;
+                    //     });
+                    //
+                    //     if (filteredUsers.length) {
+                    //         let user = filteredUsers[0];
+                    //         let responseJson = {
+                    //             id: user.id,
+                    //             username: user.username,
+                    //             firstName: user.firstName,
+                    //             lastName: user.lastName,
+                    //             roles: specifyRoles(user.role)
+                    //         };
+                    //         localStorage.setItem('id', user.id);
+                    //         resolve({ok: true, text: () => Promise.resolve(JSON.stringify(responseJson))});
+                    //     } else {
+                    //         reject('Username or password is incorrect');
+                    //     }
+                    //     return;
+                    // }
 
                     if (url.endsWith('/users/register') && opts.method === 'POST') {
                         let params = JSON.parse(opts.body);
@@ -59,18 +59,18 @@ export function configureFakeBackend() {
                         return;
                     }
 
-                    if (url.endsWith('/certificates/all') && opts.method === 'GET') {
-                        const headers = opts.headers;
-                        if (headers && isSatisfied(headers.roles, Role.ANONYMOUS)) {
-                            resolve({
-                                ok: true,
-                                text: () => Promise.resolve(JSON.stringify(allCertificates))
-                            });
-                        } else {
-                            resolve({status: 401, text: () => Promise.resolve()});
-                        }
-                        return;
-                    }
+                    // if (url.endsWith('/certificates/all') && opts.method === 'GET') {
+                    //     const headers = opts.headers;
+                    //     if (headers && isSatisfied(headers.roles, Role.ANONYMOUS)) {
+                    //         resolve({
+                    //             ok: true,
+                    //             text: () => Promise.resolve(JSON.stringify(allCertificates))
+                    //         });
+                    //     } else {
+                    //         resolve({status: 401, text: () => Promise.resolve()});
+                    //     }
+                    //     return;
+                    // }
 
                     if (url.endsWith('/certificates/findById') && opts.method === 'GET') {
                         const headers = opts.headers;

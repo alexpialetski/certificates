@@ -1,84 +1,22 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import Certificate from "./Certificate";
-import {DragDropContext} from "react-beautiful-dnd";
 import HomePageContext from "../../context/HomePageContext";
 import {updateAllCertificates, updateAllUserCertificates} from '../../../util/homepage-util'
 import AppContext from "../../context/AppContext";
-import {Droppable} from "react-beautiful-dnd";
-import {searchTagClick} from "../../../util/tag-helper";
+import Sortable from 'react-sortablejs';
+
 
 const Certificates = () => {
     const homeContext = useContext(HomePageContext);
     const appContext = useContext(AppContext);
 
+    const [groupLeft, setGroupLeft] = useState([]);
+    const [groupRight, setGroupRight] = useState([]);
+
     useEffect(() => {
         appContext.user.username && updateAllUserCertificates(appContext.user, homeContext.setUserCertificates);
         updateAllCertificates(appContext.user, homeContext.setCertificates);
     }, []);
-
-    const onDragEnd = result => {
-        const {destination, source, draggableId, type} = result;
-
-        if (!destination) {
-            return;
-        }
-
-        if (destination.droppableId === source.droppableId &&
-            destination.index === source.index) {
-            return;
-        }
-
-        let certificates = Array.from(homeContext.certificates);
-        if (type === 'tags') {
-            const home = findCertificateById(homeContext.certificates, parseInt((source.droppableId+'').replace('t','')));
-            const foreign = findCertificateById(homeContext.certificates, parseInt((destination.droppableId+'').replace('t','')));
-
-            if (home.index === foreign.index) {
-                const newTags = Array.from(home.certificate.tags);
-                const oldTag = newTags.splice(source.index, 1);
-                newTags.splice(destination.index, 0, oldTag[0]);
-                const newCertificate = {
-                    ...home.certificate,
-                    tags: newTags
-                };
-
-                certificates = Array.from(homeContext.certificates);
-                certificates.splice(home.index, 1, newCertificate);
-                homeContext.setCertificates(certificates);
-            } else {
-                const homeTags = Array.from(home.certificate.tags);
-                const foreignTags = Array.from(foreign.certificate.tags);
-                const oldTag = homeTags.splice(source.index, 1);
-                foreignTags.splice(destination.index, 0, oldTag[0]);
-
-                const newHomeCertificate = {
-                    ...home.certificate,
-                    tags: homeTags
-                };
-
-                const newForeignCertificate = {
-                    ...foreign.certificate,
-                    tags: foreignTags
-                };
-
-                certificates.splice(home.index, 1, newHomeCertificate);
-                certificates.splice(foreign.index, 1, newForeignCertificate);
-                homeContext.setCertificates(certificates);
-            }
-            return;
-        }
-        const home = findCertificateById(homeContext.certificates, currentCertificates[source.index].id);
-        const foreign = findCertificateById(homeContext.certificates, currentCertificates[destination.index].id);
-        console.log(source.index);
-        console.log(JSON.stringify(home));
-        console.log(destination.index);
-        console.log(JSON.stringify(foreign));
-        certificates.splice(source.index, 1);
-        certificates.splice(source.index, 0, foreign.certificate);
-        certificates.splice(destination.index, 1);
-        certificates.splice(destination.index, 0, home.certificate);
-        homeContext.setCertificates(certificates);
-    };
 
     const isUserCertificate = (certificateId) => {
         const {userCertificates} = homeContext;
@@ -96,64 +34,125 @@ const Certificates = () => {
 
     return (
         homeContext.certificates.length ?
-            <DragDropContext onDragEnd={onDragEnd}>
-                <div className={"grid-two-columns"}>
-                    <Droppable
-                        droppableId={'first-column'}
-                        type={'column'}>
-                        {provided => (
-                            <div
-                                ref={provided.innerRef}
-                                {...provided.droppableProps}
-                            >
-                                {
-                                    currentCertificates.map((certificate, index) => {
-                                        if (index % 2 === 0) {
-                                            const boolean = isUserCertificate(certificate.id);
-                                            return <Certificate
-                                                key={certificate.id}
-                                                certificate={certificate}
-                                                isUserCertificate={boolean}
-                                                tags={certificate.tags}
-                                                role={appContext.user.role}
-                                                index={certificate.id}
-                                                test={index}
-                                            />
-                                        }
-                                    })
+            <div className={"grid-two-columns"}>
+                <div className="row">
+                    <div className="col-sm-6">
+                        <Sortable
+                            options={{
+                                animation: 200,
+                                group: {
+                                    name: 'shared',
+                                    pull: true,
+                                    put: true,
+                                },
+                            }}
+                            onChange={(items, sortable, evt) => {
+                                const itemId = parseInt(evt.item.attributes["data-id"].value);
+                                const {oldIndex, newIndex, type, to} = evt;
+                                let {certificates, setCertificates} = homeContext;
+                                const certificateWithIndex = findCertificateById(certificates, itemId);
+                                if (type === 'update') {
+                                    let array = [];
+                                    if (newIndex > oldIndex) {
+                                        array = certificates.splice(certificateWithIndex.index, 2 * (newIndex - oldIndex) + 1);
+                                        changeArray(array);
+                                        certificates.splice(certificateWithIndex.index, 0, ...array);
+                                    } else {
+                                        const indent = oldIndex - newIndex;
+                                        array = certificates.splice(certificateWithIndex.index - 2 * indent, 2 * indent + 1);
+                                        changeArray(array.reverse());
+                                        certificates.splice(certificateWithIndex.index - 2 * indent, 0, ...array.reverse());
+                                    }
+                                } else {
+                                    if (to.id === 'right-column') {
+                                        let cpp = homeContext.certificatesPerPage;
+                                        let left = certificates.splice(2 * oldIndex, cpp - 2 * oldIndex);
+                                        copyArrayUp(left);
+                                        certificates.splice(2 * oldIndex, 0, ...left);
+                                        let right = certificates.splice(2 * newIndex - 1, cpp % 2 === 0 ? cpp - 2 * newIndex - 1 : cpp - 2 * newIndex);
+                                        const temp = left[left.length - 1];
+                                        copyArrayUp(right.reverse());
+                                        certificates.splice(2 * newIndex - 1, 0, ...right.reverse());
+                                        certificates[cpp - 1] = temp;
+                                        certificates[2 * newIndex - 1] = certificateWithIndex.certificate;
+                                    }
                                 }
-                            </div>
-                        )}
-                    </Droppable>
-                    <Droppable
-                        droppableId={'second-column'}
-                        type={'column'}>
-                        {provided => (
-                            <div
-                                ref={provided.innerRef}
-                                {...provided.droppableProps}
-                            >
-                                {
-                                    currentCertificates.map((certificate, index) => {
-                                        if (index % 2 !== 0) {
-                                            const boolean = isUserCertificate(certificate.id);
-                                            return <Certificate
-                                                key={certificate.id}
-                                                certificate={certificate}
-                                                isUserCertificate={boolean}
-                                                tags={certificate.tags}
-                                                role={appContext.user.role}
-                                                index={certificate.id}
-                                                test={index}
-                                            />
-                                        }
-                                    })
+                                setCertificates([...certificates]);
+                            }}
+                            id={'left-column'}
+                            className="block-list"
+                        >
+                            {currentCertificates.map((certificate, index) => {
+                                if (index % 2 === 0) {
+                                    const boolean = isUserCertificate(certificate.id);
+                                    return (
+                                        <div key={certificate.id} data-id={certificate.id}>
+                                            {createCertificate(certificate, boolean, appContext.user.role)}
+                                        </div>)
                                 }
-                            </div>
-                        )}
-                    </Droppable>
+                            })}
+                        </Sortable>
+                    </div>
+                    <div className="col-sm-6">
+                        <Sortable
+                            options={{
+                                animation: 200,
+                                group: {
+                                    name: 'shared',
+                                    pull: true,
+                                    put: true,
+                                },
+                            }}
+                            id={'right-column'}
+                            className="block-list"
+                            onChange={(items, sortable, evt) => {
+                                const itemId = parseInt(evt.item.attributes["data-id"].value);
+                                const {oldIndex, newIndex, type, to} = evt;
+                                let {certificates, setCertificates} = homeContext;
+                                const certificateWithIndex = findCertificateById(certificates, itemId);
+                                if (type === 'update') {
+                                    let array = [];
+                                    if (newIndex > oldIndex) {
+                                        array = certificates.splice(certificateWithIndex.index, 2 * (newIndex - oldIndex) + 1);
+                                        changeArray(array);
+                                        certificates.splice(certificateWithIndex.index, 0, ...array);
+                                    } else {
+                                        const indent = oldIndex - newIndex;
+                                        array = certificates.splice(certificateWithIndex.index - 2 * indent, 2 * indent + 1);
+                                        changeArray(array.reverse());
+                                        certificates.splice(certificateWithIndex.index - 2 * indent, 0, ...array.reverse());
+                                    }
+                                } else {
+                                    if (to.id === 'left-column') {
+                                        let cpp = homeContext.certificatesPerPage;
+                                        let right = certificates.splice(2 * oldIndex + 1, cpp - 2 * oldIndex - 1);
+                                        copyArrayUp(right);
+                                        certificates.splice(2 * oldIndex + 1, 0, ...right);
+                                        let left = certificates.splice(2 * newIndex, cpp % 2 === 0 ? cpp - 2 * newIndex - 1 : cpp - 2 * newIndex);
+                                        const temp = left[left.length - 1];
+                                        copyArrayUp(left.reverse());
+                                        certificates.splice(2 * newIndex, 0, ...left.reverse());
+                                        certificates[cpp % 2 === 0 ? cpp - 1 : cpp - 2] = temp;
+                                        certificates[2 * newIndex] = certificateWithIndex.certificate;
+                                    }
+                                }
+                                setCertificates([...certificates]);
+                            }}
+                        >
+                            {currentCertificates.map((certificate, index) => {
+                                if (index % 2 === 1) {
+                                    debugger;
+                                    const boolean = isUserCertificate(certificate.id);
+                                    return (
+                                        <div key={certificate.id} data-id={certificate.id}>
+                                            {createCertificate(certificate, boolean, appContext.user.role)}
+                                        </div>)
+                                }
+                            })}
+                        </Sortable>
+                    </div>
                 </div>
-            </DragDropContext>
+            </div>
             :
             <h1 className={'ml-5'}>Nothing here...</h1>
 
@@ -168,5 +167,32 @@ function findCertificateById(certificates, id) {
     }
 }
 
+function createCertificate(certificate, isUserCertificate, userRole) {
+    return (<Certificate
+        certificate={certificate}
+        isUserCertificate={isUserCertificate}
+        tags={certificate.tags}
+        role={userRole}
+        index={certificate.id}
+    />);
+}
+
+function changeArray(array) {
+    const temp = array[0];
+    copyArrayUp(array);
+    array[array.length - 1] = temp;
+}
+
+function copyArrayUp(array) {
+    for (let i = 0; i < array.length - 2; i += 2) {
+        array[i] = array[i + 2];
+    }
+}
+
+function copyArrayDown(array) {
+    for (let i = 2; i < array.length; i += 2) {
+        array[i] = array[i + 2];
+    }
+}
 
 export default Certificates

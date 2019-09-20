@@ -7,5 +7,8 @@ export const updateAllUserCertificates = async (user, setUserCertificates) => {
 };
 
 export const updateAllCertificates = async (user, setCertificates) => {
-    await certificateService.getAll(user).then(res => setCertificates(res.sort(sortCertificatesByDate)));
+    await certificateService.getAll(user).then(res => {
+        debugger;
+        setCertificates(res.sort(sortCertificatesByDate))
+    });
 };

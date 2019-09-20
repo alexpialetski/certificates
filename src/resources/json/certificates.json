@@ -4,8 +4,8 @@
     "title": "Dita",
     "date": "2019-07-08",
     "tags": [
-      {"id":1, "tag": "computer"},
-      {"id":2, "tag": "fun"}
+      "computer",
+      "fun"
     ],
     "description": "Aliquam sit amet diam in magna bibendum imperdiet.",
     "cost": 705
@@ -15,9 +15,9 @@
     "title": "Cristy",
     "date": "2019-04-18",
     "tags": [
-      {"id":3, "tag": "chair"},
-      {"id":4, "tag": "little cat"},
-      {"id":5, "tag": "ball"}
+      "chair",
+      "little cat",
+      "ball"
     ],
     "description": "Etiam faucibus cursus urna.",
     "cost": 487
@@ -27,8 +27,8 @@
     "title": "Ermentrude",
     "date": "2018-10-18",
     "tags": [
-      {"id":6, "tag": "gum"},
-      {"id":7, "tag": "bubble"}
+      "gum",
+      "bubble"
     ],
     "description": "Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla.",
     "cost": 812
@@ -38,9 +38,9 @@
     "title": "Barney",
     "date": "2019-01-20",
     "tags": [
-      {"id":8, "tag": "gum"},
-      {"id":9, "tag": "bread"},
-      {"id":10, "tag": "man"}
+      "gum",
+      "bread",
+      "man"
     ],
     "description": "Duis at velit eu est congue elementum.",
     "cost": 578
@@ -50,9 +50,9 @@
     "title": "Thomasina",
     "date": "2019-01-25",
     "tags": [
-      {"id":11, "tag": "window"},
-      {"id":12, "tag": "gum"},
-      {"id":13, "tag": "bread"}
+      "window",
+      "gum",
+      "bread"
     ],
     "description": "Vestibulum rutrum rutrum neque.",
     "cost": 622
@@ -62,9 +62,9 @@
     "title": "Joan",
     "date": "2019-03-18",
     "tags": [
-      {"id":14, "tag": "game"},
-      {"id":15, "tag": "door"},
-      {"id":16, "tag": "fun"}
+      "game",
+      "door",
+      "fun"
     ],
     "description": "In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem.",
     "cost": 603
@@ -74,9 +74,9 @@
     "title": "Pearl",
     "date": "2019-04-18",
     "tags": [
-      {"id":17, "tag": "computer"},
-      {"id":18, "tag": "gum"},
-      {"id":19, "tag": "man"}
+      "computer",
+      "gum",
+      "man"
     ],
     "description": "Cras non velit nec nisi vulputate nonummy.",
     "cost": 334
@@ -86,9 +86,9 @@
     "title": "Goldie",
     "date": "2019-02-23",
     "tags": [
-      {"id":20, "tag": "window"},
-      {"id":21, "tag": "door"},
-      {"id":22, "tag": "man"}
+      "window",
+      "door",
+      "man"
     ],
     "description": "Sed ante.",
     "cost": 573
@@ -98,9 +98,9 @@
     "title": "Sara",
     "date": "2018-08-30",
     "tags": [
-      {"id":23, "tag": "window"},
-      {"id":24, "tag": "gum"},
-      {"id":25, "tag": "little cat"}
+      "window",
+      "gum",
+      "little cat"
     ],
     "description": "Sed vel enim sit amet nunc viverra dapibus.",
     "cost": 350
@@ -110,9 +110,9 @@
     "title": "Fionna",
     "date": "2018-12-05",
     "tags": [
-      {"id":26, "tag": "door"},
-      {"id":27, "tag": "bubble"},
-      {"id":28, "tag": "man"}
+      "door",
+      "bubble",
+      "man"
     ],
     "description": "Duis at velit eu est congue elementum.",
     "cost": 786
@@ -122,8 +122,8 @@
     "title": "Bonita",
     "date": "2018-09-07",
     "tags": [
-      {"id":29, "tag": "window"},
-      {"id":30, "tag": "bread"}
+      "window",
+      "bread"
     ],
     "description": "Suspendisse potenti.",
     "cost": 563
@@ -133,8 +133,8 @@
     "title": "Ninon",
     "date": "2019-08-15",
     "tags": [
-      {"id":31, "tag": "computer"},
-      {"id":32, "tag": "little cat"}
+      "computer",
+      "little cat"
     ],
     "description": "Morbi porttitor lorem id ligula.",
     "cost": 234
@@ -144,9 +144,9 @@
     "title": "Nicoli",
     "date": "2019-04-07",
     "tags": [
-      {"id":33, "tag": "gum"},
-      {"id":34, "tag": "bubble"},
-      {"id":35, "tag": "little cat"}
+      "gum",
+      "bubble",
+      "little cat"
     ],
     "description": "Ut at dolor quis odio consequat varius.",
     "cost": 555
@@ -156,9 +156,9 @@
     "title": "Spike",
     "date": "2018-08-31",
     "tags": [
-      {"id":36, "tag": "bread"},
-      {"id":37, "tag": "little cat"},
-      {"id":38, "tag": "bubble"}
+      "bread",
+      "little cat",
+      "bubble"
     ],
     "description": "Donec dapibus.",
     "cost": 240
@@ -168,9 +168,9 @@
     "title": "Vivie",
     "date": "2019-07-06",
     "tags": [
-      {"id":39, "tag": "window"},
-      {"id":40, "tag": "little cat"},
-      {"id":41, "tag": "man"}
+      "window",
+      "little cat",
+      "man"
     ],
     "description": "Duis aliquam convallis nunc.",
     "cost": 255
@@ -180,9 +180,9 @@
     "title": "Kesley",
     "date": "2019-08-08",
     "tags": [
-      {"id":42, "tag": "door"},
-      {"id":43, "tag": "bubble"},
-      {"id":44, "tag": "ball"}
+      "door",
+      "bubble",
+      "ball"
     ],
     "description": "Pellentesque ultrices mattis odio.",
     "cost": 427
@@ -192,9 +192,9 @@
     "title": "Boony",
     "date": "2019-04-25",
     "tags": [
-      {"id":45, "tag": "game"},
-      {"id":46, "tag": "gum"},
-      {"id":47, "tag": "man"}
+      "game",
+      "gum",
+      "man"
     ],
     "description": "In sagittis dui vel nisl.",
     "cost": 141
@@ -204,9 +204,9 @@
     "title": "Lacy",
     "date": "2019-03-12",
     "tags": [
-      {"id":48, "tag": "chair"},
-      {"id":49, "tag": "door"},
-      {"id":50, "tag": "ball"}
+      "chair",
+      "door",
+      "ball"
     ],
     "description": "Nulla tellus.",
     "cost": 616
@@ -216,8 +216,8 @@
     "title": "Ginger",
     "date": "2019-03-09",
     "tags": [
-      {"id":51, "tag": "game"},
-      {"id":52, "tag": "bubble"}
+      "game",
+      "bubble"
     ],
     "description": "Morbi ut odio.",
     "cost": 933
@@ -227,9 +227,9 @@
     "title": "Ailina",
     "date": "2019-05-29",
     "tags": [
-      {"id":53, "tag": "computer"},
-      {"id":54, "tag": "bread"},
-      {"id":55, "tag": "bubble"}
+      "computer",
+      "bread",
+      "bubble"
     ],
     "description": "Integer tincidunt ante vel ipsum.",
     "cost": 935
@@ -239,9 +239,9 @@
     "title": "Mellicent",
     "date": "2019-06-23",
     "tags": [
-      {"id":56, "tag": "computer"},
-      {"id":57, "tag": "game"},
-      {"id":58, "tag": "man"}
+      "computer",
+      "game",
+      "man"
     ],
     "description": "Morbi a ipsum.",
     "cost": 779
@@ -251,9 +251,9 @@
     "title": "Frannie",
     "date": "2019-07-27",
     "tags": [
-      {"id":59, "tag": "window"},
-      {"id":60, "tag": "bubble"},
-      {"id":61, "tag": "man"}
+      "window",
+      "bubble",
+      "man"
     ],
     "description": "Nulla tellus.",
     "cost": 657
@@ -263,8 +263,8 @@
     "title": "Judon",
     "date": "2018-09-17",
     "tags": [
-      {"id":62, "tag": "door"},
-      {"id":63, "tag": "ball"}
+      "door",
+      "ball"
     ],
     "description": "Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi.",
     "cost": 559
@@ -274,9 +274,9 @@
     "title": "Dodie",
     "date": "2018-09-24",
     "tags": [
-      {"id":64, "tag": "chair"},
-      {"id":65, "tag": "game"},
-      {"id":66, "tag": "fun"}
+      "chair",
+      "game",
+      "fun"
     ],
     "description": "Donec ut dolor.",
     "cost": 487
@@ -286,9 +286,9 @@
     "title": "Latrina",
     "date": "2019-05-02",
     "tags": [
-      {"id":67, "tag": "computer"},
-      {"id":68, "tag": "game"},
-      {"id":69, "tag": "door"}
+      "computer",
+      "game",
+      "door"
     ],
     "description": "Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla.",
     "cost": 590
@@ -298,9 +298,9 @@
     "title": "Elladine",
     "date": "2019-07-22",
     "tags": [
-      {"id":70, "tag": "game"},
-      {"id":71, "tag": "chair"},
-      {"id":72, "tag": "man"}
+      "game",
+      "chair",
+      "man"
     ],
     "description": "Morbi porttitor lorem id ligula.",
     "cost": 496
@@ -310,8 +310,8 @@
     "title": "April",
     "date": "2019-02-01",
     "tags": [
-      {"id":73, "tag": "game"},
-      {"id":74, "tag": "little cat"}
+      "game",
+      "little cat"
     ],
     "description": "In sagittis dui vel nisl.",
     "cost": 380
@@ -321,8 +321,8 @@
     "title": "Gleda",
     "date": "2019-07-21",
     "tags": [
-      {"id":75, "tag": "door"},
-      {"id":76, "tag": "ball"}
+      "door",
+      "ball"
     ],
     "description": "Morbi porttitor lorem id ligula.",
     "cost": 831
@@ -332,9 +332,9 @@
     "title": "Luke",
     "date": "2019-03-27",
     "tags": [
-      {"id":77, "tag": "bread"},
-      {"id":78, "tag": "ball"},
-      {"id":79, "tag": "man"}
+      "bread",
+      "ball",
+      "man"
     ],
     "description": "Aliquam erat volutpat.",
     "cost": 247
@@ -344,8 +344,8 @@
     "title": "Saunderson",
     "date": "2019-04-27",
     "tags": [
-      {"id":80, "tag": "door"},
-      {"id":81, "tag": "little cat"}
+      "door",
+      "little cat"
     ],
     "description": "Duis consequat dui nec nisi volutpat eleifend.",
     "cost": 671
@@ -355,8 +355,8 @@
     "title": "Pam",
     "date": "2019-07-12",
     "tags": [
-      {"id":82, "tag": "bread"},
-      {"id":83, "tag": "bubble"}
+      "bread",
+      "bubble"
     ],
     "description": "Suspendisse potenti.",
     "cost": 743
@@ -366,9 +366,9 @@
     "title": "Ebony",
     "date": "2018-12-27",
     "tags": [
-      {"id":84, "tag": "window"},
-      {"id":85, "tag": "gum"},
-      {"id":86, "tag": "man"}
+      "window",
+      "gum",
+      "man"
     ],
     "description": "Morbi non lectus.",
     "cost": 464
@@ -378,9 +378,9 @@
     "title": "Philip",
     "date": "2019-01-04",
     "tags": [
-      {"id":87, "tag": "game"},
-      {"id":88, "tag": "bubble"},
-      {"id":89, "tag": "fun"}
+      "game",
+      "bubble",
+      "fun"
     ],
     "description": "Suspendisse potenti.",
     "cost": 205
@@ -390,9 +390,9 @@
     "title": "Thorn",
     "date": "2018-11-01",
     "tags": [
-      {"id":90, "tag": "game"},
-      {"id":91, "tag": "chair"},
-      {"id":92, "tag": "little cat"}
+      "game",
+      "chair",
+      "little cat"
     ],
     "description": "Sed accumsan felis.",
     "cost": 950
@@ -402,9 +402,9 @@
     "title": "Buckie",
     "date": "2018-10-16",
     "tags": [
-      {"id":93, "tag": "window"},
-      {"id":94, "tag": "game"},
-      {"id":95, "tag": "ball"}
+      "window",
+      "game",
+      "ball"
     ],
     "description": "Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est.",
     "cost": 891
@@ -414,9 +414,9 @@
     "title": "Kristoforo",
     "date": "2019-01-27",
     "tags": [
-      {"id":96, "tag": "computer"},
-      {"id":97, "tag": "bread"},
-      {"id":98, "tag": "little cat"}
+      "computer",
+      "bread",
+      "little cat"
     ],
     "description": "Quisque porta volutpat erat.",
     "cost": 623
@@ -426,8 +426,8 @@
     "title": "Delora",
     "date": "2019-06-14",
     "tags": [
-      {"id":99, "tag": "gum"},
-      {"id":100, "tag": "door"}
+      "gum",
+      "door"
     ],
     "description": "Pellentesque ultrices mattis odio.",
     "cost": 841
@@ -437,9 +437,9 @@
     "title": "Babara",
     "date": "2018-11-03",
     "tags": [
-      {"id":101, "tag": "chair"},
-      {"id":102, "tag": "fun"},
-      {"id":103, "tag": "ball"}
+      "chair",
+      "fun",
+      "ball"
     ],
     "description": "Pellentesque eget nunc.",
     "cost": 305
@@ -449,9 +449,9 @@
     "title": "Laurel",
     "date": "2018-11-26",
     "tags": [
-      {"id":104, "tag": "door"},
-      {"id":105, "tag": "little cat"},
-      {"id":106, "tag": "bubble"}
+      "door",
+      "little cat",
+      "bubble"
     ],
     "description": "Vivamus in felis eu sapien cursus vestibulum.",
     "cost": 631
@@ -461,8 +461,8 @@
     "title": "Dominik",
     "date": "2018-12-31",
     "tags": [
-      {"id":107, "tag": "gum"},
-      {"id":108, "tag": "bread"}
+      "gum",
+      "bread"
     ],
     "description": "Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo.",
     "cost": 562
@@ -472,8 +472,8 @@
     "title": "Emmanuel",
     "date": "2019-03-02",
     "tags": [
-      {"id":109, "tag": "bread"},
-      {"id":110, "tag": "bubble"}
+      "bread",
+      "bubble"
     ],
     "description": "Morbi a ipsum.",
     "cost": 911
@@ -483,9 +483,9 @@
     "title": "Gian",
     "date": "2019-03-05",
     "tags": [
-      {"id":111, "tag": "game"},
-      {"id":112, "tag": "fun"},
-      {"id":113, "tag": "man"}
+      "game",
+      "fun",
+      "man"
     ],
     "description": "Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.",
     "cost": 425
@@ -495,9 +495,9 @@
     "title": "Gay",
     "date": "2018-11-30",
     "tags": [
-      {"id":114, "tag": "window"},
-      {"id":115, "tag": "chair"},
-      {"id":116, "tag": "man"}
+      "window",
+      "chair",
+      "man"
     ],
     "description": "Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam.",
     "cost": 244
@@ -507,9 +507,9 @@
     "title": "Christopher",
     "date": "2019-08-02",
     "tags": [
-      {"id":117, "tag": "computer"},
-      {"id":118, "tag": "gum"},
-      {"id":119, "tag": "ball"}
+      "computer",
+      "gum",
+      "ball"
     ],
     "description": "Morbi a ipsum.",
     "cost": 240
@@ -519,9 +519,9 @@
     "title": "Honey",
     "date": "2018-09-28",
     "tags": [
-      {"id":120, "tag": "window"},
-      {"id":121, "tag": "bread"},
-      {"id":122, "tag": "ball"}
+      "window",
+      "bread",
+      "ball"
     ],
     "description": "Nulla tempus.",
     "cost": 161
@@ -531,9 +531,9 @@
     "title": "Kira",
     "date": "2019-04-18",
     "tags": [
-      {"id":123, "tag": "gum"},
-      {"id":124, "tag": "bubble"},
-      {"id":125, "tag": "little cat"}
+      "gum",
+      "bubble",
+      "little cat"
     ],
     "description": "Suspendisse accumsan tortor quis turpis.",
     "cost": 116
@@ -543,9 +543,9 @@
     "title": "Ephrayim",
     "date": "2019-06-24",
     "tags": [
-      {"id":126, "tag": "game"},
-      {"id":127, "tag": "bread"},
-      {"id":128, "tag": "ball"}
+      "game",
+      "bread",
+      "ball"
     ],
     "description": "Curabitur convallis.",
     "cost": 275
@@ -555,9 +555,9 @@
     "title": "Vicky",
     "date": "2019-03-31",
     "tags": [
-      {"id":129, "tag": "chair"},
-      {"id":130, "tag": "bread"},
-      {"id":131, "tag": "ball"}
+      "chair",
+      "bread",
+      "ball"
     ],
     "description": "Integer a nibh.",
     "cost": 923
@@ -567,9 +567,9 @@
     "title": "Hayyim",
     "date": "2019-05-14",
     "tags": [
-      {"id":132, "tag": "computer"},
-      {"id":133, "tag": "bread"},
-      {"id":134, "tag": "bubble"}
+      "computer",
+      "bread",
+      "bubble"
     ],
     "description": "Mauris sit amet eros.",
     "cost": 964
@@ -579,9 +579,9 @@
     "title": "Gwenny",
     "date": "2019-06-13",
     "tags": [
-      {"id":135, "tag": "window"},
-      {"id":136, "tag": "gum"},
-      {"id":137, "tag": "bubble"}
+      "window",
+      "gum",
+      "bubble"
     ],
     "description": "Curabitur at ipsum ac tellus semper interdum.",
     "cost": 324
@@ -591,9 +591,9 @@
     "title": "Raquela",
     "date": "2019-01-08",
     "tags": [
-      {"id":138, "tag": "gum"},
-      {"id":139, "tag": "fun"},
-      {"id":140, "tag": "man"}
+      "gum",
+      "fun",
+      "man"
     ],
     "description": "Nulla ac enim.",
     "cost": 863
@@ -603,9 +603,9 @@
     "title": "Hamlen",
     "date": "2019-03-07",
     "tags": [
-      {"id":141, "tag": "computer"},
-      {"id":142, "tag": "gum"},
-      {"id":143, "tag": "man"}
+      "computer",
+      "gum",
+      "man"
     ],
     "description": "Donec vitae nisi.",
     "cost": 896
@@ -615,8 +615,8 @@
     "title": "Octavius",
     "date": "2018-12-14",
     "tags": [
-      {"id":144, "tag": "gum"},
-      {"id":145, "tag": "fun"}
+      "gum",
+      "fun"
     ],
     "description": "In hac habitasse platea dictumst.",
     "cost": 610
@@ -626,9 +626,9 @@
     "title": "Robyn",
     "date": "2018-12-09",
     "tags": [
-      {"id":146, "tag": "computer"},
-      {"id":147, "tag": "chair"},
-      {"id":148, "tag": "bread"}
+      "computer",
+      "chair",
+      "bread"
     ],
     "description": "Nullam porttitor lacus at turpis.",
     "cost": 897
@@ -638,9 +638,9 @@
     "title": "Antone",
     "date": "2018-12-19",
     "tags": [
-      {"id":149, "tag": "gum"},
-      {"id":150, "tag": "bubble"},
-      {"id":151, "tag": "man"}
+      "gum",
+      "bubble",
+      "man"
     ],
     "description": "Curabitur at ipsum ac tellus semper interdum.",
     "cost": 257
@@ -650,9 +650,9 @@
     "title": "Melisa",
     "date": "2018-09-01",
     "tags": [
-      {"id":152, "tag": "computer"},
-      {"id":153, "tag": "game"},
-      {"id":154, "tag": "door"}
+      "computer",
+      "game",
+      "door"
     ],
     "description": "Nulla ac enim.",
     "cost": 518
@@ -662,9 +662,9 @@
     "title": "Isidro",
     "date": "2019-07-24",
     "tags": [
-      {"id":155, "tag": "window"},
-      {"id":156, "tag": "gum"},
-      {"id":157, "tag": "bubble"}
+      "window",
+      "gum",
+      "bubble"
     ],
     "description": "Suspendisse potenti.",
     "cost": 782
@@ -674,9 +674,9 @@
     "title": "Pietro",
     "date": "2018-09-12",
     "tags": [
-      {"id":158, "tag": "window"},
-      {"id":159, "tag": "computer"},
-      {"id":160, "tag": "chair"}
+      "window",
+      "computer",
+      "chair"
     ],
     "description": "In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem.",
     "cost": 981
@@ -686,9 +686,9 @@
     "title": "Corissa",
     "date": "2018-11-08",
     "tags": [
-      {"id":161, "tag": "window"},
-      {"id":162, "tag": "chair"},
-      {"id":163, "tag": "man"}
+      "window",
+      "chair",
+      "man"
     ],
     "description": "Duis mattis egestas metus.",
     "cost": 516
@@ -698,9 +698,9 @@
     "title": "Julita",
     "date": "2019-06-22",
     "tags": [
-      {"id":164, "tag": "bread"},
-      {"id":165, "tag": "little cat"},
-      {"id":166, "tag": "man"}
+      "bread",
+      "little cat",
+      "man"
     ],
     "description": "Vestibulum ac est lacinia nisi venenatis tristique.",
     "cost": 733
@@ -710,9 +710,9 @@
     "title": "Rhianna",
     "date": "2018-09-25",
     "tags": [
-      {"id":167, "tag": "door"},
-      {"id":168, "tag": "bubble"},
-      {"id":169, "tag": "man"}
+      "door",
+      "bubble",
+      "man"
     ],
     "description": "In est risus, auctor sed, tristique in, tempus sit amet, sem.",
     "cost": 240
@@ -722,8 +722,8 @@
     "title": "Yvor",
     "date": "2019-06-04",
     "tags": [
-      {"id":170, "tag": "window"},
-      {"id":171, "tag": "computer"}
+      "window",
+      "computer"
     ],
     "description": "Cras pellentesque volutpat dui.",
     "cost": 582
@@ -733,8 +733,8 @@
     "title": "Lind",
     "date": "2019-05-20",
     "tags": [
-      {"id":172, "tag": "bread"},
-      {"id":173, "tag": "bubble"}
+      "bread",
+      "bubble"
     ],
     "description": "Donec quis orci eget orci vehicula condimentum.",
     "cost": 303
@@ -744,8 +744,8 @@
     "title": "Dick",
     "date": "2019-03-30",
     "tags": [
-      {"id":174, "tag": "door"},
-      {"id":175, "tag": "bubble"}
+      "door",
+      "bubble"
     ],
     "description": "Morbi non lectus.",
     "cost": 940
@@ -755,9 +755,9 @@
     "title": "Liz",
     "date": "2019-03-01",
     "tags": [
-      {"id":176, "tag": "bubble"},
-      {"id":177, "tag": "fun"},
-      {"id":178, "tag": "ball"}
+      "bubble",
+      "fun",
+      "ball"
     ],
     "description": "Curabitur at ipsum ac tellus semper interdum.",
     "cost": 173
@@ -767,8 +767,8 @@
     "title": "Brenden",
     "date": "2019-01-14",
     "tags": [
-      {"id":179, "tag": "window"},
-      {"id":180, "tag": "door"}
+      "window",
+      "door"
     ],
     "description": "Vivamus vel nulla eget eros elementum pellentesque.",
     "cost": 221
@@ -778,9 +778,9 @@
     "title": "Dani",
     "date": "2019-06-02",
     "tags": [
-      {"id":181, "tag": "computer"},
-      {"id":182, "tag": "door"},
-      {"id":183, "tag": "bubble"}
+      "computer",
+      "door",
+      "bubble"
     ],
     "description": "Pellentesque at nulla.",
     "cost": 804
@@ -790,9 +790,9 @@
     "title": "Fabio",
     "date": "2018-11-18",
     "tags": [
-      {"id":184, "tag": "computer"},
-      {"id":185, "tag": "chair"},
-      {"id":186, "tag": "fun"}
+      "computer",
+      "chair",
+      "fun"
     ],
     "description": "Nulla ut erat id mauris vulputate elementum.",
     "cost": 201
@@ -802,9 +802,9 @@
     "title": "Jamal",
     "date": "2019-08-17",
     "tags": [
-      {"id":187, "tag": "chair"},
-      {"id":188, "tag": "ball"},
-      {"id":189, "tag": "man"}
+      "chair",
+      "ball",
+      "man"
     ],
     "description": "Morbi non lectus.",
     "cost": 536
@@ -814,9 +814,9 @@
     "title": "Fielding",
     "date": "2018-11-16",
     "tags": [
-      {"id":190, "tag": "door"},
-      {"id":191, "tag": "bubble"},
-      {"id":192, "tag": "man"}
+      "door",
+      "bubble",
+      "man"
     ],
     "description": "Donec vitae nisi.",
     "cost": 539
@@ -826,9 +826,9 @@
     "title": "Hubey",
     "date": "2019-06-24",
     "tags": [
-      {"id":193, "tag": "bread"},
-      {"id":194, "tag": "little cat"},
-      {"id":195, "tag": "man"}
+      "bread",
+      "little cat",
+      "man"
     ],
     "description": "Duis consequat dui nec nisi volutpat eleifend.",
     "cost": 738
@@ -838,8 +838,8 @@
     "title": "Marie",
     "date": "2018-09-22",
     "tags": [
-      {"id":196, "tag": "computer"},
-      {"id":197, "tag": "bread"}
+      "computer",
+      "bread"
     ],
     "description": "Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros.",
     "cost": 931
@@ -849,9 +849,9 @@
     "title": "Hillie",
     "date": "2019-04-22",
     "tags": [
-      {"id":198, "tag": "computer"},
-      {"id":199, "tag": "chair"},
-      {"id":200, "tag": "fun"}
+      "computer",
+      "chair",
+      "fun"
     ],
     "description": "Vestibulum ac est lacinia nisi venenatis tristique.",
     "cost": 656
@@ -861,9 +861,9 @@
     "title": "Munmro",
     "date": "2019-08-03",
     "tags": [
-      {"id":201, "tag": "window"},
-      {"id":202, "tag": "door"},
-      {"id":203, "tag": "man"}
+      "window",
+      "door",
+      "man"
     ],
     "description": "Morbi porttitor lorem id ligula.",
     "cost": 828
@@ -873,8 +873,8 @@
     "title": "Paulina",
     "date": "2019-03-12",
     "tags": [
-      {"id":204, "tag": "little cat"},
-      {"id":205, "tag": "ball"}
+      "little cat",
+      "ball"
     ],
     "description": "In sagittis dui vel nisl.",
     "cost": 942
@@ -884,8 +884,8 @@
     "title": "Dionisio",
     "date": "2018-09-13",
     "tags": [
-      {"id":206, "tag": "gum"},
-      {"id":207, "tag": "bread"}
+      "gum",
+      "bread"
     ],
     "description": "Proin risus.",
     "cost": 989
@@ -895,9 +895,9 @@
     "title": "Bamby",
     "date": "2019-04-14",
     "tags": [
-      {"id":208, "tag": "chair"},
-      {"id":209, "tag": "door"},
-      {"id":210, "tag": "little cat"}
+      "chair",
+      "door",
+      "little cat"
     ],
     "description": "Morbi ut odio.",
     "cost": 700
@@ -907,9 +907,9 @@
     "title": "Skipper",
     "date": "2019-03-02",
     "tags": [
-      {"id":211, "tag": "bubble"},
-      {"id":212, "tag": "little cat"},
-      {"id":213, "tag": "man"}
+      "bubble",
+      "little cat",
+      "man"
     ],
     "description": "Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam.",
     "cost": 263
@@ -919,9 +919,9 @@
     "title": "Maje",
     "date": "2019-08-19",
     "tags": [
-      {"id":214, "tag": "computer"},
-      {"id":215, "tag": "gum"},
-      {"id":216, "tag": "bread"}
+      "computer",
+      "gum",
+      "bread"
     ],
     "description": "Nulla tellus.",
     "cost": 445
@@ -931,8 +931,8 @@
     "title": "Wildon",
     "date": "2018-12-17",
     "tags": [
-      {"id":217, "tag": "bubble"},
-      {"id":218, "tag": "fun"}
+      "bubble",
+      "fun"
     ],
     "description": "Maecenas pulvinar lobortis est.",
     "cost": 575
@@ -942,8 +942,8 @@
     "title": "Iormina",
     "date": "2018-11-14",
     "tags": [
-      {"id":219, "tag": "chair"},
-      {"id":220, "tag": "bread"}
+      "chair",
+      "bread"
     ],
     "description": "Integer a nibh.",
     "cost": 852
@@ -953,9 +953,9 @@
     "title": "John",
     "date": "2018-10-30",
     "tags": [
-      {"id":221, "tag": "chair"},
-      {"id":222, "tag": "little cat"},
-      {"id":223, "tag": "man"}
+      "chair",
+      "little cat",
+      "man"
     ],
     "description": "Nulla tempus.",
     "cost": 890
@@ -965,9 +965,9 @@
     "title": "Steve",
     "date": "2019-08-07",
     "tags": [
-      {"id":224, "tag": "door"},
-      {"id":225, "tag": "bubble"},
-      {"id":226, "tag": "man"}
+      "door",
+      "bubble",
+      "man"
     ],
     "description": "Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh.",
     "cost": 157
@@ -977,9 +977,9 @@
     "title": "Ambrose",
     "date": "2019-06-15",
     "tags": [
-      {"id":227, "tag": "window"},
-      {"id":228, "tag": "computer"},
-      {"id":229, "tag": "little cat"}
+      "window",
+      "computer",
+      "little cat"
     ],
     "description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit.",
     "cost": 296
@@ -989,9 +989,9 @@
     "title": "Bess",
     "date": "2019-03-15",
     "tags": [
-      {"id":230, "tag": "bread"},
-      {"id":231, "tag": "door"},
-      {"id":232, "tag": "fun"}
+      "bread",
+      "door",
+      "fun"
     ],
     "description": "Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl.",
     "cost": 463
@@ -1001,8 +1001,8 @@
     "title": "Kristoforo",
     "date": "2018-10-27",
     "tags": [
-      {"id":233, "tag": "chair"},
-      {"id":234, "tag": "bubble"}
+      "chair",
+      "bubble"
     ],
     "description": "Vivamus vel nulla eget eros elementum pellentesque.",
     "cost": 566
@@ -1012,9 +1012,9 @@
     "title": "Cecily",
     "date": "2019-01-16",
     "tags": [
-      {"id":235, "tag": "computer"},
-      {"id":236, "tag": "game"},
-      {"id":237, "tag": "ball"}
+      "computer",
+      "game",
+      "ball"
     ],
     "description": "Ut at dolor quis odio consequat varius.",
     "cost": 854
@@ -1024,9 +1024,9 @@
     "title": "Susannah",
     "date": "2019-08-20",
     "tags": [
-      {"id":238, "tag": "chair"},
-      {"id":239, "tag": "door"},
-      {"id":240, "tag": "bubble"}
+      "chair",
+      "door",
+      "bubble"
     ],
     "description": "Duis consequat dui nec nisi volutpat eleifend.",
     "cost": 452
@@ -1036,9 +1036,9 @@
     "title": "Abrahan",
     "date": "2018-12-02",
     "tags": [
-      {"id":241, "tag": "window"},
-      {"id":242, "tag": "chair"},
-      {"id":243, "tag": "gum"}
+      "window",
+      "chair",
+      "gum"
     ],
     "description": "Integer a nibh.",
     "cost": 384
@@ -1048,8 +1048,8 @@
     "title": "Dru",
     "date": "2018-11-16",
     "tags": [
-      {"id":244, "tag": "computer"},
-      {"id":245, "tag": "ball"}
+      "computer",
+      "ball"
     ],
     "description": "In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem.",
     "cost": 478
@@ -1059,9 +1059,9 @@
     "title": "Eamon",
     "date": "2018-11-18",
     "tags": [
-      {"id":246, "tag": "chair"},
-      {"id":247, "tag": "game"},
-      {"id":248, "tag": "bread"}
+      "chair",
+      "game",
+      "bread"
     ],
     "description": "Suspendisse ornare consequat lectus.",
     "cost": 827
@@ -1071,9 +1071,9 @@
     "title": "Scottie",
     "date": "2019-03-14",
     "tags": [
-      {"id":249, "tag": "computer"},
-      {"id":250, "tag": "gum"},
-      {"id":251, "tag": "bubble"}
+      "computer",
+      "gum",
+      "bubble"
     ],
     "description": "Pellentesque eget nunc.",
     "cost": 985
@@ -1083,9 +1083,9 @@
     "title": "Gypsy",
     "date": "2018-11-29",
     "tags": [
-      {"id":252, "tag": "window"},
-      {"id":253, "tag": "game"},
-      {"id":254, "tag": "gum"}
+      "window",
+      "game",
+      "gum"
     ],
     "description": "In hac habitasse platea dictumst.",
     "cost": 329
@@ -1095,9 +1095,9 @@
     "title": "Sibel",
     "date": "2019-05-23",
     "tags": [
-      {"id":255, "tag": "computer"},
-      {"id":256, "tag": "bread"},
-      {"id":257, "tag": "door"}
+      "computer",
+      "bread",
+      "door"
     ],
     "description": "Nulla tempus.",
     "cost": 305
@@ -1107,9 +1107,9 @@
     "title": "Titus",
     "date": "2019-03-17",
     "tags": [
-      {"id":258, "tag": "chair"},
-      {"id":259, "tag": "gum"},
-      {"id":260, "tag": "door"}
+      "chair",
+      "gum",
+      "door"
     ],
     "description": "Integer ac leo.",
     "cost": 659
@@ -1119,9 +1119,9 @@
     "title": "Lexis",
     "date": "2019-04-30",
     "tags": [
-      {"id":261, "tag": "window"},
-      {"id":262, "tag": "gum"},
-      {"id":263, "tag": "door"}
+      "window",
+      "gum",
+      "door"
     ],
     "description": "Aenean lectus.",
     "cost": 804
@@ -1131,9 +1131,9 @@
     "title": "Grantley",
     "date": "2019-06-23",
     "tags": [
-      {"id":264, "tag": "computer"},
-      {"id":265, "tag": "bread"},
-      {"id":266, "tag": "bubble"}
+      "computer",
+      "bread",
+      "bubble"
     ],
     "description": "Vestibulum ac est lacinia nisi venenatis tristique.",
     "cost": 954
@@ -1143,9 +1143,9 @@
     "title": "Nicol",
     "date": "2019-04-28",
     "tags": [
-      {"id":267, "tag": "chair"},
-      {"id":268, "tag": "fun"},
-      {"id":269, "tag": "ball"}
+      "chair",
+      "fun",
+      "ball"
     ],
     "description": "Fusce consequat.",
     "cost": 688
@@ -1155,9 +1155,9 @@
     "title": "Rodrick",
     "date": "2019-03-04",
     "tags": [
-      {"id":270, "tag": "chair"},
-      {"id":271, "tag": "little cat"},
-      {"id":272, "tag": "ball"}
+      "chair",
+      "little cat",
+      "ball"
     ],
     "description": "Proin risus.",
     "cost": 211
@@ -1167,9 +1167,9 @@
     "title": "Hazel",
     "date": "2019-08-21",
     "tags": [
-      {"id":273, "tag": "window"},
-      {"id":274, "tag": "little cat"},
-      {"id":275, "tag": "man"}
+      "window",
+      "little cat",
+      "man"
     ],
     "description": "Nunc purus.",
     "cost": 100
@@ -1179,9 +1179,9 @@
     "title": "Jamil",
     "date": "2019-01-19",
     "tags": [
-      {"id":276, "tag": "window"},
-      {"id":277, "tag": "chair"},
-      {"id":278, "tag": "game"}
+      "window",
+      "chair",
+      "game"
     ],
     "description": "Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo.",
     "cost": 617
@@ -1191,9 +1191,9 @@
     "title": "Flo",
     "date": "2019-02-18",
     "tags": [
-      {"id":279, "tag": "game"},
-      {"id":280, "tag": "little cat"},
-      {"id":281, "tag": "ball"}
+      "game",
+      "little cat",
+      "ball"
     ],
     "description": "Suspendisse potenti.",
     "cost": 318
@@ -1203,9 +1203,9 @@
     "title": "Chev",
     "date": "2019-07-04",
     "tags": [
-      {"id":282, "tag": "chair"},
-      {"id":283, "tag": "game"},
-      {"id":284, "tag": "door"}
+      "chair",
+      "game",
+      "door"
     ],
     "description": "Suspendisse potenti.",
     "cost": 230
@@ -1215,9 +1215,9 @@
     "title": "Kit",
     "date": "2019-06-15",
     "tags": [
-      {"id":285, "tag": "game"},
-      {"id":286, "tag": "gum"},
-      {"id":287, "tag": "ball"}
+      "game",
+      "gum",
+      "ball"
     ],
     "description": "Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est.",
     "cost": 704
@@ -1227,9 +1227,9 @@
     "title": "Othella",
     "date": "2019-07-24",
     "tags": [
-      {"id":288, "tag": "computer"},
-      {"id":289, "tag": "bread"},
-      {"id":290, "tag": "fun"}
+      "computer",
+      "bread",
+      "fun"
     ],
     "description": "Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl.",
     "cost": 418
@@ -1239,9 +1239,9 @@
     "title": "Moises",
     "date": "2019-05-29",
     "tags": [
-      {"id":291, "tag": "game"},
-      {"id":292, "tag": "door"},
-      {"id":293, "tag": "man"}
+      "game",
+      "door",
+      "man"
     ],
     "description": "Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh.",
     "cost": 638
@@ -1251,9 +1251,9 @@
     "title": "Aaron",
     "date": "2018-11-10",
     "tags": [
-      {"id":294, "tag": "computer"},
-      {"id":295, "tag": "chair"},
-      {"id":296, "tag": "gum"}
+      "computer",
+      "chair",
+      "gum"
     ],
     "description": "Suspendisse ornare consequat lectus.",
     "cost": 537
@@ -1263,8 +1263,8 @@
     "title": "Mohandis",
     "date": "2019-08-21",
     "tags": [
-      {"id":297, "tag": "bread"},
-      {"id":298, "tag": "ball"}
+      "bread",
+      "ball"
     ],
     "description": "Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci.",
     "cost": 802
@@ -1274,9 +1274,9 @@
     "title": "Maximilian",
     "date": "2019-02-12",
     "tags": [
-      {"id":299, "tag": "window"},
-      {"id":300, "tag": "bread"},
-      {"id":301, "tag": "man"}
+      "window",
+      "bread",
+      "man"
     ],
     "description": "Nulla facilisi.",
     "cost": 838
@@ -1286,9 +1286,9 @@
     "title": "Althea",
     "date": "2019-08-02",
     "tags": [
-      {"id":302, "tag": "chair"},
-      {"id":303, "tag": "gum"},
-      {"id":304, "tag": "little cat"}
+      "chair",
+      "gum",
+      "little cat"
     ],
     "description": "Nunc purus.",
     "cost": 950
@@ -1298,9 +1298,9 @@
     "title": "Rheba",
     "date": "2018-09-22",
     "tags": [
-      {"id":305, "tag": "computer"},
-      {"id":306, "tag": "game"},
-      {"id":307, "tag": "gum"}
+      "computer",
+      "game",
+      "gum"
     ],
     "description": "Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.",
     "cost": 421
@@ -1310,9 +1310,9 @@
     "title": "Garreth",
     "date": "2019-01-05",
     "tags": [
-      {"id":308, "tag": "bread"},
-      {"id":309, "tag": "little cat"},
-      {"id":310, "tag": "ball"}
+      "bread",
+      "little cat",
+      "ball"
     ],
     "description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit.",
     "cost": 895
@@ -1322,9 +1322,9 @@
     "title": "Natividad",
     "date": "2019-07-11",
     "tags": [
-      {"id":311, "tag": "computer"},
-      {"id":312, "tag": "game"},
-      {"id":313, "tag": "gum"}
+      "computer",
+      "game",
+      "gum"
     ],
     "description": "Aenean sit amet justo.",
     "cost": 911
@@ -1334,9 +1334,9 @@
     "title": "Quillan",
     "date": "2018-12-24",
     "tags": [
-      {"id":314, "tag": "game"},
-      {"id":315, "tag": "bubble"},
-      {"id":316, "tag": "fun"}
+      "game",
+      "bubble",
+      "fun"
     ],
     "description": "Aliquam erat volutpat.",
     "cost": 606
@@ -1346,9 +1346,9 @@
     "title": "Margaretta",
     "date": "2018-08-28",
     "tags": [
-      {"id":317, "tag": "chair"},
-      {"id":318, "tag": "bread"},
-      {"id":319, "tag": "bubble"}
+      "chair",
+      "bread",
+      "bubble"
     ],
     "description": "Aliquam erat volutpat.",
     "cost": 555
@@ -1358,9 +1358,9 @@
     "title": "Roshelle",
     "date": "2019-05-29",
     "tags": [
-      {"id":320, "tag": "computer"},
-      {"id":321, "tag": "bubble"},
-      {"id":322, "tag": "little cat"}
+      "computer",
+      "bubble",
+      "little cat"
     ],
     "description": "Nunc nisl.",
     "cost": 187
@@ -1370,8 +1370,8 @@
     "title": "Clemmie",
     "date": "2019-07-19",
     "tags": [
-      {"id":323, "tag": "computer"},
-      {"id":324, "tag": "bread"}
+      "computer",
+      "bread"
     ],
     "description": "Etiam pretium iaculis justo.",
     "cost": 351
@@ -1381,9 +1381,9 @@
     "title": "Martyn",
     "date": "2019-05-29",
     "tags": [
-      {"id":325, "tag": "chair"},
-      {"id":326, "tag": "door"},
-      {"id":327, "tag": "man"}
+      "chair",
+      "door",
+      "man"
     ],
     "description": "Nam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla.",
     "cost": 918
@@ -1393,9 +1393,9 @@
     "title": "Christie",
     "date": "2019-05-26",
     "tags": [
-      {"id":328, "tag": "bread"},
-      {"id":329, "tag": "bubble"},
-      {"id":330, "tag": "ball"}
+      "bread",
+      "bubble",
+      "ball"
     ],
     "description": "Maecenas tincidunt lacus at velit.",
     "cost": 244
@@ -1405,9 +1405,9 @@
     "title": "Yul",
     "date": "2019-06-19",
     "tags": [
-      {"id":331, "tag": "computer"},
-      {"id":332, "tag": "game"},
-      {"id":333, "tag": "fun"}
+      "computer",
+      "game",
+      "fun"
     ],
     "description": "In quis justo.",
     "cost": 258
@@ -1417,9 +1417,9 @@
     "title": "Lura",
     "date": "2019-03-04",
     "tags": [
-      {"id":334, "tag": "chair"},
-      {"id":335, "tag": "bread"},
-      {"id":336, "tag": "fun"}
+      "chair",
+      "bread",
+      "fun"
     ],
     "description": "Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl.",
     "cost": 240
@@ -1429,9 +1429,9 @@
     "title": "Hadley",
     "date": "2019-03-12",
     "tags": [
-      {"id":337, "tag": "computer"},
-      {"id":338, "tag": "door"},
-      {"id":339, "tag": "man"}
+      "computer",
+      "door",
+      "man"
     ],
     "description": "Morbi non quam nec dui luctus rutrum.",
     "cost": 140
@@ -1441,8 +1441,8 @@
     "title": "Josy",
     "date": "2019-06-24",
     "tags": [
-      {"id":340, "tag": "game"},
-      {"id":341, "tag": "little cat"}
+      "game",
+      "little cat"
     ],
     "description": "Cras in purus eu magna vulputate luctus.",
     "cost": 703
@@ -1452,9 +1452,9 @@
     "title": "Ezequiel",
     "date": "2019-06-19",
     "tags": [
-      {"id":342, "tag": "bread"},
-      {"id":343, "tag": "bubble"},
-      {"id":344, "tag": "man"}
+      "bread",
+      "bubble",
+      "man"
     ],
     "description": "Nam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla.",
     "cost": 558
@@ -1464,9 +1464,9 @@
     "title": "Sarena",
     "date": "2019-08-22",
     "tags": [
-      {"id":345, "tag": "window"},
-      {"id":346, "tag": "gum"},
-      {"id":347, "tag": "bubble"}
+      "window",
+      "gum",
+      "bubble"
     ],
     "description": "Phasellus in felis.",
     "cost": 110
@@ -1476,8 +1476,8 @@
     "title": "Xylina",
     "date": "2019-05-01",
     "tags": [
-      {"id":348, "tag": "game"},
-      {"id":349, "tag": "fun"}
+      "game",
+      "fun"
     ],
     "description": "Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue.",
     "cost": 532
@@ -1487,8 +1487,8 @@
     "title": "Gerek",
     "date": "2019-01-13",
     "tags": [
-      {"id":350, "tag": "computer"},
-      {"id":351, "tag": "ball"}
+      "computer",
+      "ball"
     ],
     "description": "Vestibulum quam sapien, varius ut, blandit non, interdum in, ante.",
     "cost": 247
@@ -1498,9 +1498,9 @@
     "title": "Kliment",
     "date": "2019-02-03",
     "tags": [
-      {"id":352, "tag": "fun"},
-      {"id":353, "tag": "ball"},
-      {"id":354, "tag": "man"}
+      "fun",
+      "ball",
+      "man"
     ],
     "description": "Vivamus vel nulla eget eros elementum pellentesque.",
     "cost": 236
@@ -1510,9 +1510,9 @@
     "title": "Kacey",
     "date": "2018-10-21",
     "tags": [
-      {"id":355, "tag": "bread"},
-      {"id":356, "tag": "bubble"},
-      {"id":357, "tag": "ball"}
+      "bread",
+      "bubble",
+      "ball"
     ],
     "description": "Maecenas pulvinar lobortis est.",
     "cost": 678
@@ -1522,9 +1522,9 @@
     "title": "Hubert",
     "date": "2019-04-21",
     "tags": [
-      {"id":358, "tag": "bread"},
-      {"id":359, "tag": "bubble"},
-      {"id":360, "tag": "fun"}
+      "bread",
+      "bubble",
+      "fun"
     ],
     "description": "Aliquam sit amet diam in magna bibendum imperdiet.",
     "cost": 834
@@ -1534,9 +1534,9 @@
     "title": "Sapphira",
     "date": "2019-07-18",
     "tags": [
-      {"id":361, "tag": "bread"},
-      {"id":362, "tag": "door"},
-      {"id":363, "tag": "man"}
+      "bread",
+      "door",
+      "man"
     ],
     "description": "Aliquam erat volutpat.",
     "cost": 515
@@ -1546,9 +1546,9 @@
     "title": "Emmery",
     "date": "2019-07-02",
     "tags": [
-      {"id":364, "tag": "gum"},
-      {"id":365, "tag": "bread"},
-      {"id":366, "tag": "door"}
+      "gum",
+      "bread",
+      "door"
     ],
     "description": "Morbi vel lectus in quam fringilla rhoncus.",
     "cost": 187
@@ -1558,9 +1558,9 @@
     "title": "Nan",
     "date": "2019-06-17",
     "tags": [
-      {"id":367, "tag": "window"},
-      {"id":368, "tag": "little cat"},
-      {"id":369, "tag": "fun"}
+      "window",
+      "little cat",
+      "fun"
     ],
     "description": "Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh.",
     "cost": 841
@@ -1570,9 +1570,9 @@
     "title": "Barn",
     "date": "2018-11-02",
     "tags": [
-      {"id":370, "tag": "computer"},
-      {"id":371, "tag": "gum"},
-      {"id":372, "tag": "bread"}
+      "computer",
+      "gum",
+      "bread"
     ],
     "description": "Aliquam sit amet diam in magna bibendum imperdiet.",
     "cost": 403
@@ -1582,9 +1582,9 @@
     "title": "Kim",
     "date": "2018-09-10",
     "tags": [
-      {"id":373, "tag": "chair"},
-      {"id":374, "tag": "little cat"},
-      {"id":375, "tag": "fun"}
+      "chair",
+      "little cat",
+      "fun"
     ],
     "description": "In blandit ultrices enim.",
     "cost": 360
@@ -1594,7 +1594,7 @@
     "title": "Rockey",
     "date": "2019-02-07",
     "tags": [
-      {"id":376, "tag": "computer"}
+      "computer"
     ],
     "description": "Praesent id massa id nisl venenatis lacinia.",
     "cost": 992
@@ -1604,9 +1604,9 @@
     "title": "Dougy",
     "date": "2019-02-05",
     "tags": [
-      {"id":377, "tag": "computer"},
-      {"id":378, "tag": "ball"},
-      {"id":379, "tag": "man"}
+      "computer",
+      "ball",
+      "man"
     ],
     "description": "Donec dapibus.",
     "cost": 841
@@ -1616,9 +1616,9 @@
     "title": "Wendell",
     "date": "2018-10-31",
     "tags": [
-      {"id":380, "tag": "window"},
-      {"id":381, "tag": "chair"},
-      {"id":382, "tag": "ball"}
+      "window",
+      "chair",
+      "ball"
     ],
     "description": "Praesent blandit.",
     "cost": 255
@@ -1628,8 +1628,8 @@
     "title": "Beatriz",
     "date": "2018-12-03",
     "tags": [
-      {"id":383, "tag": "game"},
-      {"id":384, "tag": "bread"}
+      "game",
+      "bread"
     ],
     "description": "Curabitur convallis.",
     "cost": 230
@@ -1639,9 +1639,9 @@
     "title": "Constantina",
     "date": "2018-09-03",
     "tags": [
-      {"id":385, "tag": "window"},
-      {"id":386, "tag": "bread"},
-      {"id":387, "tag": "man"}
+      "window",
+      "bread",
+      "man"
     ],
     "description": "Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.",
     "cost": 651
@@ -1651,8 +1651,8 @@
     "title": "Sadie",
     "date": "2018-11-19",
     "tags": [
-      {"id":388, "tag": "little cat"},
-      {"id":389, "tag": "ball"}
+      "little cat",
+      "ball"
     ],
     "description": "Nulla nisl.",
     "cost": 104
@@ -1662,9 +1662,9 @@
     "title": "Nerti",
     "date": "2019-06-04",
     "tags": [
-      {"id":390, "tag": "computer"},
-      {"id":391, "tag": "chair"},
-      {"id":392, "tag": "game"}
+      "computer",
+      "chair",
+      "game"
     ],
     "description": "Mauris lacinia sapien quis libero.",
     "cost": 535
@@ -1674,9 +1674,9 @@
     "title": "Arlee",
     "date": "2019-04-24",
     "tags": [
-      {"id":393, "tag": "game"},
-      {"id":394, "tag": "bubble"},
-      {"id":395, "tag": "fun"}
+      "game",
+      "bubble",
+      "fun"
     ],
     "description": "Donec vitae nisi.",
     "cost": 955
@@ -1686,8 +1686,8 @@
     "title": "Karil",
     "date": "2018-10-01",
     "tags": [
-      {"id":396, "tag": "bubble"},
-      {"id":397, "tag": "fun"}
+      "bubble",
+      "fun"
     ],
     "description": "Aenean fermentum.",
     "cost": 163
@@ -1697,9 +1697,9 @@
     "title": "Bondon",
     "date": "2018-10-06",
     "tags": [
-      {"id":398, "tag": "game"},
-      {"id":399, "tag": "chair"},
-      {"id":400, "tag": "bread"}
+      "game",
+      "chair",
+      "bread"
     ],
     "description": "Cras pellentesque volutpat dui.",
     "cost": 878
@@ -1709,9 +1709,9 @@
     "title": "Sherwin",
     "date": "2019-01-18",
     "tags": [
-      {"id":401, "tag": "window"},
-      {"id":402, "tag": "chair"},
-      {"id":403, "tag": "little cat"}
+      "window",
+      "chair",
+      "little cat"
     ],
     "description": "Nunc nisl.",
     "cost": 969
@@ -1721,9 +1721,9 @@
     "title": "Deb",
     "date": "2019-01-16",
     "tags": [
-      {"id":404, "tag": "game"},
-      {"id":405, "tag": "little cat"},
-      {"id":406, "tag": "bubble"}
+      "game",
+      "little cat",
+      "bubble"
     ],
     "description": "Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa.",
     "cost": 140
@@ -1733,9 +1733,9 @@
     "title": "Judah",
     "date": "2019-01-29",
     "tags": [
-      {"id":407, "tag": "window"},
-      {"id":408, "tag": "game"},
-      {"id":409, "tag": "man"}
+      "window",
+      "game",
+      "man"
     ],
     "description": "Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante.",
     "cost": 994
@@ -1745,9 +1745,9 @@
     "title": "Inglebert",
     "date": "2019-01-14",
     "tags": [
-      {"id":410, "tag": "window"},
-      {"id":411, "tag": "bread"},
-      {"id":412, "tag": "little cat"}
+      "window",
+      "bread",
+      "little cat"
     ],
     "description": "Nulla suscipit ligula in lacus.",
     "cost": 375
@@ -1757,8 +1757,8 @@
     "title": "Kale",
     "date": "2019-06-06",
     "tags": [
-      {"id":413, "tag": "door"},
-      {"id":414, "tag": "fun"}
+      "door",
+      "fun"
     ],
     "description": "Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros.",
     "cost": 133
@@ -1768,9 +1768,9 @@
     "title": "Chadd",
     "date": "2019-03-14",
     "tags": [
-      {"id":415, "tag": "gum"},
-      {"id":416, "tag": "bread"},
-      {"id":417, "tag": "man"}
+      "gum",
+      "bread",
+      "man"
     ],
     "description": "Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo.",
     "cost": 764
@@ -1780,9 +1780,9 @@
     "title": "Yank",
     "date": "2019-08-16",
     "tags": [
-      {"id":418, "tag": "gum"},
-      {"id":419, "tag": "bread"},
-      {"id":420, "tag": "fun"}
+      "gum",
+      "bread",
+      "fun"
     ],
     "description": "Etiam justo.",
     "cost": 779
@@ -1792,8 +1792,8 @@
     "title": "Freddy",
     "date": "2018-08-27",
     "tags": [
-      {"id":421, "tag": "bread"},
-      {"id":422, "tag": "fun"}
+      "bread",
+      "fun"
     ],
     "description": "Donec posuere metus vitae ipsum.",
     "cost": 953
@@ -1803,9 +1803,9 @@
     "title": "Raeann",
     "date": "2018-11-16",
     "tags": [
-      {"id":423, "tag": "computer"},
-      {"id":424, "tag": "bread"},
-      {"id":425, "tag": "door"}
+      "computer",
+      "bread",
+      "door"
     ],
     "description": "Proin risus.",
     "cost": 835
@@ -1815,9 +1815,9 @@
     "title": "Curt",
     "date": "2018-09-05",
     "tags": [
-      {"id":426, "tag": "gum"},
-      {"id":427, "tag": "door"},
-      {"id":428, "tag": "bubble"}
+      "gum",
+      "door",
+      "bubble"
     ],
     "description": "Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus.",
     "cost": 338
@@ -1827,9 +1827,9 @@
     "title": "Rolph",
     "date": "2018-12-19",
     "tags": [
-      {"id":429, "tag": "computer"},
-      {"id":430, "tag": "little cat"},
-      {"id":431, "tag": "fun"}
+      "computer",
+      "little cat",
+      "fun"
     ],
     "description": "Proin eu mi.",
     "cost": 145
@@ -1839,9 +1839,9 @@
     "title": "Leicester",
     "date": "2018-09-09",
     "tags": [
-      {"id":432, "tag": "little cat"},
-      {"id":433, "tag": "fun"},
-      {"id":434, "tag": "man"}
+      "little cat",
+      "fun",
+      "man"
     ],
     "description": "Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo.",
     "cost": 627
@@ -1851,9 +1851,9 @@
     "title": "Maryjane",
     "date": "2019-06-27",
     "tags": [
-      {"id":435, "tag": "gum"},
-      {"id":436, "tag": "bubble"},
-      {"id":437, "tag": "little cat"}
+      "gum",
+      "bubble",
+      "little cat"
     ],
     "description": "Donec ut mauris eget massa tempor convallis.",
     "cost": 319
@@ -1863,9 +1863,9 @@
     "title": "Germaine",
     "date": "2018-10-01",
     "tags": [
-      {"id":438, "tag": "window"},
-      {"id":439, "tag": "gum"},
-      {"id":440, "tag": "bubble"}
+      "window",
+      "gum",
+      "bubble"
     ],
     "description": "Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci.",
     "cost": 557
@@ -1875,9 +1875,9 @@
     "title": "Ingram",
     "date": "2019-05-11",
     "tags": [
-      {"id":441, "tag": "gum"},
-      {"id":442, "tag": "bubble"},
-      {"id":443, "tag": "ball"}
+      "gum",
+      "bubble",
+      "ball"
     ],
     "description": "In congue.",
     "cost": 332
@@ -1887,9 +1887,9 @@
     "title": "Brigida",
     "date": "2019-01-14",
     "tags": [
-      {"id":444, "tag": "chair"},
-      {"id":445, "tag": "door"},
-      {"id":446, "tag": "fun"}
+      "chair",
+      "door",
+      "fun"
     ],
     "description": "Pellentesque eget nunc.",
     "cost": 178
@@ -1899,8 +1899,8 @@
     "title": "Hurley",
     "date": "2019-03-25",
     "tags": [
-      {"id":447, "tag": "window"},
-      {"id":448, "tag": "man"}
+      "window",
+      "man"
     ],
     "description": "Maecenas tincidunt lacus at velit.",
     "cost": 749
@@ -1910,9 +1910,9 @@
     "title": "Johnathan",
     "date": "2019-01-17",
     "tags": [
-      {"id":449, "tag": "window"},
-      {"id":450, "tag": "bubble"},
-      {"id":451, "tag": "man"}
+      "window",
+      "bubble",
+      "man"
     ],
     "description": "Nullam varius.",
     "cost": 852
@@ -1922,9 +1922,9 @@
     "title": "Shalna",
     "date": "2019-06-25",
     "tags": [
-      {"id":452, "tag": "chair"},
-      {"id":453, "tag": "game"},
-      {"id":454, "tag": "door"}
+      "chair",
+      "game",
+      "door"
     ],
     "description": "Suspendisse accumsan tortor quis turpis.",
     "cost": 794
@@ -1934,9 +1934,9 @@
     "title": "Edvard",
     "date": "2018-10-07",
     "tags": [
-      {"id":455, "tag": "window"},
-      {"id":456, "tag": "door"},
-      {"id":457, "tag": "fun"}
+      "window",
+      "door",
+      "fun"
     ],
     "description": "Duis consequat dui nec nisi volutpat eleifend.",
     "cost": 756
@@ -1946,9 +1946,9 @@
     "title": "Hersh",
     "date": "2018-11-03",
     "tags": [
-      {"id":458, "tag": "game"},
-      {"id":459, "tag": "bread"},
-      {"id":460, "tag": "man"}
+      "game",
+      "bread",
+      "man"
     ],
     "description": "Suspendisse potenti.",
     "cost": 829
@@ -1958,8 +1958,8 @@
     "title": "Earvin",
     "date": "2019-06-16",
     "tags": [
-      {"id":461, "tag": "chair"},
-      {"id":462, "tag": "fun"}
+      "chair",
+      "fun"
     ],
     "description": "Aliquam quis turpis eget elit sodales scelerisque.",
     "cost": 845
@@ -1969,9 +1969,9 @@
     "title": "Edeline",
     "date": "2019-07-18",
     "tags": [
-      {"id":463, "tag": "bread"},
-      {"id":464, "tag": "door"},
-      {"id":465, "tag": "bubble"}
+      "bread",
+      "door",
+      "bubble"
     ],
     "description": "Donec ut dolor.",
     "cost": 189
@@ -1981,9 +1981,9 @@
     "title": "Richart",
     "date": "2019-08-20",
     "tags": [
-      {"id":466, "tag": "window"},
-      {"id":467, "tag": "computer"},
-      {"id":468, "tag": "door"}
+      "window",
+      "computer",
+      "door"
     ],
     "description": "Nullam porttitor lacus at turpis.",
     "cost": 398
@@ -1993,8 +1993,8 @@
     "title": "Janeva",
     "date": "2018-08-24",
     "tags": [
-      {"id":469, "tag": "computer"},
-      {"id":470, "tag": "bubble"}
+      "computer",
+      "bubble"
     ],
     "description": "Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl.",
     "cost": 410
@@ -2004,8 +2004,8 @@
     "title": "Claudelle",
     "date": "2019-04-22",
     "tags": [
-      {"id":471, "tag": "game"},
-      {"id":472, "tag": "gum"}
+      "game",
+      "gum"
     ],
     "description": "Curabitur at ipsum ac tellus semper interdum.",
     "cost": 155
@@ -2015,9 +2015,9 @@
     "title": "Alis",
     "date": "2019-05-11",
     "tags": [
-      {"id":473, "tag": "window"},
-      {"id":474, "tag": "bread"},
-      {"id":475, "tag": "man"}
+      "window",
+      "bread",
+      "man"
     ],
     "description": "In hac habitasse platea dictumst.",
     "cost": 174
@@ -2027,9 +2027,9 @@
     "title": "Madelon",
     "date": "2018-10-22",
     "tags": [
-      {"id":476, "tag": "gum"},
-      {"id":477, "tag": "bread"},
-      {"id":478, "tag": "bubble"}
+      "gum",
+      "bread",
+      "bubble"
     ],
     "description": "Donec vitae nisi.",
     "cost": 769
@@ -2039,9 +2039,9 @@
     "title": "Kelci",
     "date": "2019-05-13",
     "tags": [
-      {"id":479, "tag": "window"},
-      {"id":480, "tag": "game"},
-      {"id":481, "tag": "little cat"}
+      "window",
+      "game",
+      "little cat"
     ],
     "description": "Etiam justo.",
     "cost": 441
@@ -2051,9 +2051,9 @@
     "title": "Arielle",
     "date": "2018-12-19",
     "tags": [
-      {"id":482, "tag": "computer"},
-      {"id":483, "tag": "fun"},
-      {"id":484, "tag": "ball"}
+      "computer",
+      "fun",
+      "ball"
     ],
     "description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit.",
     "cost": 874
@@ -2063,9 +2063,9 @@
     "title": "Clarence",
     "date": "2019-02-14",
     "tags": [
-      {"id":485, "tag": "window"},
-      {"id":486, "tag": "gum"},
-      {"id":487, "tag": "bread"}
+      "window",
+      "gum",
+      "bread"
     ],
     "description": "Nam nulla.",
     "cost": 588
@@ -2075,9 +2075,9 @@
     "title": "Joye",
     "date": "2018-09-24",
     "tags": [
-      {"id":488, "tag": "window"},
-      {"id":489, "tag": "little cat"},
-      {"id":490, "tag": "man"}
+      "window",
+      "little cat",
+      "man"
     ],
     "description": "Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.",
     "cost": 707
@@ -2087,9 +2087,9 @@
     "title": "Base",
     "date": "2019-03-07",
     "tags": [
-      {"id":491, "tag": "computer"},
-      {"id":492, "tag": "chair"},
-      {"id":493, "tag": "fun"}
+      "computer",
+      "chair",
+      "fun"
     ],
     "description": "Sed accumsan felis.",
     "cost": 975
@@ -2099,9 +2099,9 @@
     "title": "Maynord",
     "date": "2019-04-29",
     "tags": [
-      {"id":494, "tag": "little cat"},
-      {"id":495, "tag": "fun"},
-      {"id":496, "tag": "ball"}
+      "little cat",
+      "fun",
+      "ball"
     ],
     "description": "Nullam sit amet turpis elementum ligula vehicula consequat.",
     "cost": 325
@@ -2111,9 +2111,9 @@
     "title": "Odelia",
     "date": "2018-11-24",
     "tags": [
-      {"id":497, "tag": "window"},
-      {"id":498, "tag": "gum"},
-      {"id":499, "tag": "bubble"}
+      "window",
+      "gum",
+      "bubble"
     ],
     "description": "Praesent blandit lacinia erat.",
     "cost": 890
@@ -2123,9 +2123,9 @@
     "title": "Ginni",
     "date": "2018-11-24",
     "tags": [
-      {"id":500, "tag": "computer"},
-      {"id":501, "tag": "door"},
-      {"id":502, "tag": "ball"}
+      "computer",
+      "door",
+      "ball"
     ],
     "description": "Etiam justo.",
     "cost": 244
@@ -2135,8 +2135,8 @@
     "title": "Mariette",
     "date": "2019-02-06",
     "tags": [
-      {"id":503, "tag": "computer"},
-      {"id":504, "tag": "gum"}
+      "computer",
+      "gum"
     ],
     "description": "Sed accumsan felis.",
     "cost": 935
@@ -2146,9 +2146,9 @@
     "title": "Nannette",
     "date": "2018-12-20",
     "tags": [
-      {"id":505, "tag": "game"},
-      {"id":506, "tag": "bread"},
-      {"id":507, "tag": "door"}
+      "game",
+      "bread",
+      "door"
     ],
     "description": "In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem.",
     "cost": 158
@@ -2158,8 +2158,8 @@
     "title": "Aldo",
     "date": "2019-07-14",
     "tags": [
-      {"id":508, "tag": "computer"},
-      {"id":509, "tag": "gum"}
+      "computer",
+      "gum"
     ],
     "description": "Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris viverra diam vitae quam.",
     "cost": 696
@@ -2169,8 +2169,8 @@
     "title": "Hermann",
     "date": "2018-10-13",
     "tags": [
-      {"id":510, "tag": "window"},
-      {"id":511, "tag": "ball"}
+      "window",
+      "ball"
     ],
     "description": "Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.",
     "cost": 683
@@ -2180,9 +2180,9 @@
     "title": "Elwyn",
     "date": "2019-01-21",
     "tags": [
-      {"id":512, "tag": "window"},
-      {"id":513, "tag": "little cat"},
-      {"id":514, "tag": "ball"}
+      "window",
+      "little cat",
+      "ball"
     ],
     "description": "Donec vitae nisi.",
     "cost": 496
@@ -2192,8 +2192,8 @@
     "title": "Celina",
     "date": "2019-02-17",
     "tags": [
-      {"id":515, "tag": "ball"},
-      {"id":516, "tag": "man"}
+      "ball",
+      "man"
     ],
     "description": "Duis mattis egestas metus.",
     "cost": 930
@@ -2203,9 +2203,9 @@
     "title": "Darnell",
     "date": "2019-01-24",
     "tags": [
-      {"id":517, "tag": "game"},
-      {"id":518, "tag": "bread"},
-      {"id":519, "tag": "fun"}
+      "game",
+      "bread",
+      "fun"
     ],
     "description": "Aenean sit amet justo.",
     "cost": 173
@@ -2215,9 +2215,9 @@
     "title": "Harmony",
     "date": "2018-12-24",
     "tags": [
-      {"id":520, "tag": "bread"},
-      {"id":521, "tag": "ball"},
-      {"id":522, "tag": "man"}
+      "bread",
+      "ball",
+      "man"
     ],
     "description": "Morbi porttitor lorem id ligula.",
     "cost": 478
@@ -2227,8 +2227,8 @@
     "title": "Alvy",
     "date": "2018-12-05",
     "tags": [
-      {"id":523, "tag": "window"},
-      {"id":524, "tag": "door"}
+      "window",
+      "door"
     ],
     "description": "Duis consequat dui nec nisi volutpat eleifend.",
     "cost": 954
@@ -2238,9 +2238,9 @@
     "title": "Neill",
     "date": "2019-03-03",
     "tags": [
-      {"id":525, "tag": "chair"},
-      {"id":526, "tag": "bread"},
-      {"id":527, "tag": "bubble"}
+      "chair",
+      "bread",
+      "bubble"
     ],
     "description": "Nullam sit amet turpis elementum ligula vehicula consequat.",
     "cost": 595
@@ -2250,8 +2250,8 @@
     "title": "Wake",
     "date": "2019-02-04",
     "tags": [
-      {"id":528, "tag": "game"},
-      {"id":529, "tag": "little cat"}
+      "game",
+      "little cat"
     ],
     "description": "In hac habitasse platea dictumst.",
     "cost": 540
@@ -2261,8 +2261,8 @@
     "title": "Patrizio",
     "date": "2018-11-06",
     "tags": [
-      {"id":530, "tag": "fun"},
-      {"id":531, "tag": "ball"}
+      "fun",
+      "ball"
     ],
     "description": "Nunc purus.",
     "cost": 262
@@ -2272,9 +2272,9 @@
     "title": "Miner",
     "date": "2019-08-21",
     "tags": [
-      {"id":532, "tag": "computer"},
-      {"id":533, "tag": "little cat"},
-      {"id":534, "tag": "ball"}
+      "computer",
+      "little cat",
+      "ball"
     ],
     "description": "Sed ante.",
     "cost": 132
@@ -2284,9 +2284,9 @@
     "title": "Dulcea",
     "date": "2018-11-21",
     "tags": [
-      {"id":535, "tag": "computer"},
-      {"id":536, "tag": "game"},
-      {"id":537, "tag": "bubble"}
+      "computer",
+      "game",
+      "bubble"
     ],
     "description": "Suspendisse potenti.",
     "cost": 730
@@ -2296,8 +2296,8 @@
     "title": "Vivyan",
     "date": "2018-08-31",
     "tags": [
-      {"id":538, "tag": "bread"},
-      {"id":539, "tag": "man"}
+      "bread",
+      "man"
     ],
     "description": "Donec ut mauris eget massa tempor convallis.",
     "cost": 876
@@ -2307,8 +2307,8 @@
     "title": "Rab",
     "date": "2019-06-29",
     "tags": [
-      {"id":540, "tag": "computer"},
-      {"id":541, "tag": "man"}
+      "computer",
+      "man"
     ],
     "description": "Integer tincidunt ante vel ipsum.",
     "cost": 926
@@ -2318,8 +2318,8 @@
     "title": "Colline",
     "date": "2019-05-09",
     "tags": [
-      {"id":542, "tag": "door"},
-      {"id":543, "tag": "little cat"}
+      "door",
+      "little cat"
     ],
     "description": "Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue.",
     "cost": 535
@@ -2329,9 +2329,9 @@
     "title": "Ganny",
     "date": "2019-07-15",
     "tags": [
-      {"id":544, "tag": "window"},
-      {"id":545, "tag": "computer"},
-      {"id":546, "tag": "little cat"}
+      "window",
+      "computer",
+      "little cat"
     ],
     "description": "Nulla mollis molestie lorem.",
     "cost": 866
@@ -2341,9 +2341,9 @@
     "title": "Abbot",
     "date": "2019-03-05",
     "tags": [
-      {"id":547, "tag": "bread"},
-      {"id":548, "tag": "bubble"},
-      {"id":549, "tag": "fun"}
+      "bread",
+      "bubble",
+      "fun"
     ],
     "description": "Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus.",
     "cost": 882

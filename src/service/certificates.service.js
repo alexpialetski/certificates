@@ -1,7 +1,10 @@
 import {userService} from "./user.service";
 import config from 'config';
 import {authHeader} from '../util/authorization';
+
+import axios from 'axios';
 import {postFetch} from "../util/backend-util";
+import {getFetch} from "../util/backend-util";
 
 export const certificateService = {
     getAll,
@@ -20,8 +23,7 @@ async function getAll(user) {
         method: 'GET',
         headers: authHeader(user)
     };
-    return await fetch(`${config.apiUrl}/certificates/all`, requestOptions).then(handleResponse);
-    // return await fetch(`${config.tomcatUrl}/user/allCertificates`, {...postFetch()}).then(handleResponse);
+    return axios.get(`${config.serverUrl}api/certificates`, getFetch).then(handleResponse);
 }
 
 async function findById(user, certificateId) {
@@ -118,18 +120,5 @@ async function getUserCertificates(user) {
 }
 
 function handleResponse(response) {
-    return response.text().then(text => {
-        const data = text && JSON.parse(text);
-        if (!response.ok) {
-            if (response.status === 401) {
-                // auto logout if 401 response returned from api
-                userService.logout();
-                location.reload(true);
-            }
-
-            const error = (data && data.message) || response.statusText;
-            return Promise.reject(error);
-        }
-        return data;
-    });
+    return response.data;
 }
