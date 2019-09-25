@@ -31,18 +31,16 @@ export const LoginPage = (props) => {
                 user => {
                     contextType.createUser(user);
                     const {from} = props.location.state || {from: {pathname: "/"}};
-                    props.history.push(from);
-                },
-                error => {
-                    setError(error);
-                    setLoading(false)
+                    // props.history.push(from);
                 }
-            );
+            ).catch(error => {
+            setError(error.response.data);
+            setLoading(false)
+        });
     };
 
     return (
         <div>
-            <Header/>
             <Container className="row mt-5 p-5">
                 <h2>{__("login.login.label")}</h2>
                 <div className={"row"}>

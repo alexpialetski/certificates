@@ -1,17 +1,11 @@
-import React, {useContext} from 'react'
+import React from 'react'
 import ColumnOfButtons from "./ColumnOfButtons";
-import HomePageContext from "../context/HomePageContext";
 import {filterCertificateByTag, filterCertificateByTitle} from "../../util/filters";
-import {certificateService} from "../../service/certificates.service";
-import {sortCertificatesByDate} from "../../util/comparators";
-import AppContext from "../context/AppContext";
-import {updateAllCertificates} from '../../util/homepage-util'
 
-export default () => {
-    const homeContext = useContext(HomePageContext);
-    const appContext = useContext(AppContext);
-    const {search, setSearch} = homeContext;
-
+export default ({
+                    setSearch, user, setFilterBody, setUpCertificates, clearFilterBody,
+                    userCertificates, certificates, search, setCurrentCertificates, showUserCertificates
+                }) => {
     const onChange = e => {
         setSearch(e.target.value);
         searchEvent(e.target.value);
@@ -20,61 +14,39 @@ export default () => {
     const searchEvent = (searchWords) => {
         const filterObject = {};
         const tags = [];
-        const searchValues = searchWords.split(' ');
+        const searchValues = searchWords.trim().split(' ');
         if (!searchValues) {
-            updateAllCertificates(appContext.user, homeContext.setCertificates);
+            setFilterBody({});
+            setUpCertificates();
             return;
         }
         searchValues.forEach(value => {
             if (value.indexOf('#') === 0) {
                 tags.push(value.slice(1));
             } else {
-                filterObject.title = value;
+                filterObject.title = value.trim();
             }
         });
         if (tags.length) {
             filterObject.tags = tags;
         }
-        console.log(filterObject);
-        searchByFilters(filterObject);
-    };
-
-    const searchByFilters = async (filterObject) => {
-        const arrayOfFilters = [];
-        filterObject.title && arrayOfFilters.push((filterCertificateByTitle(filterObject.title)));
-        filterObject.tags && filterObject.tags.forEach(tag => arrayOfFilters.push(filterCertificateByTag(tag)));
-        await certificateService.searchByMultipleFilters(homeContext.user, arrayOfFilters)
-            .then(res => homeContext.setCertificates(res.sort(sortCertificatesByDate))).then(() => homeContext.paginate(1));
+        setFilterBody(filterObject);
+        setUpCertificates();
     };
 
     const typeOfCertificatesEvent = e => {
-        const {setCertificates, userCertificates, certificates, setCurrentPage} = homeContext;
         if (e.target.value === __("homePage.label.all")) {
-            setSearch('');
-            updateAllCertificates(appContext.user, setCertificates);
+            showUserCertificates(false);
         } else if (e.target.value === __("homePage.label.onlyMy")) {
-            const isUserCertificate = (certificateId) => {
-                for (let i = 0; i < userCertificates.length; i++) {
-                    if (userCertificates[i] === certificateId) {
-                        return true;
-                    }
-                }
-                return false;
-            };
-
-            const array = [];
-            for (let i = 0; i < certificates.length; i++) {
-                if (isUserCertificate(certificates[i].id)) {
-                    array.push(certificates[i]);
-                }
-            }
-            setCertificates([...array]);
-            setCurrentPage(1);
+            showUserCertificates(true);
         }
+        setSearch('');
+        clearFilterBody();
+        setUpCertificates();
     };
 
     let userActions = [__("homePage.label.all")];
-    if (appContext.user.username && homeContext.userCertificates.length) {
+    if (user.username && userCertificates.length) {
         userActions.push(__("homePage.label.onlyMy"));
     } else {
         userActions = [__("homePage.label.all")];

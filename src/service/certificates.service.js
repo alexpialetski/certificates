@@ -1,9 +1,7 @@
-import {userService} from "./user.service";
 import config from 'config';
 import {authHeader} from '../util/authorization';
 
 import axios from 'axios';
-import {postFetch} from "../util/backend-util";
 import {getFetch} from "../util/backend-util";
 
 export const certificateService = {
@@ -15,7 +13,11 @@ export const certificateService = {
     deleteAdminCertificate,
     createAdminCertificate,
     editAdminCertificate,
-    findById
+    findById,
+    paginate,
+    setUpCertificates,
+    paginateUserCertificates,
+    setUpUserCertificates
 };
 
 async function getAll(user) {
@@ -23,16 +25,15 @@ async function getAll(user) {
         method: 'GET',
         headers: authHeader(user)
     };
-    return axios.get(`${config.serverUrl}api/certificates`, getFetch).then(handleResponse);
+    return await axios.get(`${config.serverUrl}certificates`, getFetch).then(handleResponse);
 }
 
 async function findById(user, certificateId) {
     const requestOptions = {
         method: 'GET',
-        certificateId,
         headers: authHeader(user)
     };
-    return await fetch(`${config.apiUrl}/certificates/findById`, requestOptions).then(handleResponse);
+    return await axios.get(`${config.serverUrl}certificates/${certificateId}`, requestOptions).then(handleResponse);
 }
 
 async function searchByMultipleFilters(user, arrayOfFilters) {
@@ -40,8 +41,7 @@ async function searchByMultipleFilters(user, arrayOfFilters) {
         method: 'GET',
         headers: authHeader(user)
     };
-    // return await fetch(`${config.tomcatUrl}/user/allCertificates`, {...postFetch(), ...requestOptions})
-    return await fetch(`${config.apiUrl}/certificates/all`, requestOptions)
+    return await axios.get(`${config.serverUrl}certificates`, requestOptions)
         .then(handleResponse)
         .then(array => {
             return array.filter(certificate => {
@@ -53,6 +53,40 @@ async function searchByMultipleFilters(user, arrayOfFilters) {
                 return true;
             })
         });
+}
+
+function paginate(user, limit, offset, filterBody) {
+    const requestOptions = {
+        ...getFetch,
+        user,
+        filterBody,
+    };
+    return axios.post(`${config.serverUrl}certificates/paginate/${limit}/${offset}`, requestOptions).then(handleResponse);
+}
+
+async function setUpCertificates(user, limit, filterBody) {
+    const requestOptions = {
+        ...getFetch,
+        filterBody,
+    };
+    return await axios.post(`${config.serverUrl}certificates/setUp/${limit}`, requestOptions).then(handleResponse);
+}
+
+function paginateUserCertificates(user, limit, offset, filterBody) {
+    const requestOptions = {
+        ...getFetch,
+        filterBody,
+    };
+    return axios.post(`${config.serverUrl}userCertificate/paginate/${limit}/${offset}`, requestOptions).then(handleResponse);
+}
+
+async function setUpUserCertificates(user, limit, filterBody) {
+    const requestOptions = {
+        ...getFetch,
+        user,
+        filterBody,
+    };
+    return await axios.post(`${config.serverUrl}userCertificate/setUp/${limit}`, requestOptions).then(handleResponse);
 }
 
 async function buy(certificateId, user) {

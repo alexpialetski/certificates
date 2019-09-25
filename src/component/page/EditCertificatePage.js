@@ -59,7 +59,7 @@ export const EditCertificatePage = (props) => {
             .then(
                 () => {
                     const {from} = props.location.state || {from: {pathname: "/"}};
-                    props.history.push(from);
+                    // props.history.push(from);
                 },
                 error => {
                     setError(error);

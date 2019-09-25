@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from "./Header";
 import Body from "./Body";
-import Footer from "./Footer";
+import Footer from "../../containers/Footer";
 
 class Certificate extends React.Component {
     constructor(props) {
@@ -16,9 +16,9 @@ class Certificate extends React.Component {
         const {isUserCertificate, tagClick, role} = this.props;
         const isUserCertificateClass = isUserCertificate ? 'user-certificate' : '';
         return (
-            <div className={'shadow p-3 certificate ' + isUserCertificateClass} certificateid={this.state.id}>
+            <div className={'shadow p-3 certificate ' + isUserCertificateClass} certificateid={this.state._id}>
                 <Header date={this.state.date} title={this.state.title}/>
-                <Body certificateId={this.state.id} tags={this.props.tags}
+                <Body certificateId={this.state._id} tags={this.props.tags}
                       description={this.state.description}
                       tagClick={tagClick}/>
                 <Footer
@@ -26,7 +26,7 @@ class Certificate extends React.Component {
                     cost={this.state.cost}
                     isUserCertificate={isUserCertificate}
                     userButtonText={isUserCertificate ? __("certificate.button.delete") : __("certificate.button.buy")}
-                    certificateId={this.state.id}/>
+                    certificateId={this.state._id}/>
             </div>
         )
     }

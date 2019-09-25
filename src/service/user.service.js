@@ -1,6 +1,6 @@
 import config from 'config';
 import {authHeader, specifyRoles} from '../util/authorization';
-import {getFetch, postFetch} from "../util/backend-util";
+import {postFetch} from "../util/backend-util";
 import axios from "axios";
 
 export const userService = {
@@ -15,7 +15,7 @@ function login(username, password) {
         username,
         password
     };
-    return axios.post(`${config.serverUrl}api/users/authenticate`, {...postFetch, ...requestOptions}).then(handleResponse).then(user => {
+    return axios.post(`${config.serverUrl}user/authenticate`, {...postFetch, ...requestOptions}).then(handleResponse).then(user => {
         return {
             ...user,
             roles: specifyRoles(user.role)
@@ -37,7 +37,7 @@ function register(username, password, firstName, lastName) {
     const requestOptions = {
         username, password, firstName, lastName
     };
-    return axios.post(`${config.serverUrl}api/users/register`, {...postFetch, ...requestOptions}).then(handleResponse);
+    return axios.post(`${config.serverUrl}user/register`, {...postFetch, ...requestOptions}).then(handleResponse);
 }
 
 function logout() {

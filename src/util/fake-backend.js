@@ -36,28 +36,28 @@ export function configureFakeBackend() {
                     //     return;
                     // }
 
-                    if (url.endsWith('/users/register') && opts.method === 'POST') {
-                        let params = JSON.parse(opts.body);
-                        const user = {};
-                        user.id = users[users.length - 1].id + 1;
-                        user.firstName = params.firstName;
-                        user.lastName = params.lastName;
-                        user.username = params.username;
-                        user.password = params.password;
-                        user.role = Role.USER;
-                        users.push(user);
-                        resolve({ok: true, text: () => Promise.resolve()});
-                        return;
-                    }
+                    // if (url.endsWith('/users/register') && opts.method === 'POST') {
+                    //     let params = JSON.parse(opts.body);
+                    //     const user = {};
+                    //     user.id = users[users.length - 1].id + 1;
+                    //     user.firstName = params.firstName;
+                    //     user.lastName = params.lastName;
+                    //     user.username = params.username;
+                    //     user.password = params.password;
+                    //     user.role = Role.USER;
+                    //     users.push(user);
+                    //     resolve({ok: true, text: () => Promise.resolve()});
+                    //     return;
+                    // }
 
-                    if (url.endsWith('/users') && opts.method === 'GET') {
-                        if (opts.headers && isSatisfied(opts.headers.roles, Role.ADMIN)) {
-                            resolve({ok: true, text: () => Promise.resolve(JSON.stringify(users))});
-                        } else {
-                            resolve({status: 401, text: () => Promise.resolve()});
-                        }
-                        return;
-                    }
+                    // if (url.endsWith('/users') && opts.method === 'GET') {
+                    //     if (opts.headers && isSatisfied(opts.headers.roles, Role.ADMIN)) {
+                    //         resolve({ok: true, text: () => Promise.resolve(JSON.stringify(users))});
+                    //     } else {
+                    //         resolve({status: 401, text: () => Promise.resolve()});
+                    //     }
+                    //     return;
+                    // }
 
                     // if (url.endsWith('/certificates/all') && opts.method === 'GET') {
                     //     const headers = opts.headers;

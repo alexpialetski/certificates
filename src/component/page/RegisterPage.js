@@ -29,7 +29,7 @@ export const RegisterPage = (props) => {
             .then(
                 () => {
                     const {from} = props.location.state || {from: {pathname: "/login"}};
-                    props.history.push(from);
+                    // props.history.push(from);
                 });
     };
 

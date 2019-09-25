@@ -1,10 +1,8 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import Tag from "./Tag";
 import Sortable from "react-sortablejs";
-import HomePageContext from "../../context/HomePageContext";
 
 export default ({tags, tagClick, certificateId}) => {
-    const homePage = useContext(HomePageContext);
     return (
         <Sortable
             options={{
@@ -16,35 +14,35 @@ export default ({tags, tagClick, certificateId}) => {
                 },
             }}
             onChange={(order, sortable, evt) => {
-                let {certificates, setCertificates} = homePage;
-                if (evt.type === 'update') {
-                    const certificateWithIndex = findCertificateById(certificates, parseInt(evt.from.id));
-                    const tags = [...order];
-                    const newCertificate = {
-                        ...certificateWithIndex.certificate,
-                        tags
-                    };
-                    certificates.splice(certificateWithIndex.index, 1, newCertificate);
-                    setCertificates([...certificates]);
-                    return;
-                }
-                let certificate = {};
-                if (evt.from === sortable.el) {
-                    certificate = findCertificateById(certificates, parseInt(evt.from.id));
-                } else {
-                    certificate = findCertificateById(certificates, parseInt(evt.to.id));
-                }
-
-                const newCertificate = {
-                    ...certificate.certificate,
-                    tags: [...order]
-                };
-
-                if (event.ctrlKey && evt.from === sortable.el) {
-                    return;
-                }
-                certificates.splice(certificate.index, 1, newCertificate);
-                setCertificates([...certificates]);
+                // let {certificates, setCertificates} = homePage;
+                // if (evt.type === 'update') {
+                //     const certificateWithIndex = findCertificateById(certificates, parseInt(evt.from.id));
+                //     const tags = [...order];
+                //     const newCertificate = {
+                //         ...certificateWithIndex.certificate,
+                //         tags
+                //     };
+                //     certificates.splice(certificateWithIndex.index, 1, newCertificate);
+                //     setCertificates([...certificates]);
+                //     return;
+                // }
+                // let certificate = {};
+                // if (evt.from === sortable.el) {
+                //     certificate = findCertificateById(certificates, parseInt(evt.from.id));
+                // } else {
+                //     certificate = findCertificateById(certificates, parseInt(evt.to.id));
+                // }
+                //
+                // const newCertificate = {
+                //     ...certificate.certificate,
+                //     tags: [...order]
+                // };
+                //
+                // if (event.ctrlKey && evt.from === sortable.el) {
+                //     return;
+                // }
+                // certificates.splice(certificate.index, 1, newCertificate);
+                // setCertificates([...certificates]);
 
             }}
             id={certificateId}

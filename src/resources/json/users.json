@@ -1,6 +1,5 @@
 [
   {
-    "id": 1,
     "username": "user",
     "password": "user",
     "firstName": "UserFirst",
@@ -8,7 +7,6 @@
     "role": "USER"
   },
   {
-    "id": 2,
     "username": "admin",
     "password": "admin",
     "firstName": "AdminFirst",

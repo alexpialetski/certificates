@@ -3,24 +3,23 @@ import {Link} from "react-router-dom";
 import {isSatisfied, Role} from "../../../util/authorization";
 import {certificateService} from "../../../service/certificates.service";
 import AppContext from "../../context/AppContext";
-import HomePageContext from "../../context/HomePageContext";
-import {updateAllCertificates, updateAllUserCertificates} from '../../../util/homepage-util'
 
-export default ({cost, userButtonText, certificateId, isUserCertificate}) => {
+export default ({paginate, setUpCertificates, updateUserCertificates, addSuccessMessage, addError, cost, userButtonText, certificateId, isUserCertificate}) => {
     const appContext = useContext(AppContext);
-    const homeContext = useContext(HomePageContext);
+    // const homeContext = useContext(HomePageContext);
     const role = appContext.user.roles;
     const buyClick = async (e) => {
         e.preventDefault();
         const certificateId = e.target.getAttribute('certificateid');
         if (confirm(__("homePage.alert.buy"))) {
-            homeContext.setLoading(true);
+            // homeContext.setLoading(true);
             await certificateService.buy(parseInt(certificateId), appContext.user)
-                .then(message => homeContext.setSuccessMessage(message))
-                .catch(error => homeContext.setErrorMessage(error))
+                .then(message => addSuccessMessage(message))
+                .catch(error => addError(error))
                 .then(async res => {
-                    await updateAllUserCertificates(appContext.user, homeContext.setUserCertificates);
-                    homeContext.setLoading(false);
+                    updateUserCertificates();
+                    // await updateAllUserCertificates(appContext.user, homeContext.setUserCertificates);
+                    // homeContext.setLoading(false);
                 });
         }
     };
@@ -29,14 +28,16 @@ export default ({cost, userButtonText, certificateId, isUserCertificate}) => {
         e.preventDefault();
         const certificateId = e.target.getAttribute('certificateid');
         if (confirm(__("homePage.alert.user.delete"))) {
-            homeContext.setLoading(true);
+            // homeContext.setLoading(true);
             await certificateService.deleteUserCertificate(parseInt(certificateId), appContext.user)
-                .then(message => homeContext.setSuccessMessage(message))
-                .catch(error => homeContext.setErrorMessage(error))
+                .then(message => addSuccessMessage(message))
+                .catch(error => addError(error))
                 .then(async () => {
-                    await updateAllUserCertificates(appContext.user, homeContext.setUserCertificates);
-                    await updateAllCertificates(appContext.user, homeContext.setCertificates);
-                    homeContext.setLoading(false);
+                    updateUserCertificates();
+                    paginate(1);
+                    // await updateAllUserCertificates(appContext.user, homeContext.setUserCertificates);
+                    // await updateAllCertificates(appContext.user, homeContext.setCertificates);
+                    // homeContext.setLoading(false);
                 });
         }
     };
@@ -45,14 +46,16 @@ export default ({cost, userButtonText, certificateId, isUserCertificate}) => {
         e.preventDefault();
         const certificateId = e.target.getAttribute('certificateid');
         if (confirm(__("homePage.alert.admin.delete"))) {
-            homeContext.setLoading(true);
+            // homeContext.setLoading(true);
             await certificateService.deleteAdminCertificate(parseInt(certificateId), appContext.user)
-                .then(message => homeContext.setSuccessMessage(message))
-                .catch(error => homeContext.setErrorMessage(error))
+                .then(message => addSuccessMessage(message))
+                .catch(error => addError(error))
                 .then(async () => {
-                    await updateAllUserCertificates(appContext.user, homeContext.setUserCertificates);
-                    await updateAllCertificates(appContext.user, homeContext.setCertificates);
-                    homeContext.setLoading(false);
+                    updateUserCertificates();
+                    paginate(1);
+                    // await updateAllUserCertificates(appContext.user, homeContext.setUserCertificates);
+                    // await updateAllCertificates(appContext.user, homeContext.setCertificates);
+                    // homeContext.setLoading(false);
                 });
         }
     };

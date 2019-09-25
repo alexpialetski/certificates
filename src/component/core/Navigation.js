@@ -1,16 +1,13 @@
 import ColumnOfButtons from "./ColumnOfButtons";
 import Pagination from "./pagination/Pagination";
-import React, {useContext} from "react";
-import HomePageContext from "../context/HomePageContext";
+import React from "react";
 
-export default () => {
-    const contextType = useContext(HomePageContext);
-
+export default ({certificatesPerPage, paginate, setCertificatesPerPage, quantity, currentPage}) => {
     const quantityOfCertificates = e => {
-        contextType.setCurrentPage(1);
-        contextType.setCertificatesPerPage(parseInt(e.target.value));
+        setCertificatesPerPage(parseInt(e.target.value));
+        paginate(1);
     };
-
+    // debugger;
     return (
         <div className={'container'}>
             <div className={'row align-items-center'}>
@@ -18,14 +15,14 @@ export default () => {
                     items={[2, 25, 50, 100]}
                     action={quantityOfCertificates}
                     className={'col-md-2 offset-md-1 shadow'}
-                    check={contextType.certificatesPerPage}
+                    check={certificatesPerPage}
                 />
                 <Pagination
-                    certificatesPerPage={contextType.certificatesPerPage}
-                    totalCertificates={contextType.certificates.length}
-                    paginate={(pageNumber) => contextType.setCurrentPage(pageNumber)}
+                    certificatesPerPage={certificatesPerPage}
+                    totalCertificates={quantity}
                     className={'col-md-7 push-md-2'}
-                    currentPage={contextType.currentPage}/>
+                    paginate={paginate}
+                    currentPage={currentPage}/>
             </div>
         </div>
     )
