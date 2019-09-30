@@ -9,18 +9,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {configureFakeBackend} from './util/fake-backend'
 import routes from './routes'
-import sampleData from './initialState'
-import storeFactory from './store'
+import store from './store/index'
 import {Provider} from 'react-redux'
 import {addError} from './actions'
 import {BrowserRouter} from "react-router-dom";
+import {CookiesProvider} from 'react-cookie';
 
-const initialState = (localStorage["redux-store"]) ?
-    JSON.parse(localStorage["redux-store"]) :
-    sampleData;
-
-const saveState = () =>
-    localStorage["redux-store"] = JSON.stringify(store.getState());
 
 const handleError = error => {
     store.dispatch(
@@ -28,11 +22,10 @@ const handleError = error => {
     )
 };
 
-const store = storeFactory(initialState);
-store.subscribe(saveState);
-
+//DEBUG VALUES
 window.React = React;
 window.store = store;
+//
 
 window.addEventListener("error", handleError);
 
@@ -40,9 +33,11 @@ configureFakeBackend();
 
 ReactDOM.render(
     <BrowserRouter>
-        <Provider store={store}>
-            {routes}
-        </Provider>
+        <CookiesProvider>
+            <Provider store={store}>
+                {routes}
+            </Provider>
+        </CookiesProvider>
     </BrowserRouter>,
     document.getElementById('root')
 );

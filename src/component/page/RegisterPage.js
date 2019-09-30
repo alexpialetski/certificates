@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 
 import {userService} from '../../service/user.service';
 import {valueGreaterOrEqualThan, valueLessThan} from "../../validation/FormValidation";
-import {Header} from "../core/Header";
 import Container from "../core/Container";
 import FormGroup from "../core/form/FormGroup";
 import img from "../../resources/images/register.jpg"
@@ -29,13 +28,12 @@ export const RegisterPage = (props) => {
             .then(
                 () => {
                     const {from} = props.location.state || {from: {pathname: "/login"}};
-                    // props.history.push(from);
+                    props.history.push(from);
                 });
     };
 
     return (
         <div>
-            <Header/>
             <Container className="row mt-5 p-5">
                 <h2>{__("register.register.label")}</h2>
                 <div className={"row"}>

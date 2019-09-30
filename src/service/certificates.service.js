@@ -1,12 +1,10 @@
 import config from 'config';
 import {authHeader} from '../util/authorization';
-
 import axios from 'axios';
-import {getFetch} from "../util/backend-util";
+import {getFetch, postFetch, createTokenHeader} from "../util/backend-util";
+
 
 export const certificateService = {
-    getAll,
-    searchByMultipleFilters,
     getUserCertificates,
     buy,
     deleteUserCertificate,
@@ -20,53 +18,21 @@ export const certificateService = {
     setUpUserCertificates
 };
 
-async function getAll(user) {
-    const requestOptions = {
-        method: 'GET',
-        headers: authHeader(user)
-    };
-    return await axios.get(`${config.serverUrl}certificates`, getFetch).then(handleResponse);
-}
-
 async function findById(user, certificateId) {
-    const requestOptions = {
-        method: 'GET',
-        headers: authHeader(user)
-    };
-    return await axios.get(`${config.serverUrl}certificates/${certificateId}`, requestOptions).then(handleResponse);
+    return await axios.get(`${config.serverUrl}certificates/${certificateId}`, createTokenHeader()).then(handleResponse);
 }
 
-async function searchByMultipleFilters(user, arrayOfFilters) {
+function paginate(limit, offset, filterBody) {
     const requestOptions = {
-        method: 'GET',
-        headers: authHeader(user)
-    };
-    return await axios.get(`${config.serverUrl}certificates`, requestOptions)
-        .then(handleResponse)
-        .then(array => {
-            return array.filter(certificate => {
-                for (let i = 0; i < arrayOfFilters.length; i++) {
-                    if (!arrayOfFilters[i](certificate)) {
-                        return false
-                    }
-                }
-                return true;
-            })
-        });
-}
-
-function paginate(user, limit, offset, filterBody) {
-    const requestOptions = {
-        ...getFetch,
-        user,
+        ...postFetch,
         filterBody,
     };
     return axios.post(`${config.serverUrl}certificates/paginate/${limit}/${offset}`, requestOptions).then(handleResponse);
 }
 
-async function setUpCertificates(user, limit, filterBody) {
+async function setUpCertificates(limit, filterBody) {
     const requestOptions = {
-        ...getFetch,
+        ...postFetch,
         filterBody,
     };
     return await axios.post(`${config.serverUrl}certificates/setUp/${limit}`, requestOptions).then(handleResponse);
@@ -74,83 +40,67 @@ async function setUpCertificates(user, limit, filterBody) {
 
 function paginateUserCertificates(user, limit, offset, filterBody) {
     const requestOptions = {
-        ...getFetch,
-        filterBody,
-    };
-    return axios.post(`${config.serverUrl}userCertificate/paginate/${limit}/${offset}`, requestOptions).then(handleResponse);
-}
-
-async function setUpUserCertificates(user, limit, filterBody) {
-    const requestOptions = {
-        ...getFetch,
+        ...postFetch,
         user,
         filterBody,
     };
-    return await axios.post(`${config.serverUrl}userCertificate/setUp/${limit}`, requestOptions).then(handleResponse);
+    console.log(requestOptions);
+    return axios.post(`${config.serverUrl}userCertificate/paginate/${limit}/${offset}`, requestOptions, createTokenHeader()).then(handleResponse);
 }
 
-async function buy(certificateId, user) {
+function setUpUserCertificates(user, limit, filterBody) {
     const requestOptions = {
-        method: 'GET',
-        certificateId,
-        userId: user.id,
-        headers: authHeader(user)
+        ...postFetch,
+        user,
+        filterBody,
     };
-    return await fetch(`${config.apiUrl}/certificates/buy`, requestOptions)
+    return axios.post(`${config.serverUrl}userCertificate/setUp/${limit}`, requestOptions, createTokenHeader()).then(handleResponse);
+}
+
+function buy(certificateId, user) {
+    const requestOptions = {
+        ...postFetch,
+        certificate: certificateId,
+        user
+    };
+    return axios.post(`${config.serverUrl}userCertificate/create`, requestOptions, createTokenHeader())
         .then(handleResponse)
         .then(result => 'Everything went alright!!!');
 }
 
-async function deleteUserCertificate(certificateId, user) {
-    const requestOptions = {
-        method: 'GET',
-        certificateId,
-        userId: user.id,
-        headers: authHeader(user)
-    };
-    return await fetch(`${config.apiUrl}/certificates/delete`, requestOptions)
+function deleteUserCertificate(certificateId) {
+    return axios.delete(`${config.serverUrl}userCertificate/${certificateId}`, createTokenHeader())
         .then(handleResponse)
         .then(result => 'Everything went alright!!!');
 }
 
-async function deleteAdminCertificate(certificateId, user) {
-    const requestOptions = {
-        method: 'GET',
-        certificateId,
-        headers: authHeader(user)
-    };
-    return await fetch(`${config.apiUrl}/certificates/admin/delete`, requestOptions)
+async function deleteAdminCertificate(certificateId) {
+    return axios.delete(`${config.serverUrl}certificates/${certificateId}`, createTokenHeader())
         .then(handleResponse)
         .then(result => 'Everything went alright!!!(ADMIN)');
 }
 
 async function createAdminCertificate(user, certificate) {
     const requestOptions = {
-        method: 'GET',
         certificate: certificate,
-        headers: authHeader(user)
     };
-    return await fetch(`${config.apiUrl}/certificates/admin/create`, requestOptions)
+    return axios.post(`${config.apiUrl}/certificates`, requestOptions, createTokenHeader())
         .then(handleResponse);
 }
 
 async function editAdminCertificate(user, certificate) {
     const requestOptions = {
-        method: 'GET',
         certificate: certificate,
-        headers: authHeader(user)
     };
-    return await fetch(`${config.apiUrl}/certificates/admin/edit`, requestOptions)
+    return axios.post(`${config.apiUrl}/certificates/edit`, requestOptions, createTokenHeader())
         .then(handleResponse);
 }
 
 async function getUserCertificates(user) {
     const requestOptions = {
-        method: 'GET',
-        userId: user.id,
-        headers: authHeader(user)
+        user
     };
-    return await fetch(`${config.apiUrl}/certificates/userCertificates`, requestOptions).then(handleResponse);
+    return axios.post(`${config.serverUrl}userCertificate/array`, requestOptions, createTokenHeader()).then(handleResponse);
 }
 
 function handleResponse(response) {

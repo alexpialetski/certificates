@@ -35,18 +35,20 @@ export default ({
     };
 
     const typeOfCertificatesEvent = e => {
+        let bool = false;
         if (e.target.value === __("homePage.label.all")) {
-            showUserCertificates(false);
+            bool = false;
         } else if (e.target.value === __("homePage.label.onlyMy")) {
-            showUserCertificates(true);
+            bool = true;
         }
+        showUserCertificates(bool);
         setSearch('');
         clearFilterBody();
         setUpCertificates();
     };
 
     let userActions = [__("homePage.label.all")];
-    if (user.username && userCertificates.length) {
+    if (user.username && Object.keys(userCertificates).length) {
         userActions.push(__("homePage.label.onlyMy"));
     } else {
         userActions = [__("homePage.label.all")];

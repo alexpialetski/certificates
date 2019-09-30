@@ -6,16 +6,10 @@ const Certificates = ({certificates, userCertificates, user , updateUserCertific
     useEffect(() => {
         user.username && updateUserCertificates(user);
         setUpCertificates();
-        // paginate(1);
     }, []);
 
     const isUserCertificate = (certificateId) => {
-        for (let i = 0; i < userCertificates.length; i++) {
-            if (userCertificates[i] === certificateId) {
-                return true;
-            }
-        }
-        return false;
+        return userCertificates[certificateId] !== undefined;
     };
 
     return (
@@ -39,7 +33,7 @@ const Certificates = ({certificates, userCertificates, user , updateUserCertific
                         >
                             {certificates.map((certificate, index) => {
                                 if (index % 2 === 0) {
-                                    const boolean = isUserCertificate(certificate.id);
+                                    const boolean = isUserCertificate(certificate._id);
                                     return (
                                         <div key={certificate._id} data-id={certificate._id}>
                                             {createCertificate(certificate, boolean, user.role)}
@@ -65,10 +59,10 @@ const Certificates = ({certificates, userCertificates, user , updateUserCertific
                         >
                             {certificates.map((certificate, index) => {
                                 if (index % 2 === 1) {
-                                    const boolean = isUserCertificate(certificate.id);
+                                    const boolean = isUserCertificate(certificate._id);
                                     return (
                                         <div key={certificate._id} data-id={certificate._id}>
-                                            {createCertificate(certificate, boolean, user.role)}
+                                            {createCertificate(certificate, boolean, user.roles)}
                                         </div>)
                                 }
                             })}

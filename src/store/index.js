@@ -1,39 +1,14 @@
-import appReducer from './reducers'
-import thunk from 'redux-thunk'
-import {applyMiddleware, createStore} from 'redux'
+import sampleData from "../initialState";
+import storeFactory from "./middleware";
 
-const consoleMessages = store => next => action => {
+const initialState = (localStorage["redux-store"]) ?
+    JSON.parse(localStorage["redux-store"]) :
+    sampleData;
 
-    let result;
+const saveState = () =>
+    localStorage["redux-store"] = JSON.stringify(store.getState());
 
-    console.groupCollapsed(`dispatching action => ${action.type}`);
-    console.log('ski days', store.getState().currentCertificates.length);
-    result = next(action);
+const store = storeFactory(initialState);
+store.subscribe(saveState);
 
-    let {currentCertificates, userCertificates, errors, successMessage, pageNumber, entitiesPerPage, user, quantityOfPages, search, filterBody} = store.getState();
-
-    console.log(`
-		user: ${JSON.stringify(user)}
-		currentCertificates: ${currentCertificates.length}
-		userCertificates: ${userCertificates.length}
-		entitiesPerPage: ${entitiesPerPage}
-		quantityOfPages: ${quantityOfPages}
-		pageNumber: ${pageNumber}
-		search: ${search}
-		filterBody: ${filterBody}
-		errors: ${errors.length}
-		successMessage: ${successMessage.length}
-
-	`);
-
-    console.groupEnd();
-
-    return result
-};
-
-export default (initialState = {}) => {
-    return applyMiddleware(thunk, consoleMessages)(createStore)(appReducer, initialState)
-}
-
-
-
+export default store;

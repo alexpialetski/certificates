@@ -12,13 +12,39 @@ export const user = (state = {}, action) => {
     }
 };
 
+export const token = (state = "", action) => {
+    switch (action.type) {
+        case C.SET_TOKEN:
+            return action.payload;
+        case C.CLEAR_TOKEN:
+            return "";
+        default:
+            return state
+    }
+};
+
 export const errors = (state = [], action) => {
     switch (action.type) {
         case C.ADD_ERROR :
-            return [
-                ...state,
-                action.payload
-            ];
+            if (typeof action.payload === 'string') {
+                return [
+                    ...state,
+                    action.payload
+                ];
+            }else if(typeof action.payload === 'object'){
+                if(action.payload.error){
+                    return [
+                        ...state,
+                        action.payload.error
+                    ];
+                }
+
+            }else{
+                return [
+                    ...state,
+                    ...action.payload
+                ];
+            }
         case C.CLEAR_ERROR :
             return state.filter((message, i) => i !== action.payload);
         default:
@@ -79,7 +105,7 @@ export const quantityOfPages = (state = 1, action) =>
 
 export const showUserCertificates = (state = false, action) =>
     (action.type === C.SHOW_USER_CERTIFICATES) ?
-        parseInt(action.payload) :
+        action.payload :
         state;
 
 export const currentCertificates = (state = [], action) =>
@@ -87,13 +113,14 @@ export const currentCertificates = (state = [], action) =>
         action.payload :
         state;
 
-export const userCertificates = (state = [], action) =>
+export const userCertificates = (state = {}, action) =>
     (action.type === C.SET_USER_CERTIFICATES) ?
         action.payload :
         state;
 
 export default combineReducers({
     user,
+    token,
     userCertificates,
     pageNumber,
     entitiesPerPage,

@@ -1,35 +1,36 @@
 import config from 'config';
-import {authHeader, specifyRoles} from '../util/authorization';
-import {postFetch} from "../util/backend-util";
+import {specifyRoles} from '../util/authorization';
+import {createTokenHeader, postFetch} from "../util/backend-util";
 import axios from "axios";
 
 export const userService = {
     login,
     register,
     logout,
-    findById
+    findByToken
 };
 
 function login(username, password) {
     const requestOptions = {
         username,
-        password
+        password,
     };
-    return axios.post(`${config.serverUrl}user/authenticate`, {...postFetch, ...requestOptions}).then(handleResponse).then(user => {
+    return axios.post(`${config.serverUrl}user/authenticate`, {...postFetch, ...requestOptions}).then(handleResponse).then(userWithToken => {
         return {
-            ...user,
-            roles: specifyRoles(user.role)
+            user: {
+                ...userWithToken.user,
+                roles: specifyRoles(userWithToken.user.role)
+            },
+            token: userWithToken.token
         };
     });
 }
 
-async function findById(id, user) {
+function findByToken(token) {
     const requestOptions = {
-        method: 'GET',
-        userId: parseInt(id),
-        headers: authHeader(user)
+        token,
     };
-    return await fetch(`${config.apiUrl}/admin/findById`, requestOptions)
+    return axios.post(`${config.serverUrl}user/findByToken`, requestOptions, createTokenHeader())
         .then(handleResponse);
 }
 
@@ -41,7 +42,7 @@ function register(username, password, firstName, lastName) {
 }
 
 function logout() {
-    localStorage.removeItem('id');
+    localStorage.removeItem('token');
 }
 
 function handleResponse(response) {

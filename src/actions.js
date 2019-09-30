@@ -36,6 +36,17 @@ export const clearUser = () =>
         type: C.CLEAR_USER,
     });
 
+export const setToken = token =>
+    ({
+        type: C.SET_TOKEN,
+        payload: token
+    });
+
+export const clearToken = () =>
+    ({
+        type: C.CLEAR_TOKEN,
+    });
+
 export const changeSearchVariable = value =>
     ({
         type: C.CHANGE_SEARCH_VARIABLE,
@@ -88,7 +99,7 @@ export const setUserCertificates = certificates =>
         payload: certificates
     });
 
-export const showUserCertificates = bool =>
+export const showUserCertificates = (bool = false) =>
     ({
         type: C.SHOW_USER_CERTIFICATES,
         payload: bool
@@ -110,7 +121,7 @@ export const paginate = pageNumber => (dispatch, getState) => {
                 );
             })
         :
-        certificateService.paginate(state.user, state.entitiesPerPage, (pageNumber - 1) * state.entitiesPerPage, state.filterBody)
+        certificateService.paginate(state.entitiesPerPage, (pageNumber - 1) * state.entitiesPerPage, state.filterBody)
             .then(result => {
                 dispatch(setCurrentCertificates(result));
             })
@@ -123,7 +134,6 @@ export const paginate = pageNumber => (dispatch, getState) => {
 
 export const setUpCertificates = () => (dispatch, getState) => {
     const state = getState();
-
     state.showUserCertificates ?
         certificateService.setUpUserCertificates(state.user, state.entitiesPerPage, state.filterBody)
             .then(result => {
@@ -137,7 +147,7 @@ export const setUpCertificates = () => (dispatch, getState) => {
                 );
             })
         :
-        certificateService.setUpCertificates(state.user, state.entitiesPerPage, state.filterBody)
+        certificateService.setUpCertificates(state.entitiesPerPage, state.filterBody)
             .then(result => {
                 dispatch(changePageNumber(1));
                 dispatch(changeQuantityOfPages(result.quantityOfPages));
@@ -148,23 +158,6 @@ export const setUpCertificates = () => (dispatch, getState) => {
                     addError(error.message)
                 );
             });
-};
-
-export const paginateUserCertificates = pageNumber => (dispatch, getState) => {
-    dispatch(changePageNumber(pageNumber));
-
-    const state = getState();
-
-    certificateService.paginateUserCertificates(state.user, state.entitiesPerPage, (pageNumber - 1) * state.entitiesPerPage, state.filterBody)
-        .then(result => {
-            console.log(result);
-            dispatch(setCurrentCertificates(result));
-        })
-        .catch(error => {
-            dispatch(
-                addError(error.message)
-            );
-        });
 };
 
 export const updateUserCertificates = () => (dispatch, getState) => {

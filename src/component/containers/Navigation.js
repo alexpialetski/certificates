@@ -3,7 +3,7 @@ import React from 'react';
 import Navigation from '../core/Navigation'
 import {withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
-import {paginate} from '../../actions'
+import {paginate, changePerPage} from '../../actions'
 
 const mapStateToProps = (state, props) =>
     ({
@@ -21,7 +21,7 @@ const mapDispatchToProps = dispatch =>
         },
         setCertificatesPerPage(number) {
             dispatch(
-                paginate(number)
+                changePerPage(number)
             )
         },
     });

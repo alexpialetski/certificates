@@ -7,17 +7,19 @@ import {addError, addSuccessMessage, paginate, setUpCertificates, updateUserCert
 
 const mapStateToProps = (state, props) =>
     ({
-        router: props.router
+        user: state.user,
+        router: props.router,
+        userCertificates: state.userCertificates
     });
 
 const mapDispatchToProps = dispatch =>
     ({
-        setSuccessMessage(message) {
+        addSuccessMessage(message) {
             dispatch(
                 addSuccessMessage(message)
             )
         },
-        setErrorMessage(message) {
+        addError(message) {
             dispatch(
                 addError(message)
             )

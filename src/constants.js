@@ -19,6 +19,9 @@ const constants = {
 	SET_USER: 'SET_USER',
 	CLEAR_USER: 'CLEAR_USER',
 	FETCH_USER: 'FETCH_USER',
+
+	SET_TOKEN: 'SET_TOKEN',
+	CLEAR_TOKEN: 'CLEAR_TOKEN',
 };
 
 export default constants

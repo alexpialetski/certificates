@@ -1,23 +1,21 @@
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 import {userService} from '../../service/user.service';
 import {valueGreaterOrEqualThan, valueLessThan} from "../../validation/FormValidation";
-import {Header} from "../core/Header";
-import UserContext from '../context/AppContext';
 import Container from "../core/Container";
 import FormGroup from "../core/form/FormGroup";
 import FormInput from "../core/form/FormInput";
 import img from "../../resources/images/welcome.jpg"
 import smallLoader from "../../resources/images/smallLoader.gif"
 import ControlButtons from "../core/form/ControlButtons";
+import {Redirect} from "react-router-dom";
 
-export const LoginPage = (props) => {
-    const contextType = useContext(UserContext);
-
+export const LoginPage = ({setUser, setToken}) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [errorFlag, setErrorFlag] = useState(false);
+    const [redirect, setRedirect] = useState(false);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -28,10 +26,11 @@ export const LoginPage = (props) => {
         setLoading(true);
         userService.login(username, password)
             .then(
-                user => {
-                    contextType.createUser(user);
-                    const {from} = props.location.state || {from: {pathname: "/"}};
-                    // props.history.push(from);
+                userWithToken => {
+                    localStorage.setItem('token', userWithToken.token);
+                    setToken(userWithToken.token);
+                    setUser(userWithToken.user);
+                    setRedirect(true);
                 }
             ).catch(error => {
             setError(error.response.data);
@@ -41,6 +40,7 @@ export const LoginPage = (props) => {
 
     return (
         <div>
+            {redirect && <Redirect to={'/'}/>}
             <Container className="row mt-5 p-5">
                 <h2>{__("login.login.label")}</h2>
                 <div className={"row"}>

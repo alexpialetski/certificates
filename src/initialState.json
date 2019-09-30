@@ -1,6 +1,7 @@
 {
 	"user": {},
-	"userCertificates": [],
+	"token": "",
+	"userCertificates": {},
 	"pageNumber": 1,
 	"entitiesPerPage": 2,
 	"quantityOfPages": 1,

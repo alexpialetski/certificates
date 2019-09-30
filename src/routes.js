@@ -1,8 +1,8 @@
 import React from 'react'
 import {Route} from 'react-router-dom'
-import {App, Whoops404} from './component'
+import App from '../src/component/containers/Index'
 import HomePage from "./component/page/HomePage";
-import {LoginPage} from "./component/page/LoginPage";
+import LoginPage from "./component/containers/LoginPage";
 import {RegisterPage} from "./component/page/RegisterPage";
 import {PrivateRoute} from "./util/privateRoute";
 import {AddCertificatePage} from "./component/page/AddCertificatePage";

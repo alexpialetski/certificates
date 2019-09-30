@@ -31,6 +31,7 @@
     "mongodb": "^3.1.13",
     "popper.js": "^1.15.0",
     "prop-types": "^15.5.10",
+    "react-cookie": "^4.0.1",
     "react-datepicker": "^2.8.0",
     "react-i18next": "^10.12.2",
     "react-native-dynamic-bundle": "^0.5.0",

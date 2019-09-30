@@ -2,24 +2,18 @@ import React, {useContext} from 'react';
 import {Link} from "react-router-dom";
 import {isSatisfied, Role} from "../../../util/authorization";
 import {certificateService} from "../../../service/certificates.service";
-import AppContext from "../../context/AppContext";
 
-export default ({paginate, setUpCertificates, updateUserCertificates, addSuccessMessage, addError, cost, userButtonText, certificateId, isUserCertificate}) => {
-    const appContext = useContext(AppContext);
-    // const homeContext = useContext(HomePageContext);
-    const role = appContext.user.roles;
+export default ({user, paginate, setUpCertificates, updateUserCertificates, addSuccessMessage, addError, cost, userButtonText, userCertificates, certificateId, isUserCertificate}) => {
+    const role = user.roles;
     const buyClick = async (e) => {
         e.preventDefault();
         const certificateId = e.target.getAttribute('certificateid');
         if (confirm(__("homePage.alert.buy"))) {
-            // homeContext.setLoading(true);
-            await certificateService.buy(parseInt(certificateId), appContext.user)
+            await certificateService.buy(certificateId, user)
                 .then(message => addSuccessMessage(message))
-                .catch(error => addError(error))
+                .catch(error => addError(error.message))
                 .then(async res => {
                     updateUserCertificates();
-                    // await updateAllUserCertificates(appContext.user, homeContext.setUserCertificates);
-                    // homeContext.setLoading(false);
                 });
         }
     };
@@ -27,17 +21,14 @@ export default ({paginate, setUpCertificates, updateUserCertificates, addSuccess
     const deleteClick = async (e) => {
         e.preventDefault();
         const certificateId = e.target.getAttribute('certificateid');
+        const userCertificateId = userCertificates[certificateId];
         if (confirm(__("homePage.alert.user.delete"))) {
-            // homeContext.setLoading(true);
-            await certificateService.deleteUserCertificate(parseInt(certificateId), appContext.user)
+            await certificateService.deleteUserCertificate(userCertificateId)
                 .then(message => addSuccessMessage(message))
                 .catch(error => addError(error))
                 .then(async () => {
                     updateUserCertificates();
-                    paginate(1);
-                    // await updateAllUserCertificates(appContext.user, homeContext.setUserCertificates);
-                    // await updateAllCertificates(appContext.user, homeContext.setCertificates);
-                    // homeContext.setLoading(false);
+                    setUpCertificates();
                 });
         }
     };
@@ -46,16 +37,12 @@ export default ({paginate, setUpCertificates, updateUserCertificates, addSuccess
         e.preventDefault();
         const certificateId = e.target.getAttribute('certificateid');
         if (confirm(__("homePage.alert.admin.delete"))) {
-            // homeContext.setLoading(true);
-            await certificateService.deleteAdminCertificate(parseInt(certificateId), appContext.user)
+            await certificateService.deleteAdminCertificate(parseInt(certificateId), user)
                 .then(message => addSuccessMessage(message))
                 .catch(error => addError(error))
                 .then(async () => {
                     updateUserCertificates();
-                    paginate(1);
-                    // await updateAllUserCertificates(appContext.user, homeContext.setUserCertificates);
-                    // await updateAllCertificates(appContext.user, homeContext.setCertificates);
-                    // homeContext.setLoading(false);
+                    setUpCertificates();
                 });
         }
     };

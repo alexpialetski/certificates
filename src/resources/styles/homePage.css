@@ -13,7 +13,7 @@
 }
 
 .user-certificate {
-    background-color: aliceblue;
+    background-color: aliceblue !important;
 }
 
 .user-footer-options {

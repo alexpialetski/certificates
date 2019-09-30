@@ -7,7 +7,7 @@ export default ({certificatesPerPage, paginate, setCertificatesPerPage, quantity
         setCertificatesPerPage(parseInt(e.target.value));
         paginate(1);
     };
-    // debugger;
+
     return (
         <div className={'container'}>
             <div className={'row align-items-center'}>
